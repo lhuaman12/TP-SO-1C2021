@@ -1,5 +1,5 @@
 #include "discordiador.h"
-
+#include<readline/readline.h>
 int main(void)
 {
 	int conexion;
@@ -53,7 +53,7 @@ void leer_consola(void)
 	char* leido;
 
 	//El primero te lo dejo de yapa
-	leido = readline(">");
+	leido = readline("<>");
 
 	while(strcmp(leido,"\0") != 0) {
 		log_info(discordiador_logger, leido);
