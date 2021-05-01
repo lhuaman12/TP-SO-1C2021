@@ -18,7 +18,8 @@
 
 #include "utils.h"
 
-// Por lo general, a menos que tengan que tener recursos compartidos, no es buena práctica usar variables globales. Nosotros lo estamos haciendo por la simplicidad del TP0 :)
+// Por lo general, a menos que tengan que tener recursos compartidos, no es buena práctica usar variables globales.
+//Nosotros lo estamos haciendo por la simplicidad del TP0 :)
 t_log* discordiador_logger;
 t_config* discordiador_config;
 

@@ -2,38 +2,53 @@
 #include<readline/readline.h>
 int main(void)
 {
-	int conexion;
-	char* ip;
-	char* puerto;
+	int CodigoDeconexion;
+
+
+//	discordiador_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Discordiador/discordiador.config");
 //SE INICIA DISCORDIADOR_LOGGER
+
 	iniciar_logger();
 
-	log_info(discordiador_logger, "paso logg");
 
 	leer_config();
-
-	log_info(discordiador_logger, "paso config");
-
 	//leer_consola();
 
-	log_info(discordiador_logger, "paso consola");
+		//ip = config_get_string_value(discordiador_config,"IP");
+		//puerto = config_get_string_value(discordiador_config, "PUERTO");
+		//crear_conexion(ip, puerto);
+	//char* valor;
+	//valor = config_get_string_value(discordiador_config, "CLAVE");
+	//enviar_mensaje(valor, CodigoDeconexion);
+	//paquete(conexion);
 
-	ip = config_get_string_value(discordiador_config, "IP");
 
-	puerto = config_get_string_value(discordiador_config, "PUERTO");
+	CodigoDeconexion = conectar_con_servidor();
+	//abrir_chat(CodigoDeconexion);
+	chat(CodigoDeconexion);
+	terminar_programa(CodigoDeconexion);
+}
 
-	conexion = crear_conexion(ip, puerto);
+void abrir_chat(CodigoDeconexion){
 
 	char* valor;
 
 	valor = config_get_string_value(discordiador_config, "CLAVE");
 
-	enviar_mensaje(valor, conexion);
+	enviar_mensaje(valor, CodigoDeconexion);
 
-	//paquete(conexion);
-	chat(conexion);
-	terminar_programa(conexion);
 }
+
+int conectar_con_servidor(){
+	char* ip;
+	char* puerto;
+
+	ip = config_get_string_value(discordiador_config,"IP");
+	puerto = config_get_string_value(discordiador_config, "PUERTO");
+
+	return crear_conexion(ip,puerto);
+}
+
 
 void iniciar_logger(void)
 {
@@ -42,22 +57,25 @@ void iniciar_logger(void)
 	log_info(discordiador_logger, "Cliente Discordiador");
 }
 
+
 void leer_config(void)
 {
 	char* valor;
 
-	discordiador_config = config_create("/tp-2021-1c-BastardosSinGloria/Discordiador/discordiador.config");
+	discordiador_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Discordiador/discordiador.config");
 
 	//tenemos que levantar en valor asociado a la clave "CLAVE" del archivo y asignarselo a la variable valor
 	valor = config_get_string_value(discordiador_config,"CLAVE");
 
-	log_info(discordiador_logger, "ASIGNO VALOR");
+
+	log_info(discordiador_logger, "ASIGNO VALOR:");
 
 	//Por último, logeame ese valor :)
 	log_info(discordiador_logger, valor);
 
 }
 
+/*
 void leer_consola(void)
 {
 	char* leido;
@@ -72,7 +90,7 @@ void leer_consola(void)
 	}
 
 	free(leido);
-}
+}*/
 
 void chat(int conexion)
 {
@@ -88,7 +106,7 @@ void chat(int conexion)
 	free(leido);
 
 }
-
+/*
 void paquete(int conexion)
 {
 
@@ -108,7 +126,7 @@ void paquete(int conexion)
 
 	eliminar_paquete(paquete);
 }
-
+*/
 void terminar_programa(int conexion)
 {
 	liberar_conexion(conexion);
