@@ -72,7 +72,7 @@ void crear_buffer(t_paquete* paquete)
 	paquete->buffer->size = 0;
 	paquete->buffer->stream = NULL;
 }
-
+/*
 t_paquete* crear_super_paquete(void)
 {
 	//me falta un malloc!
@@ -83,7 +83,7 @@ t_paquete* crear_super_paquete(void)
 	//crear_buffer(paquete);
 	return paquete;
 }
-
+*/
 t_paquete* crear_paquete(void)
 {
 	t_paquete* paquete = malloc(sizeof(t_paquete));

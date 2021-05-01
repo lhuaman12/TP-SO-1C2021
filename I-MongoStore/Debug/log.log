@@ -1,0 +1,5 @@
+[INFO] 19:45:31:408 Servidor/(6716:6716): Servidor listo para recibir al cliente
+[INFO] 20:32:22:927 Servidor/(6716:6716): Se conecto un cliente!
+[INFO] 20:32:22:928 Servidor/(6716:6716): Me llego el mensaje Hola, soy un valor
+[ERROR] 20:32:52:528 Servidor/(6716:6716): el cliente se desconecto. Terminando servidor
+[INFO] 20:36:57:891 Servidor/(8238:8238): Servidor listo para recibir al cliente

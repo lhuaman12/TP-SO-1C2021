@@ -25,6 +25,7 @@ t_config* discordiador_config;
 void iniciar_logger(void);
 void leer_config(void);
 void leer_consola(void);
+void chat(int);
 void paquete(int);
 void terminar_programa(int);
 

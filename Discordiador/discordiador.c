@@ -8,9 +8,15 @@ int main(void)
 //SE INICIA DISCORDIADOR_LOGGER
 	iniciar_logger();
 
+	log_info(discordiador_logger, "paso logg");
+
 	leer_config();
 
-	leer_consola();
+	log_info(discordiador_logger, "paso config");
+
+	//leer_consola();
+
+	log_info(discordiador_logger, "paso consola");
 
 	ip = config_get_string_value(discordiador_config, "IP");
 
@@ -24,8 +30,8 @@ int main(void)
 
 	enviar_mensaje(valor, conexion);
 
-	paquete(conexion);
-
+	//paquete(conexion);
+	chat(conexion);
 	terminar_programa(conexion);
 }
 
@@ -39,13 +45,17 @@ void iniciar_logger(void)
 void leer_config(void)
 {
 	char* valor;
-	discordiador_config = config_create("discordiador.config");
+
+	discordiador_config = config_create("/tp-2021-1c-BastardosSinGloria/Discordiador/discordiador.config");
 
 	//tenemos que levantar en valor asociado a la clave "CLAVE" del archivo y asignarselo a la variable valor
-	valor = config_get_string_value(discordiador_config, "CLAVE");
+	valor = config_get_string_value(discordiador_config,"CLAVE");
+
+	log_info(discordiador_logger, "ASIGNO VALOR");
 
 	//Por último, logeame ese valor :)
 	log_info(discordiador_logger, valor);
+
 }
 
 void leer_consola(void)
@@ -62,6 +72,21 @@ void leer_consola(void)
 	}
 
 	free(leido);
+}
+
+void chat(int conexion)
+{
+	char* leido;
+	leido = readline(">");
+
+	while(strcmp(leido,"\0") != 0) {
+			enviar_mensaje(leido,conexion);
+			free(leido);
+			leido = readline(">");
+		}
+	enviar_mensaje(leido,conexion);
+	free(leido);
+
 }
 
 void paquete(int conexion)

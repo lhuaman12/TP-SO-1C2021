@@ -4,20 +4,20 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../discordiador/discordiador.c \
-../discordiador/utils.c 
+../discordiador.c \
+../utils.c 
 
 OBJS += \
-./discordiador/discordiador.o \
-./discordiador/utils.o 
+./discordiador.o \
+./utils.o 
 
 C_DEPS += \
-./discordiador/discordiador.d \
-./discordiador/utils.d 
+./discordiador.d \
+./utils.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-discordiador/%.o: ../discordiador/%.c
+%.o: ../%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C Compiler'
 	gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
