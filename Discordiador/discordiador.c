@@ -2,10 +2,8 @@
 #include<readline/readline.h>
 int main(void)
 {
-	int CodigoDeconexion;
+	int codigoDeconexion;
 
-
-//	discordiador_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Discordiador/discordiador.config");
 //SE INICIA DISCORDIADOR_LOGGER
 
 	iniciar_logger();
@@ -23,19 +21,19 @@ int main(void)
 	//paquete(conexion);
 
 
-	CodigoDeconexion = conectar_con_servidor();
+	codigoDeconexion = conectar_con_servidor();
 	//abrir_chat(CodigoDeconexion);
-	chat(CodigoDeconexion);
-	terminar_programa(CodigoDeconexion);
+	chat(codigoDeconexion);
+	terminar_programa(codigoDeconexion);
 }
 
-void abrir_chat(CodigoDeconexion){
+void abrir_chat(int codigoDeconexion){
 
 	char* valor;
 
 	valor = config_get_string_value(discordiador_config, "CLAVE");
 
-	enviar_mensaje(valor, CodigoDeconexion);
+	enviar_mensaje(valor, codigoDeconexion);
 
 }
 
@@ -62,11 +60,11 @@ void leer_config(void)
 {
 	char* valor;
 
-	discordiador_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Discordiador/discordiador.config");
+	discordiador_config = config_create("../discordiador.config");
 
 	//tenemos que levantar en valor asociado a la clave "CLAVE" del archivo y asignarselo a la variable valor
 	valor = config_get_string_value(discordiador_config,"CLAVE");
-
+	log_info(discordiador_logger, "Aca crashea");
 
 	log_info(discordiador_logger, "ASIGNO VALOR:");
 

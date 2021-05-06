@@ -7,6 +7,7 @@
 
 #include "servidor.h"
 
+
 int main(void)
 {
 	void iterator(char* value)
@@ -27,7 +28,8 @@ int main(void)
 		switch(cod_op)
 		{
 		case MENSAJE:
-			recibir_mensaje(cliente_fd);
+			//recibir_mensaje(cliente_fd);
+			recibir_mensaje_encriptado(cliente_fd);
 			break;
 		case PAQUETE:
 			lista = recibir_paquete(cliente_fd);
@@ -43,4 +45,33 @@ int main(void)
 		}
 	}
 	return EXIT_SUCCESS;
+}
+
+
+// string sabotaje = "HORA,LUGAR,CANT_PARTICIPANTES"
+
+void recibir_mensaje_encriptado(int cliente_fd)
+{
+	char* mensaje;
+	char** mensaje_decriptado;
+
+	mensaje = recibir_y_guardar_mensaje(cliente_fd);
+
+	mensaje_decriptado = string_split(mensaje,",");
+
+
+	int hora = atoi(mensaje_decriptado[0]);
+	char* lugar = mensaje_decriptado[1];
+	int cant_participantes = atoi(mensaje_decriptado[2]);
+
+	hora += 18;
+
+	//"2" -> 2
+	//STRING -> INT
+
+	log_info(logger,"La hora es %d", hora);
+	log_info(logger,"La ubicacion es %s", lugar);
+	log_info(logger,"La cantidad de tripulantes es %d", cant_participantes);
+
+
 }

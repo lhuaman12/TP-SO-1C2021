@@ -84,6 +84,17 @@ void recibir_mensaje(int socket_cliente)
 	free(buffer);
 }
 
+
+char* recibir_y_guardar_mensaje(int socket_cliente)
+{
+	int size;
+	char* buffer = recibir_buffer(&size, socket_cliente);
+	log_info(logger, "Me llego el mensaje %s", buffer);
+	return buffer;
+	free(buffer);
+	}
+
+
 //podemos usar la lista de valores para poder hablar del for y de como recorrer la lista
 t_list* recibir_paquete(int socket_cliente)
 {
