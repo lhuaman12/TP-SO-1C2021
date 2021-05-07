@@ -10,23 +10,34 @@
 
 int main(void)
 {
+	logger = log_create("log.log", "Servidor", 1, LOG_LEVEL_DEBUG);
+
+	pthread_t hilo1;
+
 	void iterator(char* value)
 	{
 		printf("%s\n", value);
 	}
 
-	logger = log_create("log.log", "Servidor", 1, LOG_LEVEL_DEBUG);
 
 	int server_fd = iniciar_servidor();
-	log_info(logger, "Servidor listo para recibir al cliente");
+
+	log_info(logger, "Servidor listo para recibir al cliente en %d",server_fd);
+
 	int cliente_fd = esperar_cliente(server_fd);
+	log_info(logger,"El cliente es: %d", cliente_fd);
+	pthread_create(&hilo1, NULL, enviar_a_cliente, cliente_fd);
 
 	t_list* lista;
+
 	while(1)
 	{
 		int cod_op = recibir_operacion(cliente_fd);
 		switch(cod_op)
 		{
+		case CONEXION:
+			recibir_codigo(cliente_fd);
+
 		case MENSAJE:
 			//recibir_mensaje(cliente_fd);
 			recibir_mensaje_encriptado(cliente_fd);
@@ -44,12 +55,43 @@ int main(void)
 			break;
 		}
 	}
+
+
+	pthread_join(hilo1, NULL);
 	return EXIT_SUCCESS;
 }
 
 
-// string sabotaje = "HORA,LUGAR,CANT_PARTICIPANTES"
 
+
+void *enviar_a_cliente(int conexion)
+{
+	char* leido;
+		leido = readline(">");
+
+		while(strcmp(leido,"\0") != 0) {
+				enviar_mensaje(leido,conexion);
+				free(leido);
+				leido = readline(">");
+			}
+		enviar_mensaje(leido,conexion);
+		free(leido);
+}
+
+void recibir_codigo(int cliente_fd)
+{
+	//char* mensaje;
+	//mensaje = recibir_y_guardar_mensaje(cliente_fd);
+
+
+	//int codigoConexion = atoi(mensaje);
+	//pthread_create(&hilo, NULL, enviar_a_cliente, cliente_fd);
+
+}
+
+
+
+// string sabotaje = "HORA,LUGAR,CANT_PARTICIPANTES"
 void recibir_mensaje_encriptado(int cliente_fd)
 {
 	char* mensaje;

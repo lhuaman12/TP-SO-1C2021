@@ -5,15 +5,15 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../discordiador.c \
-../utils.c 
+../utils_cliente.c 
 
 OBJS += \
 ./discordiador.o \
-./utils.o 
+./utils_cliente.o 
 
 C_DEPS += \
 ./discordiador.d \
-./utils.d 
+./utils_cliente.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -5,8 +5,8 @@
  *      Author: utnso
  */
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef UTILS_CLIENTE_H_
+#define UTILS_CLIENTE_H_
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -19,6 +19,7 @@
 typedef enum
 {
 	MENSAJE,
+	CONEXION,
 	PAQUETE
 }op_code;
 
@@ -42,5 +43,15 @@ void agregar_a_paquete(t_paquete* paquete, void* valor, int tamanio);
 void enviar_paquete(t_paquete* paquete, int socket_cliente);
 void liberar_conexion(int socket_cliente);
 void eliminar_paquete(t_paquete* paquete);
+void enviar_codigo(char* mensaje, int socket_cliente);
 
-#endif /* UTILS_H_ */
+
+
+///////////////////////
+
+void* recibir_buffer(int* size, int socket_cliente);
+char* recibir_y_guardar_mensaje(int socket_cliente);
+
+
+
+#endif /* UTILS_CLIENTE_H_ */

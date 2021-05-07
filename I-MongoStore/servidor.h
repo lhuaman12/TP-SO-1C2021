@@ -9,13 +9,19 @@
 #define SERVIDOR_H_
 
 #include<stdio.h>
+#include<pthread.h>
 #include<stdlib.h>
 #include<string.h>
 #include<commons/string.h>
 #include<commons/log.h>
-#include "utils.h"
+
+#include "utils_servidor.h"
 
 
+pthread_t hilo;
+
+
+void* enviar_a_cliente();
 void recibir_mensaje_encriptado(int cliente_fd);
 
 

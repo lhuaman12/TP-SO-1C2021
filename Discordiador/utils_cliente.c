@@ -5,7 +5,7 @@
  *      Author: utnso
  */
 
-#include "utils.h"
+#include "utils_cliente.h"
 
 
 void* serializar_paquete(t_paquete* paquete, int bytes)
@@ -50,6 +50,26 @@ void enviar_mensaje(char* mensaje, int socket_cliente)
 	t_paquete* paquete = malloc(sizeof(t_paquete));
 
 	paquete->codigo_operacion = MENSAJE;
+	paquete->buffer = malloc(sizeof(t_buffer));
+	paquete->buffer->size = strlen(mensaje) + 1;
+	paquete->buffer->stream = malloc(paquete->buffer->size);
+	memcpy(paquete->buffer->stream, mensaje, paquete->buffer->size);
+
+	int bytes = paquete->buffer->size + 2*sizeof(int);
+
+	void* a_enviar = serializar_paquete(paquete, bytes);
+
+	send(socket_cliente, a_enviar, bytes, 0);
+
+	free(a_enviar);
+	eliminar_paquete(paquete);
+}
+
+void enviar_codigo(char* mensaje, int socket_cliente)
+{
+	t_paquete* paquete = malloc(sizeof(t_paquete));
+
+	paquete->codigo_operacion = CONEXION;
 	paquete->buffer = malloc(sizeof(t_buffer));
 	paquete->buffer->size = strlen(mensaje) + 1;
 	paquete->buffer->stream = malloc(paquete->buffer->size);
@@ -123,3 +143,38 @@ void liberar_conexion(int socket_cliente)
 {
 	close(socket_cliente);
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+//RECIBIR MENSAJES
+
+
+void* recibir_buffer(int* size, int socket_cliente)
+{
+	void * buffer;
+
+	recv(socket_cliente, size, sizeof(int), MSG_WAITALL);
+	buffer = malloc(*size);
+	recv(socket_cliente, buffer, *size, MSG_WAITALL);
+
+	return buffer;
+}
+
+char* recibir_y_guardar_mensaje(int socket_cliente)
+{
+	int size;
+	char* buffer = recibir_buffer(&size, socket_cliente);
+	return buffer;
+	free(buffer);
+	}
+
+
+
+
+
+
+
+
+
+

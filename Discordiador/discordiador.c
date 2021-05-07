@@ -7,24 +7,26 @@ int main(void)
 //SE INICIA DISCORDIADOR_LOGGER
 
 	iniciar_logger();
-
-
 	leer_config();
-	//leer_consola();
 
-		//ip = config_get_string_value(discordiador_config,"IP");
-		//puerto = config_get_string_value(discordiador_config, "PUERTO");
-		//crear_conexion(ip, puerto);
-	//char* valor;
-	//valor = config_get_string_value(discordiador_config, "CLAVE");
-	//enviar_mensaje(valor, CodigoDeconexion);
-	//paquete(conexion);
-
+	pthread_t hiloEscucharSERVIDOR;
 
 	codigoDeconexion = conectar_con_servidor();
+	log_info(discordiador_logger,"El servidor es: %d", codigoDeconexion);
+	//enviar_codigo(string_itoa(codigoDeconexion),codigoDeconexion);
+	pthread_create(&hiloEscucharSERVIDOR, NULL, escuchar_servidor, (void*)codigoDeconexion);
 	//abrir_chat(CodigoDeconexion);
 	chat(codigoDeconexion);
+	pthread_join(hiloEscucharSERVIDOR,NULL);
 	terminar_programa(codigoDeconexion);
+}
+
+void* escuchar_servidor(int codigoDeConexion)
+{
+
+	log_info(discordiador_logger, "Conecto la escucha");
+	char* mensaje = recibir_y_guardar_mensaje(codigoDeConexion);
+	log_info(discordiador_logger,"El mensaje:%s",mensaje);
 }
 
 void abrir_chat(int codigoDeconexion){
@@ -64,9 +66,6 @@ void leer_config(void)
 
 	//tenemos que levantar en valor asociado a la clave "CLAVE" del archivo y asignarselo a la variable valor
 	valor = config_get_string_value(discordiador_config,"CLAVE");
-	log_info(discordiador_logger, "Aca crashea");
-
-	log_info(discordiador_logger, "ASIGNO VALOR:");
 
 	//Por último, logeame ese valor :)
 	log_info(discordiador_logger, valor);
