@@ -8,6 +8,7 @@
 #ifndef DISCORDIADOR_H_
 #define DISCORDIADOR_H_
 
+#include<SharedUtils.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<pthread.h>

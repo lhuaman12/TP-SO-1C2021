@@ -17,6 +17,8 @@
 
 #include "utils_servidor.h"
 
+#include<SharedUtils.h>
+
 
 pthread_t hilo;
 

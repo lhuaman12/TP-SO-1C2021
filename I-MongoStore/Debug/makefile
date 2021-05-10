@@ -28,7 +28,7 @@ all: I-MongoStore
 I-MongoStore: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "I-MongoStore" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L/home/utnso/shared-library-so/SharedUtils/Debug -o "I-MongoStore" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
