@@ -1,8 +1,18 @@
 #include "discordiador.h"
 #include<readline/readline.h>
+
+
 int main(void)
 {
-	int codigoDeconexion;
+
+
+	//escuchar_y_enviar(IP,PUERTO_ESCUCHA_CLIENTE);
+
+
+
+
+
+	/*int codigoDeconexion;
 
 //SE INICIA DISCORDIADOR_LOGGER
 
@@ -19,6 +29,10 @@ int main(void)
 	chat(codigoDeconexion);
 	pthread_join(hiloEscucharSERVIDOR,NULL);
 	terminar_programa(codigoDeconexion);
+	*/
+
+
+
 }
 
 void* escuchar_servidor(int codigoDeConexion)
@@ -39,25 +53,26 @@ void abrir_chat(int codigoDeconexion){
 
 }
 
+/*
 int conectar_con_servidor(){
 	char* ip;
 	char* puerto;
 
 	ip = config_get_string_value(discordiador_config,"IP");
-	puerto = config_get_string_value(discordiador_config, "PUERTO");
+	puerto = config_get_string_value(discordiador_config, "PUERTO_ENVIAR");
 
 	return crear_conexion(ip,puerto);
 }
-
-
+*/
+/*
 void iniciar_logger(void)
 {
 	discordiador_logger = log_create("disc.log", "DISCORDIADOR", 1, LOG_LEVEL_INFO);
 
 	log_info(discordiador_logger, "Cliente Discordiador");
 }
-
-
+*/
+/*
 void leer_config(void)
 {
 	char* valor;
@@ -70,7 +85,7 @@ void leer_config(void)
 	//Por último, logeame ese valor :)
 	log_info(discordiador_logger, valor);
 
-}
+}*/
 
 /*
 void leer_consola(void)
@@ -88,7 +103,7 @@ void leer_consola(void)
 
 	free(leido);
 }*/
-
+/*
 void chat(int conexion)
 {
 	char* leido;
@@ -103,6 +118,7 @@ void chat(int conexion)
 	free(leido);
 
 }
+*/
 /*
 void paquete(int conexion)
 {
@@ -124,9 +140,11 @@ void paquete(int conexion)
 	eliminar_paquete(paquete);
 }
 */
+
+/*
 void terminar_programa(int conexion)
 {
 	liberar_conexion(conexion);
 	log_destroy(discordiador_logger);
 	config_destroy(discordiador_config);
-}
+}*/

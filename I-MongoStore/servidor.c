@@ -10,6 +10,22 @@
 
 int main(void)
 {
+	//escuchar_y_enviar(IP,PUERTO_ESCUCHA_SERVER);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*
 	logger = log_create("log.log", "Servidor", 1, LOG_LEVEL_DEBUG);
 
 	pthread_t hilo1;
@@ -35,8 +51,8 @@ int main(void)
 		int cod_op = recibir_operacion(cliente_fd);
 		switch(cod_op)
 		{
-		case CONEXION:
-			recibir_codigo(cliente_fd);
+	//	case CONEXION:
+	//		recibir_codigo(cliente_fd); --------------------> Esto hay que sacarlo?
 
 		case MENSAJE:
 			//recibir_mensaje(cliente_fd);
@@ -59,6 +75,9 @@ int main(void)
 
 	pthread_join(hilo1, NULL);
 	return EXIT_SUCCESS;
+*/
+
+
 }
 
 
@@ -78,20 +97,26 @@ void *enviar_a_cliente(int conexion)
 		free(leido);
 }
 
+/*
 void recibir_codigo(int cliente_fd)
 {
-	//char* mensaje;
-	//mensaje = recibir_y_guardar_mensaje(cliente_fd);
+	char* mensaje;
+	mensaje = recibir_y_guardar_mensaje(cliente_fd);
 
 
-	//int codigoConexion = atoi(mensaje);
-	//pthread_create(&hilo, NULL, enviar_a_cliente, cliente_fd);
+	int codigoConexion = atoi(mensaje);
+	pthread_create(&hilo, NULL, enviar_a_cliente, cliente_fd);
 
 }
-
+*/
 
 
 // string sabotaje = "HORA,LUGAR,CANT_PARTICIPANTES"
+
+
+
+
+/*
 void recibir_mensaje_encriptado(int cliente_fd)
 {
 	char* mensaje;
@@ -116,4 +141,4 @@ void recibir_mensaje_encriptado(int cliente_fd)
 	log_info(logger,"La cantidad de tripulantes es %d", cant_participantes);
 
 
-}
+}*/
