@@ -10,26 +10,16 @@ int main(void)
 
 
 
-
-
-	/*int codigoDeconexion;
-
 //SE INICIA DISCORDIADOR_LOGGER
-
+	char*ip;
+	char*PUERTO_PARA_ENVIAR;
 	iniciar_logger();
 	leer_config();
+	ip = config_get_string_value(discordiador_config,"IP");
+	PUERTO_PARA_ENVIAR = config_get_string_value(discordiador_config,"PUERTO_PARA_ENVIAR");
+	enviar(IP,PUERTO_PARA_ENVIAR,discordiador_config,discordiador_logger);
 
-	pthread_t hiloEscucharSERVIDOR;
 
-	codigoDeconexion = conectar_con_servidor();
-	log_info(discordiador_logger,"El servidor es: %d", codigoDeconexion);
-	//enviar_codigo(string_itoa(codigoDeconexion),codigoDeconexion);
-	pthread_create(&hiloEscucharSERVIDOR, NULL, escuchar_servidor, (void*)codigoDeconexion);
-	//abrir_chat(CodigoDeconexion);
-	chat(codigoDeconexion);
-	pthread_join(hiloEscucharSERVIDOR,NULL);
-	terminar_programa(codigoDeconexion);
-	*/
 
 
 
@@ -64,15 +54,15 @@ int conectar_con_servidor(){
 	return crear_conexion(ip,puerto);
 }
 */
-/*
+
 void iniciar_logger(void)
 {
 	discordiador_logger = log_create("disc.log", "DISCORDIADOR", 1, LOG_LEVEL_INFO);
 
 	log_info(discordiador_logger, "Cliente Discordiador");
 }
-*/
-/*
+
+
 void leer_config(void)
 {
 	char* valor;
@@ -85,7 +75,7 @@ void leer_config(void)
 	//Por último, logeame ese valor :)
 	log_info(discordiador_logger, valor);
 
-}*/
+}
 
 /*
 void leer_consola(void)

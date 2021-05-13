@@ -37,6 +37,7 @@
 
 // Por lo general, a menos que tengan que tener recursos compartidos, no es buena práctica usar variables globales.
 //Nosotros lo estamos haciendo por la simplicidad del TP0 :)
+
 t_log* discordiador_logger;
 t_config* discordiador_config;
 
@@ -44,8 +45,8 @@ void* escuchar_servidor(int codigoDeConexion);
 void abrir_chat(int codigoDeConexion);
 
 // int conectar_con_servidor();
-//void iniciar_logger(void);
-//void leer_config(void);
+void iniciar_logger(void);
+void leer_config(void);
 //void leer_consola(void);
 //void chat(int);
 //void paquete(int);
