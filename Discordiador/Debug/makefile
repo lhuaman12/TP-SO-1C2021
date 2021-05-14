@@ -28,7 +28,7 @@ all: Discordiador
 Discordiador: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L/home/utnso/shared-library-so/SharedUtils/Debug -o "Discordiador" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L/home/utnso/shared-library-so/SharedUtils/Debug -L"/home/utnso/shared-library-so/SharedUtils/Debug" -o "Discordiador" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

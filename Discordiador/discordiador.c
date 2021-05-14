@@ -57,9 +57,9 @@ int conectar_con_servidor(){
 
 void iniciar_logger(void)
 {
-	discordiador_logger = log_create("disc.log", "DISCORDIADOR", 1, LOG_LEVEL_INFO);
+//	discordiador_logger = log_create("disc.log", "DISCORDIADOR", 1, LOG_LEVEL_INFO);
 
-	log_info(discordiador_logger, "Cliente Discordiador");
+//	log_info(discordiador_logger, "Cliente Discordiador");
 }
 
 
