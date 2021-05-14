@@ -10,7 +10,7 @@
 
 
 
-/*
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<pthread.h>
@@ -19,12 +19,9 @@
 #include<commons/config.h>
 #include<readline/readline.h>
 #include<string.h>
-*/
-// Estas estan todas incluidas en SharedUtils.h
 
-
-
-#include<SharedUtils.h>
+#include<conexiones.h>
+#include <conections.h>
 #include "utils_cliente.h"
 
 
@@ -40,16 +37,11 @@
 
 t_log* discordiador_logger;
 t_config* discordiador_config;
+pthread_t hilo_escucha;
 
-void* escuchar_servidor(int codigoDeConexion);
-void abrir_chat(int codigoDeConexion);
-
-// int conectar_con_servidor();
+void* crear_escucha(int puerto);
 void iniciar_logger(void);
 void leer_config(void);
-//void leer_consola(void);
-//void chat(int);
-//void paquete(int);
-//void terminar_programa(int);
+
 
 #endif /* DISCORDIADOR_H_ */
