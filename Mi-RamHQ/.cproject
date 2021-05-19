@@ -29,12 +29,15 @@
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.540091947" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1128771074" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SharedUtils/src}&quot;"/>
+									<listOptionValue builtIn="false" value="/home/utnso/shared-library-so/SharedUtils/Debug"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1641961166" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.1532174484" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug">
 								<option id="gnu.c.link.option.libs.767461822" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="commons"/>
+									<listOptionValue builtIn="false" value="nivel-gui"/>
+									<listOptionValue builtIn="false" value="ncurses"/>
 									<listOptionValue builtIn="false" value="SharedUtils"/>
 								</option>
 								<option id="gnu.c.link.option.paths.1963357069" name="Library search path (-L)" superClass="gnu.c.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
