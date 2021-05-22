@@ -1,5 +1,4 @@
 #include "discordiador.h"
-#include<readline/readline.h>
 
 
 int main(void)
@@ -7,7 +6,7 @@ int main(void)
 
 	char*ip;
 	int PUERTO_PARA_ENVIAR;
-	int PUERTO_ESCUCHA = atoi(PUERTO_ESCUCHA_CLIENTE);
+	//int PUERTO_ESCUCHA = atoi(PUERTO_ESCUCHA_CLIENTE);
 	int codigoDeConexion = crearSocket();
 
 
@@ -16,15 +15,15 @@ int main(void)
 	leer_config();
 	ip = config_get_string_value(discordiador_config,"IP");
 	PUERTO_PARA_ENVIAR = atoi(config_get_string_value(discordiador_config,"PUERTO_PARA_ENVIAR"));
-	pthread_create(&hilo_escucha,NULL,crear_escucha,PUERTO_ESCUCHA);
+	//pthread_create(&hilo_escucha,NULL,crear_escucha,PUERTO_ESCUCHA);
 
 	conectar_envio(codigoDeConexion,ip,PUERTO_PARA_ENVIAR,discordiador_logger);
 	chat(codigoDeConexion);
 
-	pthread_join(hilo_escucha,NULL);
+	//pthread_join(hilo_escucha,NULL);
 	terminar_programa(codigoDeConexion,discordiador_config,discordiador_logger);
 }
-
+/*
 void* crear_escucha(int puerto)
 {
 	int codigoEscucha = crearSocket();
@@ -57,7 +56,7 @@ void* crear_escucha(int puerto)
 			return EXIT_SUCCESS;
 }
 
-
+*/
 void iniciar_logger(void)
 {
 	discordiador_logger = log_create("disc.log", "DISCORDIADOR", 1, LOG_LEVEL_INFO);

@@ -17,7 +17,7 @@
 #include<commons/log.h>
 #include <conections.h>
 #include<readline/readline.h>
-#include "utils_servidor.h"
+#include <utils_servidor.h>
 
 // Estas estan todas incluidas en SharedUtils.h
 
@@ -30,11 +30,13 @@
 
 
 
-t_log* logger;
+// 4444 - 5555
+int PUERTO_ESCUCHA_IMONGO = 4444;
+t_log* log_IMONGO;
 pthread_t hilo_envio;
 
 void* abrir_chat(int PUERTO_PARA_ENVIAR);
-void* enviar_a_cliente();
+//void* enviar_a_cliente();
 
 
 

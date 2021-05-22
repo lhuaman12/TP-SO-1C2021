@@ -21,8 +21,8 @@
 #include<string.h>
 
 #include<conexiones.h>
-#include <conections.h>
-#include "utils_cliente.h"
+#include<conections.h>
+#include"utils_cliente.h"
 
 
 
@@ -39,7 +39,7 @@ t_log* discordiador_logger;
 t_config* discordiador_config;
 pthread_t hilo_escucha;
 
-void* crear_escucha(int puerto);
+//void* crear_escucha(int puerto);
 void iniciar_logger(void);
 void leer_config(void);
 
