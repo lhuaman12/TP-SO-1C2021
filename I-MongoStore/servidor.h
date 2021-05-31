@@ -35,6 +35,8 @@ int PUERTO_ESCUCHA_IMONGO = 4444;
 t_log* log_IMONGO;
 pthread_t hilo_envio;
 
+void escuchar_cliente();
+void prender_server();
 void* abrir_chat(int PUERTO_PARA_ENVIAR);
 //void* enviar_a_cliente();
 

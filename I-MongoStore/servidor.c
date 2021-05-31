@@ -11,23 +11,28 @@
 int main(void)
 {
 	//char*ip = IP;
-	int conexion_escucha = crearSocket();
-	int puerto_escucha = atoi(PUERTO_ESCUCHA_SERVER);
 	//int puerto_envio = atoi(PUERTO_ENVIO_SERVER);
 	log_IMONGO = log_create("log.log", "I-MONGO-STORE", 1, LOG_LEVEL_DEBUG);
 	//log_info(logger,"SERVIDOR LISTO");
-	//conexion_escucha = escuchar_puerto(conexion_server,puerto_escucha);
-	asignar_escuchas(conexion_escucha,puerto_escucha,log_IMONGO);
-
+	prender_server();
 	//pthread_create(&hilo_envio,NULL,abrir_chat,puerto_envio);
 
 }
-/*
-void* escuchar_cliente()
+
+
+void prender_server()
 {
 	int puerto_escucha = atoi(PUERTO_ESCUCHA_SERVER);
 	int socket_interno = crearSocket();
+	log_info(log_IMONGO,"SERVIDOR LISTO");
+	asignar_escuchas(socket_interno,puerto_escucha);
 
+}
+
+void escuchar_cliente()
+{
+	int puerto_escucha = atoi(PUERTO_ESCUCHA_SERVER);
+	int socket_interno = crearSocket();
 	log_info(log_IMONGO,"SERVIDOR LISTO");
 	socket_interno = escuchar_puerto(socket_interno,puerto_escucha,log_IMONGO);
 
@@ -41,7 +46,7 @@ void* escuchar_cliente()
 					break;
 				case -1:
 					log_error(log_IMONGO, "El cliente se desconecto. Terminando servidor");
-					return EXIT_FAILURE;
+					break;
 				default:
 					log_warning(log_IMONGO, "Operacion desconocida. No quieras meter la pata");
 					break;
@@ -49,7 +54,7 @@ void* escuchar_cliente()
 
 }
 
-*/
+
 //ABRE EL CHAT DE ENVIO AL CLIENTE. TIENE QUE ESPERAR QUE SE ABRA LA ESCUCHA DEL CLIENTE.
 void* abrir_chat(int PUERTO_PARA_ENVIAR)
 {
