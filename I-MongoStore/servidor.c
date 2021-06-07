@@ -66,10 +66,10 @@ void* abrir_chat(int PUERTO_PARA_ENVIAR)
 }
 
 
-t_log* iniciar_logger(){
-	return log_create("servidor.config", "servidor", 1, LOG_LEVEL_INFO);
+void iniciar_logger(void){
+	servidor_logger=log_create("servidor.log", "servidor", 1, LOG_LEVEL_INFO);)
 }
 
-t_config* leer_config(){
-	return config_create("servidor.config");
+void leer_config(void){
+	leer_config=config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/I-MongoStore/servidor.config")
 }
