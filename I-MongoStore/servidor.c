@@ -66,3 +66,10 @@ void* abrir_chat(int PUERTO_PARA_ENVIAR)
 }
 
 
+t_log* iniciar_logger(){
+	return log_create("servidor.config", "servidor", 1, LOG_LEVEL_INFO);
+}
+
+t_config* leer_config(){
+	return config_create("servidor.config");
+}
