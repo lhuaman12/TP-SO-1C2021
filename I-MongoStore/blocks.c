@@ -1,4 +1,4 @@
-#include"blocks.h"
+/*#include"blocks.h"
 
 int getBlockQuantity(char** arrayDeBlocks) {
 	int i;
@@ -25,7 +25,8 @@ char* getDatosDeBlocks(char** arrayDeBlocks, int size) {
 
 		void* contenidoDeBloqueActual;
 
-		/* Lo que hay que leer es menor a tamaño de bloque */
+		/* Lo que hay que leer es menor a tamaño de bloque
+
 		if (sizeRestante < BLOCK_SIZE) {
 			log_debug(logger, "Debemos leer %d bytes del bloque", sizeRestante);
 			contenidoDeBloqueActual = malloc(sizeRestante);
@@ -36,7 +37,7 @@ char* getDatosDeBlocks(char** arrayDeBlocks, int size) {
 					sizeRestante);
 		}
 
-		/* Lo que hay que leer es mayor a un bloque */
+		/* Lo que hay que leer es mayor a un bloque
 		else {
 			log_debug(logger, "Debemos leer %d bytes del bloque", BLOCK_SIZE);
 			contenidoDeBloqueActual = malloc(BLOCK_SIZE);
@@ -105,3 +106,4 @@ char* getPathDeBlock(int bloque) {
 	free(numeroEnString);
 	return path;
 }
+*/

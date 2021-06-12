@@ -18,7 +18,6 @@
 #include<commons/collections/list.h>
 #include<commons/bitarray.h>
 
-#include"GameCard.h"
 
 //LOGICA DE BITMAP
 

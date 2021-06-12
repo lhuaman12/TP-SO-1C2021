@@ -18,7 +18,6 @@
 #include<commons/collections/list.h>
 #include<commons/bitarray.h>
 
-#include"GameCard.h"
 
 int getBlockQuantity(char** arrayDeBlocks);
 char* getDatosDeBlocks(char** arrayDeBlocks, int size);

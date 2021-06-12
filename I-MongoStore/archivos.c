@@ -1,4 +1,4 @@
-#include"archivos.h"
+/*#include"archivos.h"
 
 int checkingOpenFile(char* filePath){
 
@@ -101,3 +101,5 @@ void pedirArchivoParaUso(char* filePath){
 		crearArchivo(filePath);
 	}
 }
+*/
+

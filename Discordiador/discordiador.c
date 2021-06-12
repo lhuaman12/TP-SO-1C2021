@@ -17,7 +17,7 @@ int main(void)
 	PUERTO_PARA_ENVIAR = atoi(config_get_string_value(discordiador_config,"PUERTO_PARA_ENVIAR"));
 	//pthread_create(&hilo_escucha,NULL,crear_escucha,PUERTO_ESCUCHA);
 
-	conectar_envio(codigoDeConexion,ip,PUERTO_PARA_ENVIAR,discordiador_logger);
+	conectar_envio(codigoDeConexion,ip,PUERTO_PARA_ENVIAR);
 	chat(codigoDeConexion);
 
 	//pthread_join(hilo_escucha,NULL);

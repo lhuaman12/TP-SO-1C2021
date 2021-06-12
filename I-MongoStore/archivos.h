@@ -8,8 +8,6 @@
 #include<commons/config.h>
 #include<readline/readline.h>
 
-#include"GameCard.h"
-
 int checkingOpenFile(char* filePath);
 void cambiarAAbierto(char* filePath);
 void cambiarACerrado(char* filePath);
@@ -18,6 +16,9 @@ void crearArchivo(char* filePath);
 /*Pide archivo para uso
  * si no existe, lo crea
  */
+
+t_log logger;
+
 void pedirArchivoParaUso(char* filePath);
 
 int checkArchivoExiste(char* filePath);

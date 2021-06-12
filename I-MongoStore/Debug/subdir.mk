@@ -4,12 +4,21 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../archivos.c \
+../bitmap.c \
+../blocks.c \
 ../servidor.c 
 
 OBJS += \
+./archivos.o \
+./bitmap.o \
+./blocks.o \
 ./servidor.o 
 
 C_DEPS += \
+./archivos.d \
+./bitmap.d \
+./blocks.d \
 ./servidor.d 
 
 

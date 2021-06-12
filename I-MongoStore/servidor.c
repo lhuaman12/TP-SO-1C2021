@@ -54,7 +54,7 @@ void escuchar_cliente()
 
 }
 
-
+/*
 //ABRE EL CHAT DE ENVIO AL CLIENTE. TIENE QUE ESPERAR QUE SE ABRA LA ESCUCHA DEL CLIENTE.
 void* abrir_chat(int PUERTO_PARA_ENVIAR)
 {
@@ -73,3 +73,4 @@ void iniciar_logger(void){
 void leer_config(void){
 	leer_config=config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/I-MongoStore/servidor.config")
 }
+*/

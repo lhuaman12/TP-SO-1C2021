@@ -1,4 +1,4 @@
-#include"bitmap.h"
+/*#include"bitmap.h"
 
 int solicitarBloque() {
 	log_debug(logger, "<> START: Solicitar bloque <>");
@@ -44,3 +44,4 @@ void liberarBloque(int bloqueALiberar){
 
 	log_debug(logger, "<> END: Liberar bloque <>");
 }
+*/
