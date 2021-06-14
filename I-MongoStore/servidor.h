@@ -13,32 +13,59 @@
 #include<pthread.h>
 #include<stdlib.h>
 #include<string.h>
+#include<commons/bitarray.h>
 #include<commons/string.h>
+#include<commons/config.h>
 #include<commons/log.h>
-#include <conections.h>
 #include<readline/readline.h>
 #include <utils_servidor.h>
 
 // Estas estan todas incluidas en SharedUtils.h
 
-
+#include <conections.h>
 #include<conexiones.h>
+
+#include"archivos.h"
 
 #define IP "127.0.0.1"
 #define PUERTO_ESCUCHA_SERVER "4444"
-#define PUERTO_ENVIO_SERVER "4446"
+
+//VARIABLES GLOBALES
+int BLOCKS;
+int BLOCK_SIZE;
+
+// *PARA LA CONEXION
+int PUERTO_ESCUCHA_IMONGO;
+
+// *PARA EL BITMAP
+char* RUTA_BITMAP;
+void* bufferBitArray;
+t_bitarray* bitarray;
+
+// *PARA LAS ESTRUCTURAS
+char* PUNTO_MONTAJE;
+
+// *PARA LOS BLOQUES
 
 
+// *SEMAFOROS
 
-// 4444 - 5555
-int PUERTO_ESCUCHA_IMONGO = 4444;
+
+// *LOGS, CONFIG E HILOS
+
 t_log* log_IMONGO;
-pthread_t hilo_envio;
+t_config* config_IMONGO;
+pthread_t hiloEscuchas;
 
-void escuchar_cliente();
+
+
+//FUNCIONES
 void prender_server();
-void* abrir_chat(int PUERTO_PARA_ENVIAR);
-//void* enviar_a_cliente();
+void iniciar_log();
+void leer_config(void);
+
+void iniciar_filesystem();
+void init_bitmap();
 
 
 

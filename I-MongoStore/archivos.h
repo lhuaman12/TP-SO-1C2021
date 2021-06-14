@@ -7,20 +7,13 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<readline/readline.h>
+#include<sys/stat.h>
 
-int checkingOpenFile(char* filePath);
-void cambiarAAbierto(char* filePath);
-void cambiarACerrado(char* filePath);
+
+#include"servidor.h"
+
+
 void crearArchivo(char* filePath);
 
-/*Pide archivo para uso
- * si no existe, lo crea
- */
-
-t_log logger;
-
-void pedirArchivoParaUso(char* filePath);
-
-int checkArchivoExiste(char* filePath);
 
 #endif /* SRC_ARCHIVOS_H_ */

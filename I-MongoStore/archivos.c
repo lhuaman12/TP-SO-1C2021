@@ -1,5 +1,5 @@
-/*#include"archivos.h"
-
+#include"archivos.h"
+/*
 int checkingOpenFile(char* filePath){
 
 	t_config* configFile = config_create(filePath);
@@ -36,31 +36,33 @@ void cambiarACerrado(char* filePath){
 	config_save(metadataArchivoACerrar);
 	config_destroy(metadataArchivoACerrar);
 }
-
+*/
 void crearArchivo(char* filePath){
-	char* carpetaPokemon = string_substring_until(filePath, strlen(filePath) - strlen("Metadata.bin"));
-	log_debug(logger, "Se procede a crear la carpeta del metadata: %s", carpetaPokemon);
+	char* carpeta = string_substring_until(filePath, strlen(filePath) - strlen("Metadata.bin"));
+	log_debug(log_IMONGO, "Se procede a crear la carpeta del metadata: %s", carpeta);
 
-	mkdir(carpetaPokemon, S_IRWXU);
+	mkdir(carpeta, S_IRWXU);
 
 	FILE* metadata = fopen(filePath,"w+");
 
-	char* directory = "DIRECTORY=N\n";
 	char* size = "SIZE=0\n";
+	char* block_count = "BLOCK_COUNT=0\n";
 	char* blocks = "BLOCKS=[]\n";
-	char* open = "OPEN=Y";
+	char* caracter_llenado = "CARACTER_LLENADO=N\n";
+	char* md5 = "MD5_ARCHIVO=0\n";
 
-	log_debug(logger, "Se procede a escribir los atributos iniciales");
-	fwrite(directory, strlen(directory), 1, metadata);
+	log_debug(log_IMONGO, "Se procede a escribir los atributos iniciales");
 	fwrite(size, strlen(size), 1, metadata);
+	fwrite(block_count, strlen(block_count), 1, metadata);
 	fwrite(blocks, strlen(blocks), 1, metadata);
-	fwrite(open, strlen(open), 1, metadata);
+	fwrite(caracter_llenado, strlen(caracter_llenado), 1, metadata);
+	fwrite(md5,strlen(md5),1,metadata);
 
-	log_info(logger, "Se creo el metadata del pokemon.");
-	free(carpetaPokemon);
+	log_info(log_IMONGO, "Se creo el metadata del pokemon.");
+	free(carpeta);
 	fclose(metadata);
 }
-
+/*
 int checkArchivoExiste(char* filePath){
 
 	log_debug(logger, "Chequeando si existe el archivo %s", filePath);
