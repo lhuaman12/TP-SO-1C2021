@@ -26,6 +26,8 @@
 #include<conexiones.h>
 
 #include"archivos.h"
+#include"blocks.h"
+#include"bitmap.h"
 
 #define IP "127.0.0.1"
 #define PUERTO_ESCUCHA_SERVER "4444"
@@ -44,6 +46,10 @@ t_bitarray* bitarray;
 
 // *PARA LAS ESTRUCTURAS
 char* PUNTO_MONTAJE;
+char* RUTA_SUPER_BLOQUE;
+char* RUTA_FILES;
+char* RUTA_BLOCKS;
+char* RUTA_BITACORA;
 
 // *PARA LOS BLOQUES
 
@@ -55,6 +61,7 @@ char* PUNTO_MONTAJE;
 
 t_log* log_IMONGO;
 t_config* config_IMONGO;
+t_config* super_config;
 pthread_t hiloEscuchas;
 
 
@@ -66,6 +73,9 @@ void leer_config(void);
 
 void iniciar_filesystem();
 void init_bitmap();
+void leer_super_bloque();
+void init_bloques();
+void init_directorios();
 
 
 

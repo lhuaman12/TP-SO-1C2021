@@ -10,9 +10,6 @@ int main(void)
 	iniciar_filesystem();
 	prender_server();
 
-
-	//crearArchivo("/home/utnso/polus/Files/Tripulante/Metadata.bin");
-
 }
 
 void prender_server()
@@ -25,17 +22,17 @@ void prender_server()
 
 void iniciar_filesystem()
 {
-	//leer_metadata();
+	leer_super_bloque();
 	//init_semaforos();
 	init_bitmap();
-	//init_estructura_file_blocks();
-	//init_blocks();
+	init_directorios();
+	init_bloques();
 
 }
 
 void init_bitmap()
 {
-	log_info(log_IMONGO,"<> INICIO CREACION BITMAP");
+	log_debug(log_IMONGO,"<> INICIO CREACION BITMAP");
 	FILE* bitmapFile = fopen(RUTA_BITMAP,"w+");
 
 	int cantidad_bits = BLOCKS / 8;
@@ -54,13 +51,39 @@ void init_bitmap()
 		bitarray_clean_bit(bitarray,i);
 	}
 
-	log_info(log_IMONGO,"<> FIN CREACION BITMAP");
+	log_debug(log_IMONGO,"<> FIN CREACION BITMAP");
 
 }
 
 
 
+void init_directorios()
+{
+	mkdir(RUTA_FILES,S_IRWXU);
+	mkdir(RUTA_BLOCKS,S_IRWXU);
+	mkdir(RUTA_BITACORA,S_IRWXU);
+}
 
+void init_bloques()
+{
+	log_debug(log_IMONGO,"<> START: Creacion de bloques");
+	for(int i = 0; i < BLOCKS; i++)
+	{
+		char* path = string_new();
+		string_append(&path, RUTA_BLOCKS);
+
+		char* numeroEnString = string_itoa(i);
+		string_append(&path, numeroEnString);
+		string_append(&path, ".bin");
+
+		FILE* bloqueACrear = fopen(path,"wb");
+		fclose(bloqueACrear);
+
+		free(numeroEnString);
+		free(path);
+	}
+	log_debug(log_IMONGO,"<> FIN: Creacion de bloques, se crearon %d",BLOCKS);
+}
 
 void iniciar_log()
 {
@@ -74,9 +97,22 @@ void leer_config(void)
 
 	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 	RUTA_BITMAP = string_from_format("%s/Metadata/Bitmap.bin",PUNTO_MONTAJE);
-	BLOCKS = 8;
-	BLOCK_SIZE = 130;
-
+	RUTA_SUPER_BLOQUE = string_from_format("%s/SuperBloque.ims",PUNTO_MONTAJE);
+	RUTA_FILES = string_from_format("%s/Files/",PUNTO_MONTAJE);
+	RUTA_BLOCKS = string_from_format("%s/Blocks/",PUNTO_MONTAJE);
+	RUTA_BITACORA = string_from_format("%s/Files/Bitacora/",PUNTO_MONTAJE);
 
 }
+
+void leer_super_bloque()
+{
+	super_config = config_create(RUTA_SUPER_BLOQUE);
+	BLOCKS = config_get_int_value(super_config,"BLOCKS");
+	BLOCK_SIZE = config_get_int_value(super_config,"BLOCK_SIZE");
+	config_destroy(super_config);
+	log_info(log_IMONGO,"<> TERMINO DE LEER SUPER BLOQUE");
+
+}
+
+
 

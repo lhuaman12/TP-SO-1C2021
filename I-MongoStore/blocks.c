@@ -1,12 +1,11 @@
-/*#include"blocks.h"
+#include"blocks.h"
 
 int getBlockQuantity(char** arrayDeBlocks) {
 	int i;
-	for (i = 0; arrayDeBlocks[i] != NULL; i++)
-		;
+	for (i = 0; arrayDeBlocks[i] != NULL; i++);
 	return i;
 }
-
+/*
 char* getDatosDeBlocks(char** arrayDeBlocks, int size) {
 	log_debug(logger, "<> START: getDatosDeBlocks | Size del archivo: %d <>",
 			size);
@@ -64,7 +63,7 @@ char* getDatosDeBlocks(char** arrayDeBlocks, int size) {
 
 	return contenidoDeArchivo;
 }
-
+*/
 void guardarDatosEnBlocks(char* contenidoNuevo, char** arrayDeBlocks) {
 	int bytesGuardados = 0;
 	int cantidadDeBloques = getBlockQuantity(arrayDeBlocks);
@@ -98,7 +97,7 @@ void guardarDatosEnBlocks(char* contenidoNuevo, char** arrayDeBlocks) {
 
 char* getPathDeBlock(int bloque) {
 	char* path = string_new();
-	string_append(&path, PATH_BLOCKS);
+	string_append(&path, RUTA_BLOCKS);
 	char* numeroEnString = string_itoa(bloque);
 	string_append(&path, numeroEnString);
 	string_append(&path, ".bin");
@@ -106,4 +105,4 @@ char* getPathDeBlock(int bloque) {
 	free(numeroEnString);
 	return path;
 }
-*/
+

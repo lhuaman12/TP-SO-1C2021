@@ -14,6 +14,7 @@
 
 
 void crearArchivo(char* filePath);
+void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* bloques, char* caracter);
 
 
 #endif /* SRC_ARCHIVOS_H_ */

@@ -1,7 +1,7 @@
-/*#include"bitmap.h"
+#include"bitmap.h"
 
 int solicitarBloque() {
-	log_debug(logger, "<> START: Solicitar bloque <>");
+	log_debug(log_IMONGO, "<> START: Solicitar bloque <>");
 
 	int bloqueEncontrado = -1;
 	int cantidadBloques = bitarray_get_max_bit(bitarray);
@@ -15,33 +15,33 @@ int solicitarBloque() {
 	}
 
 	if(bloqueEncontrado == -1){
-		log_debug(logger, "No se han encontrado bloques libres.");
+		log_debug(log_IMONGO, "No se han encontrado bloques libres.");
 	}
 
 	else{
-		log_info(logger, "Bloque libre encontrado: [%d]", bloqueEncontrado);
+		log_info(log_IMONGO, "Bloque libre encontrado: [%d]", bloqueEncontrado);
 
-		FILE* bitmap = fopen(PATH_BITMAP, "r+w");
+		FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
 		fseek(bitmap, bloqueEncontrado, SEEK_SET);
 		fwrite("1", 1, 1, bitmap);
 		fclose(bitmap);
 	}
 
-	log_debug(logger, "<> END: Solicitar bloque <>");
+	log_debug(log_IMONGO, "<> END: Solicitar bloque <>");
 
 	return bloqueEncontrado;
 }
 
 void liberarBloque(int bloqueALiberar){
-	log_debug(logger, "<> START: Liberar bloque <>");
+	log_debug(log_IMONGO, "<> START: Liberar bloque <>");
 
 	bitarray_clean_bit(bitarray, bloqueALiberar);
 
-	FILE* bitmap = fopen(PATH_BITMAP, "r+w");
+	FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
 	fseek(bitmap, bloqueALiberar, SEEK_SET);
 	fwrite("0", 1, 1, bitmap);
 	fclose(bitmap);
 
-	log_debug(logger, "<> END: Liberar bloque <>");
+	log_debug(log_IMONGO, "<> END: Liberar bloque <>");
 }
-*/
+
