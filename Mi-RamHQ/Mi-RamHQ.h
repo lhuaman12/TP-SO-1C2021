@@ -1,14 +1,14 @@
 
 
 
+
+
 #ifndef MIRAM_H_
 #define MIRAM_H_
 
-
-
-
 #include<stdio.h>
 #include<stdlib.h>
+
 #include<pthread.h>
 #include<commons/log.h>
 #include<commons/string.h>
@@ -22,38 +22,49 @@
 #include <nivel-gui/nivel-gui.h>
 #include <nivel-gui/tad_nivel.h>
 #include <curses.h>
+#include <stdbool.h>
 
 
+// VALORES GLOBALES DE CONFIG
+int PUERTO_ESCUCHA_MIRAM;
+char* ESQUEMA_MEMORIA;
+int TAMANIO_MEMORIA_RAM;
+char*  CRITERIO_ELECCION_DE_SEGMENTO;
+int tamanioPCB=8;
+int tamanioTCB=21;
+int tamanioTablaSegmento=9;
 
+// DECLARACIÓN DE LOG,CONFIG,RAM, LISTAS Y TIPOS DE SEGMENTOS.
 
 t_log* miRam_logger;
 t_config* miRam_config;
-int* ram;
+uint32_t* ram;
+t_list* tablaDeSegmentos;
 
 
-void iniciar_logger();
-void iniciar_config();
-void reservar_memoria();
-//int iniciar_mapa(char*,int,int);
-int iniciar_escucha_a_tripulantes();
+//ESTRUCTURAS TIPOS DE SEGMENTOS
 
+typedef struct tipo_tabla_segmentos{
 
-#endif  MIRAM_H_
+	bool ocupado;
+	uint32_t* base;
+	uint32_t* limite;
 
+}t_tabla_segmentos;
 
+typedef struct tipo_segmento{
 
+	uint32_t numeroSegmento;
+	_Bool ocupado;
+	uint32_t* base;
+	uint32_t* limite;
+	void* cosa;
 
-
-
-
-
-
-
-
-
-
-
-
+}t_segmento;
 
 
 
+//  ESTRUCTURAS DE PCB , TCB Y CONJUNTO DE TAREAS
+
+//PATOTA CONTROL BLOCK
+typedef struct pcb{
