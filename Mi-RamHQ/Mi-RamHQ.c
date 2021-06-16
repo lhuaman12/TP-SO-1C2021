@@ -1,5 +1,3 @@
-
-
 #include "Mi-RamHQ.h"
 
 // INICIO DE LOGGER
