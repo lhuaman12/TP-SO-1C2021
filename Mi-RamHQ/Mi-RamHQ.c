@@ -148,6 +148,7 @@ int existeSegmento(){
  The C library function void *memcpy(void *dest, const void *src, size_t n) copies n characters
  from memory area src to memory area dest.
  **/
+
 void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa)
 {
 	//int indiceDeGuardado;
@@ -203,19 +204,27 @@ bool existe_segmento_libre(uint32_t tamanioCosa)
 
 t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 {
-	    t_tabla_segmentos* segmentoVacioExistente = buscar_segmento_segun_criterio(tamanio);
 
+		t_tabla_segmentos* segmentoVacioExistente = buscar_segmento_segun_criterio(tamanio);
+
+
+	    //malloc(sizeof(t_tabla_segmentos));
+	    //segmentoVacioExistente =
 
 	    log_info(miRam_logger,"Recortar: devolví segmento segun criterio");
 
-	    /*uint32_t limiteSeg = segmentoVacioExistente->limite;
-	    uint32_t baseSeg = segmentoVacioExistente->base;*/
+	    //uint32_t limiteSeg = segmentoVacioExistente->limite;
+	    //uint32_t baseSeg = segmentoVacioExistente->base;
 
 	   // uint32_t tamanioDeSegmentoExistente= tamanioPCB;
 
-	    uint32_t tamanioDeSegmentoExistente =  segmentoVacioExistente->limite;
+	    //printf("tamanio %lu", (unsigned long)segmentoVacioExistente->limite);
+	    //printf("tamanio %zu", segmentoVacioExistente->base);
+
+	    uint32_t tamanioDeSegmentoExistente = segmentoVacioExistente->limite - segmentoVacioExistente->base;
 
 
+	    printf("tamanio %d", tamanioDeSegmentoExistente);
 	    log_info(miRam_logger,"Recortar: Asigne tamanio de segmento");
 
 	    if(tamanio == tamanioDeSegmentoExistente){
@@ -299,13 +308,14 @@ t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 
 		if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO ,"FIRSTFIT"))
 		{
+			log_info(miRam_logger,"llegue a buscar");
 			return buscar_segmento_libre_primer_ajuste(tamanioCosa);
 		}
 		else if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO,"BESTFIT"))
 		{
-			return NULL;
+			return buscar_segmento_libre_mejor_ajuste(tamanioCosa);
 		}
-
+		return NULL;
 }
 
 
@@ -313,19 +323,44 @@ t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 
 t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio)
 {
-
+	log_info(miRam_logger,"llegue a buscar primer ajuste");
 bool segmento_vacio_de_tamanio( t_tabla_segmentos* segmento)
 {
 	uint32_t tamanio_segmento_tabla = segmento->limite - segmento->base;
 	return tamanio <= tamanio_segmento_tabla && segmento->ocupado == false;
 }
+	t_tabla_segmentos* segmentoLibre= malloc(sizeof(t_tabla_segmentos));
+	segmentoLibre = list_find(tablaDeSegmentos,(void*) segmento_vacio_de_tamanio);
 
-	return list_find(tablaDeSegmentos,(void*) segmento_vacio_de_tamanio);
+	return segmentoLibre; // SI ES NULL HAY QUE COMPACTAR
 
 }
 
 
 
+t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
+{
+	bool segmento_vacio(t_tabla_segmentos* segmento)
+	{
+		return segmento->ocupado == false;
+	}
+
+	t_list* listaDeVacios;
+	listaDeVacios = list_filter(tablaDeSegmentos,(void*)segmento_vacio);
+
+	t_tabla_segmentos* segmento_que_mejor_se_ajusta(t_tabla_segmentos* segmento,t_tabla_segmentos* otroSegmento)
+	{
+		uint32_t tamanioPrimero = segmento->limite - segmento->base;
+		uint32_t tamanioSegundo = otroSegmento->limite - otroSegmento->base;
+		if(tamanioPrimero>tamanioSegundo && tamanioSegundo>=tamanio){
+			return otroSegmento;
+		}else{
+			return segmento;
+		}
+	}
+
+	return  list_fold(listaDeVacios,(void*)list_get(tablaDeSegmentos,0),(void*)segmento_que_mejor_se_ajusta); // AGREGAR QUE SI ES NULL HAY QUE COMPACTAR
+}
 
 
 
@@ -388,8 +423,8 @@ int main(){
 
 	existeSegmento();
 
-
-
+	int tamanioLista=list_size(tablaDeSegmentos);
+	printf("%d",tamanioLista);
 
     //guardar_cosa_en_segmento_adecuado(bloqueTripulante);
 

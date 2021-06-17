@@ -102,7 +102,7 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio);
 t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa);
 t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio);
 void agregarSegmentoRestanteATabla(void* limite,void* base);
-
+t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
 
 
 //int iniciar_mapa(char*,int,int);
