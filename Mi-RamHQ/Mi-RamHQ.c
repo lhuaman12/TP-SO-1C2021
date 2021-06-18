@@ -53,7 +53,7 @@ pcb* crear_PCB(uint32_t pid, uint32_t tareas)
 	return nuevoPCB;
 }
 
-
+/*
 tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante,uint32_t proxInstruccion,uint32_t direccionPCB)
 {
     tcb* nuevoTCB = malloc(tamanioTCB);
@@ -65,20 +65,20 @@ tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante
 	nuevoTCB->ubicacionPCBtripulante = direccionPCB;
     return nuevoTCB;
 }
+*/
 
-/*
-tcb* crear_TCB(     //t_tripulante* tripulante   //   void* direccionPCB)
+tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacionPCB) //   void* direccionPCB)
 {
     tcb* nuevoTCB = malloc(tamanioTCB);
-    nuevoTCB->tid = NULL;//tripulante->tid;
-    nuevoTCB->posicionX = NULL; //tripulante->pos_x;
-	nuevoTCB->posicionY = NULL; //tripulante->pos_y;
-	nuevoTCB->estado = NULL; //tripulante->estadoTripulante;
-	nuevoTCB->idProxInstruccion = NULL;//tripulante->proxInstruccion;
-	nuevoTCB->ubicacionPCBtripulante = NULL;//direccionPCB;
+    nuevoTCB->tid = tripulante->tid;//tripulante->tid;
+    nuevoTCB->posicionX = tripulante->pos_x; //tripulante->pos_x;
+	nuevoTCB->posicionY = tripulante->pos_y; //tripulante->pos_y;
+	nuevoTCB->estado = tripulante->estado; //tripulante->estadoTripulante;
+	nuevoTCB->idProxInstruccion = proxInstruccion;//tripulante->proxInstruccion;
+	nuevoTCB->ubicacionPCBtripulante = ubicacionPCB;//direccionPCB;
     return nuevoTCB;
 }
-*/
+
 
 
 
@@ -130,6 +130,10 @@ t_tabla_segmentos* crear_primer_segmento()
 }
 
 
+
+
+
+
 // ¿EXISTE ALGUN SEGMENTO EN LA TABLA DE SEGMENTOS?
 
 int existeSegmento(){
@@ -160,7 +164,7 @@ int existeSegmento(){
  from memory area src to memory area dest.
  **/
 
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa)
+void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa)
 {
 	//int indiceDeGuardado;
 
@@ -176,7 +180,9 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa)
 
 		log_info(miRam_logger,"Copié ");
 
-		segmentoDisponible->ocupado=true;
+		segmentoDisponible->ocupado = true;
+
+		segmentoDisponible->tipo_dato = tipoCosa;
 
         log_info(miRam_logger,"Ya lo guarde pa");
 
@@ -201,7 +207,7 @@ void mostrarElemento(){
 
 	memcpy(pcb,segmento->base,sizeof(8));
 
-	printf("Un campo del valor guardado en segmento es %d", pcb->pid);
+	printf("Un campo del valor guardado en segmento es %d  \n", pcb->pid);
 }
 
 
@@ -284,7 +290,7 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 void agregarSegmentoRestanteATabla(void* limite,void* base){
 
-	t_tabla_segmentos* segmentoNuevoRestante= malloc(tamanioTablaSegmento);
+	t_tabla_segmentos* segmentoNuevoRestante= malloc(sizeof(*segmentoNuevoRestante));
 
 	segmentoNuevoRestante->base = base;
 
@@ -368,26 +374,8 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 
 
 
+// ATIENDE Y RESPONDE LOS MENSAJES DE
 
-
-
-
-
-
-
-void prender_server()
-{
-
-	int puerto_escucha = PUERTO_ESCUCHA_MIRAM;
-	int socket_interno = crearSocket();
-	log_info(miRam_logger,"SERVIDOR LISTO");
-	asignar_escuchas(socket_interno,puerto_escucha);
-
-	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
-	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
-}
-
-//funcion atender un tripulante.
 void* atender_tripulante(Tripulante* trip)
 {
 	while(1)
@@ -395,6 +383,12 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
+						/*case INICIAR_PATOTA:
+
+						break;
+						case EXPULSAR_TRIPULANTE:
+							expulsar_tripulante(trip);
+						break;*/
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
 							break;
@@ -407,6 +401,30 @@ void* atender_tripulante(Tripulante* trip)
 						}
 		}
 }
+void expulsar_tripulante(Tripulante* trip)
+{
+	char* id = recibir_id(trip->conexion);
+	log_debug(trip->log,"SE EXPULSO EL TRIPULANTE %s",id);
+}
+
+
+
+
+
+
+void prender_server()
+{
+
+	int puerto_escucha = PUERTO_ESCUCHA_MIRAM;
+	int socket_interno = crearSocket();
+	log_info(miRam_logger,"SERVIDOR LISTO");
+	asignar_escuchas(socket_interno,puerto_escucha,atender_tripulante);
+
+	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
+	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
+}
+
+
 
 
 
@@ -417,175 +435,67 @@ void* atender_tripulante(Tripulante* trip)
 
 
 //                                     INICIAR PATOTA
-/*
 
-void iniciarPatota(uint32_t pid,void* tareas, void* tripulantes){
+//t_list* enlistar_tripulantes
 
-//	int cantidadTareas = list_size(tareas);
-	//int cantidadTripulantes = list_size(tripulantes);
-	//int i;
-	//int j;
+
+void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
+
+	int cantidadTareas = list_size(tareas);
+	int cantidadTripulantes = list_size(listaDeTripulante);
+	int i,j;
+
 	tipo_tarea nodoTarea;
-	nodoTarea.listaTareas= list_create();
+
+	pcb* pcb1 = crear_PCB(pid,&tareas);
+
+	guardar_cosa_en_segmento_adecuado(pcb1,tamanioPCB,PCB);
+
+
+	// ESTO IRÍA EN RECIBIR INICIAR PATOTA.
+	/*nodoTarea.listaTareas= list_create();
 
 	for(i=0; i < cantidadTareas ; i++){
 
-	list_add(nodoTarea.listaTareas,tareas[i]);
+	list_add(nodoTarea.listaTareas,tareas);
+
+	}*/
+
+	for(j=0;j < cantidadTripulantes; j++){
+
+		crear_TCB(list_get(listaDeTripulante,j),1,pcb1);
 	}
-
-	for(j=0;j < cantidadTripulantes, j++){
-		crearTCB(tripulantes[i],pcb->);
-	}
-
-	//pcb* pcb1 = crear_PCB(pid,tareas);
-
-	//guardar_cosa_en_segmento_adecuado(pcb1,tamanioPCB);
 }
-*/
-
-//
-
-
-
-
-// NUEVA VERSION MULTI-CLIENTE DEL SERVIDOR  (VARIOS CLIENTES AL MISMO TIEMPO TENIENDO MISMO PUERTO DE ESCUCHA :))
 /*
-void asignar_escuchas(int conexion_server,int puerto)
-{
-		escuchaEn(conexion_server,puerto);
-		while(1)
-					{
-						 aceptar_tripulante(conexion_server);
 
-					}
-}
-void* atender_tripulante(Tripulante* trip)
-{
-	while(1)
-		{
-		int cod_op = recibir_operacion(trip->conexion);
-						switch(cod_op)
-						{
-						case MENSAJE:
-							recibir_mensaje_encriptado(trip->conexion,trip->log);
-							break;
-						case -1:
-							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
-							break;
-						default:
-							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
-							break;
-						}
+void expulsar_tripulante(uint32_t idTripAExpulsar){
+
+	tcb* buscarTCB(t_tabla_segmentos* cosa){
+
+		if(cosa->tipoDato== TCB ){
+
 		}
+	}
+
+
+	list_find(tablaDeSegmentos,buscarTCB());
+  }
 }
-
-
-
-void recibir_mensaje_encriptado(int cliente_fd,t_log* logg)
-{
-	char* mensaje;
-	char** mensaje_decriptado;
-
-	mensaje = recibir_y_guardar_mensaje(cliente_fd);
-
-	mensaje_decriptado = string_split(mensaje,",");
-
-
-	int hora = atoi(mensaje_decriptado[0]);
-	char* lugar = mensaje_decriptado[1];
-	int cant_participantes = atoi(mensaje_decriptado[2]);
-
-	hora += 18;
-
-	//"2" -> 2
-	//STRING -> INT
-
-	log_info(logg,"La hora es %d", hora);
-	log_info(logg,"La ubicacion es %s", lugar);
-	log_info(logg,"La cantidad de tripulantes es %d", cant_participantes);
-
-
-}
-
-
-
-void recibir_solicitud_tarea(int cliente,t_log* logg)
-{
-	char* mensaje;
-	char** mensaje_decriptado;
-	mensaje = recibir_y_guardar_mensaje(cliente);
-	mensaje_decriptado = string_split(mensaje,",");
-
-	iniciar_patota();
-
-
-
-
-	t_pcb* pcb = malloc(sizeof(t_pcb));
-
-	pcb->primero = atoi(mensaje_decriptado[0]);
-	pcb->segundo = atoi(mensaje_decriptado[1]);
-	pcb->tercero = mensaje_decriptado[2];
-
-}
-
-
-
-
-void recibir_expulsar_tripulante(int cliente,t_log* logg)
-{
-	char* mensaje;
-	char** mensaje_decriptado;
-	mensaje = recibir_y_guardar_mensaje(cliente);
-	mensaje_decriptado = string_split(mensaje,",");
-
-	iniciar_patota();
-
-
-
-
-	t_pcb* pcb = malloc(sizeof(t_pcb));
-
-	pcb->primero = atoi(mensaje_decriptado[0]);
-	pcb->segundo = atoi(mensaje_decriptado[1]);
-	pcb->tercero = mensaje_decriptado[2];
-
-}
-
-
-
-void recibir_posicion(int cliente,t_log* logg)
-{
-	char* mensaje;
-	char** mensaje_decriptado;
-	mensaje = recibir_y_guardar_mensaje(cliente);
-	mensaje_decriptado = string_split(mensaje,",");
-
-	iniciar_patota();
-
-
-
-
-	t_pcb* pcb = malloc(sizeof(t_pcb));
-
-	pcb->primero = atoi(mensaje_decriptado[0]);
-	pcb->segundo = atoi(mensaje_decriptado[1]);
-	pcb->tercero = mensaje_decriptado[2];
-
-}
-
-void recibir_iniciar_patota(int cliente,t_log* logg)
-{
-	char* mensaje;
-	char** mensaje_decriptado;
-	mensaje = recibir_y_guardar_mensaje(cliente);
-	mensaje_decriptado = string_split(mensaje,",");
-
-	iniciar_patota(atoi(mensaje_decriptado[0]),atoi(mensaje_decriptado[1]),mensaje_decriptado[2]);
-
-}
-
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -606,17 +516,11 @@ int main(){
 
 	// PRUEBA DE GUARDAR PCB EN SEGMENTO NUEVO CREADO Y AJUSTADO
 
-	//
-
-
 	pcb* bloquePatota = crear_PCB(1111,128);
-	guardar_cosa_en_segmento_adecuado(bloquePatota,tamanioPCB);
+	guardar_cosa_en_segmento_adecuado(bloquePatota,tamanioPCB,PCB);
 	mostrarElemento();
 
-
     //guardar_cosa_en_segmento_adecuado(bloqueTripulante);
-
-
 
     //iniciar_mapa("Nivel Base",4,4);
 
@@ -661,4 +565,5 @@ int iniciar_mapa(char* nombreNivel,int columnas,int filas)
 }
 
 */
+
 

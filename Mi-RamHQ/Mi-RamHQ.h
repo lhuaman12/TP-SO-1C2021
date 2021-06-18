@@ -1,4 +1,3 @@
-
 #ifndef MIRAM_H_
 #define MIRAM_H_
 
@@ -38,14 +37,22 @@ t_config* miRam_config;
 uint32_t* ram;
 t_list* tablaDeSegmentos;
 
-
 //ESTRUCTURAS TIPOS DE SEGMENTOS
 
-typedef struct tipo_tabla_segmentos{
+typedef enum{
+PCB,
+TCB,
+TAREAS
+}tipo_dato_guardado;
+
+
+
+typedef struct {
 
 	bool ocupado;
 	uint32_t* base;
 	uint32_t* limite;
+	tipo_dato_guardado tipo_dato;
 
 }t_tabla_segmentos;
 
@@ -66,7 +73,7 @@ typedef struct{
 	uint32_t posicionX;
 	uint32_t posicionY;
 	uint32_t idProxInstruccion;
-	uint32_t ubicacionPCBtripulante;
+	void* ubicacionPCBtripulante;
 	char estado;
 }tcb;
 
@@ -76,28 +83,32 @@ typedef struct{
 	t_list* listaTareas;
 }tipo_tarea;
 
-/*
+
 typedef struct{
 	uint32_t tid;
-
+	uint32_t pos_y;
+	uint32_t pos_x;
+	char estado;
 }t_tripulante;
 
-typedef struct listaTareas{
-	void* tarea;
-};
-*/
+typedef struct{
+	t_list* tarea;
+}listaTareas;
+
+
+
 
 // DECLARACION DE FUNCIONES UTILIZADAS
 
 void iniciar_logger();
 void iniciar_config();
 void reservar_memoria();
-void guardar_cosa_en_segmento_adecuado(void* cosa,uint32_t tamanioCosa);
+void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa);
 void prender_server();
 int existeSegmento();
-//pcb* crear_PCB(uint32_t pid, uint32_t tareas);
-//tcb* crear_TCB(void* direccionPCB);
-tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante,uint32_t proxInstruccion,uint32_t direccionPCB);
+pcb* crear_PCB(uint32_t pid, uint32_t tareas);
+tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacionPCB);
+//tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante,uint32_t proxInstruccion,uint32_t direccionPCB);
 void crear_estructuras();
 t_tabla_segmentos* crear_primer_segmento();
 bool existe_segmento_libre(uint32_t tamanioCosa);
@@ -107,9 +118,9 @@ t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio);
 void agregarSegmentoRestanteATabla(void* limite,void* base);
 t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
 void mostrarElemento();
-void* atender_tripulante(Tripulante* trip);
 
-//void iniciarPatota(uint32_t pid,void* tareas, void* tripulantes);
+
+void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante);
 
 
 //void recibir_mensaje_encriptado(int cliente_fd,t_log* logg);
@@ -126,5 +137,6 @@ void* atender_tripulante(Tripulante* trip);
 
 
 #endif MIRAM_H
+
 
 
