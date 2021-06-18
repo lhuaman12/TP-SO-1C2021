@@ -66,6 +66,19 @@ tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante
     return nuevoTCB;
 }
 
+/*
+tcb* crear_TCB(     //t_tripulante* tripulante   //   void* direccionPCB)
+{
+    tcb* nuevoTCB = malloc(tamanioTCB);
+    nuevoTCB->tid = NULL;//tripulante->tid;
+    nuevoTCB->posicionX = NULL; //tripulante->pos_x;
+	nuevoTCB->posicionY = NULL; //tripulante->pos_y;
+	nuevoTCB->estado = NULL; //tripulante->estadoTripulante;
+	nuevoTCB->idProxInstruccion = NULL;//tripulante->proxInstruccion;
+	nuevoTCB->ubicacionPCBtripulante = NULL;//direccionPCB;
+    return nuevoTCB;
+}
+*/
 
 
 
@@ -84,13 +97,13 @@ void crear_estructuras()
 	if(strcmp(esquema_de_memoria,"SEGMENTACION")){
 		t_tabla_segmentos* primerSegmento;
 		tablaDeSegmentos = list_create();
-		log_info(miRam_logger,"Ya cree la lista");
+		log_info(miRam_logger,"Cree lista de segmentos");
 		primerSegmento = crear_primer_segmento();
-		log_info(miRam_logger,"Ya cree el primer segmento");
+		log_info(miRam_logger,"Ya cree el primer segmento con sus respectivas direcciones en memoria");
 		list_add(tablaDeSegmentos,primerSegmento);
-		log_info(miRam_logger,"Ya guarde el segmento en tabla bro");
+		log_info(miRam_logger,"Ya guarde el segmento en lista");
 		//free(primerSegmento);  BORRA LO QUE ESTA ADENTRO DEL LISTADD?
-		log_info(miRam_logger,"Pude liberar");
+		//log_info(miRam_logger,"Pude liberar");
 
 	}
 }
@@ -102,17 +115,17 @@ t_tabla_segmentos* crear_primer_segmento()
 {
 
 	t_tabla_segmentos* primerSegmento= malloc(sizeof(*primerSegmento));
-	log_info(miRam_logger,"ram2");
+
 	primerSegmento->base = malloc(sizeof(*primerSegmento->base));
+
     primerSegmento->base = ram;
-	log_info(miRam_logger,"ram3");
+
 	primerSegmento->limite = malloc(sizeof(*primerSegmento->base));
 
 	primerSegmento->limite = ram + TAMANIO_MEMORIA_RAM;
 
-	//log_info(miRam_logger,"tam + tamanio");
 	primerSegmento->ocupado = false;
-	log_info(miRam_logger,"ocupado");
+
     return primerSegmento;
 }
 
@@ -124,8 +137,10 @@ t_tabla_segmentos* crear_primer_segmento()
 // ¿EXISTE ALGUN SEGMENTO EN LA TABLA DE SEGMENTOS?
 
 int existeSegmento(){
+
 	int result = list_is_empty(tablaDeSegmentos);
 	int tamanioLista;
+
 	if(result==1){
 
 		log_info(miRam_logger,"La lista no contiene ningún segmento");
@@ -159,9 +174,13 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa)
 
 		t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
 
-		log_info(miRam_logger,"Devolvi segmento disponible para ocupar");
+		log_info(miRam_logger,"Devolvi segmento disponible y recortado para ocupar");
 
-		memcpy(segmentoDisponible->base,cosa,1);
+		memcpy(segmentoDisponible->base,cosa,tamanioCosa);
+
+		log_info(miRam_logger,"Copié ");
+
+		segmentoDisponible->ocupado=true;
 
         log_info(miRam_logger,"Ya lo guarde pa");
 
@@ -172,10 +191,22 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa)
 	}*/
 }
 
+// MUESTRA EL ELEMENTO DEL PRIMER SEGMENTO OCUPADO
+
+void mostrarElemento(){
+
+	bool segmentoOcupado(t_tabla_segmentos* segmento){
+		return segmento->ocupado==true;
+	}
 
 
+	pcb* pcb= malloc(tamanioPCB);
+	t_tabla_segmentos* segmento = list_find(tablaDeSegmentos,(void*) segmentoOcupado);
 
+	memcpy(pcb,segmento->base,sizeof(8));
 
+	printf("Un campo del valor guardado en segmento es %d", pcb->pid);
+}
 
 
 
@@ -207,70 +238,47 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 		t_tabla_segmentos* segmentoVacioExistente = buscar_segmento_segun_criterio(tamanio);
 
-
-	    //malloc(sizeof(t_tabla_segmentos));
-	    //segmentoVacioExistente =
-
-	    log_info(miRam_logger,"Recortar: devolví segmento segun criterio");
-
-	    //uint32_t limiteSeg = segmentoVacioExistente->limite;
-	    //uint32_t baseSeg = segmentoVacioExistente->base;
-
-	   // uint32_t tamanioDeSegmentoExistente= tamanioPCB;
-
-	    //printf("tamanio %lu", (unsigned long)segmentoVacioExistente->limite);
-	    //printf("tamanio %zu", segmentoVacioExistente->base);
-
 	    uint32_t tamanioDeSegmentoExistente = segmentoVacioExistente->limite - segmentoVacioExistente->base;
 
 
-	    printf("tamanio %d", tamanioDeSegmentoExistente);
-	    log_info(miRam_logger,"Recortar: Asigne tamanio de segmento");
+	    // PRUEBA DE DIRECCION LOGICA
+
+	    printf(" Recortar: El tamanio del segmento a recortar es de %d   \n", tamanioDeSegmentoExistente);
 
 	    if(tamanio == tamanioDeSegmentoExistente){
 
-		log_info(miRam_logger,"Recortar: El tamanio de segmento es igual al de la cosa");
+		log_info(miRam_logger,"Recortar: El tamanio de segmento a recortar es igual al de la cosa");
 
 		return segmentoVacioExistente;
 
-	}else if(tamanio < tamanioDeSegmentoExistente){
+	    }else if(tamanio < tamanioDeSegmentoExistente){
+
+		log_info(miRam_logger,"Recortar: El tamanio de la cosa a guardar es menor que el tamanio del segmento");
+
+		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio);
+
+		log_info(miRam_logger,"Recortar: Agregue segmento restante a tabla con sus nuevas direcciones");
+
+        segmentoVacioExistente->limite = segmentoVacioExistente->base + tamanio;
+
+        log_info(miRam_logger,"Recortar: Asigné el nuevo límite del segmento existente");
 
 
-		log_info(miRam_logger,"Recortar: Reservé memoria para el nuevo segmento restante");
+       //PRUEBAS DE TAMANIO FISICO.
+    	uint32_t tamanioPrimerSegmento = segmentoVacioExistente->limite - segmentoVacioExistente->base;
 
-		agregarSegmentoRestanteATabla(&segmentoVacioExistente->limite,&segmentoVacioExistente->base);
-
-		log_info(miRam_logger,"Recortar: Agregue segmento restante a tabla con sus respectivas direcciones");
-
-		uint32_t* limiteAnterior = &(segmentoVacioExistente->limite); //NO TOCAR ES GOD
-
-		log_info(miRam_logger,"Recortar: Cree limite anterior");
-
-		//uint32_t limiteNuevo = *limiteAnterior;
-
-		//log_info(miRam_logger,"Recortar: Cree el limite nuevo a asignar");
-
-		uint32_t* limiteTraducido = malloc(sizeof(limiteTraducido));
-
-		//limiteTraducido = &limiteAnterior + &tamanio;
-
-		log_info(miRam_logger,"Recortar: Cree limite nuevo");
-
-		//printf("el valor es %i",&limiteTraducido);
+    	printf("El tamanio del primer segmento es  %d        \n",tamanioPrimerSegmento);
 
 
-       segmentoVacioExistente->limite = &limiteTraducido;		//segmentoVacioExistente->limite = limiteTraducido;
+      //  printf("El nuevo limite del primer segmento  %d    \n",segmentoVacioExistente->limite); ESTO DEVUELVE UN APOSICION EN MEMORIA FISICA
 
-
-		log_info(miRam_logger,"Recortar: Al fin pa");
-
-
+        log_info(miRam_logger,"Recortar: Reasigné limite del primer segmento");
 
         return(segmentoVacioExistente);
 
 	}
 	 else{
-		printf("El tamaño es demasiado grande para crear segmento, el segmento es de tamaño: %d",tamanioDeSegmentoExistente);
+		//printf("El tamaño es demasiado grande para crear segmento, el segmento es de tamaño: %d",tamanioDeSegmentoExistente);
 		return NULL;
 	}
 
@@ -282,19 +290,15 @@ void agregarSegmentoRestanteATabla(void* limite,void* base){
 
 	t_tabla_segmentos* segmentoNuevoRestante= malloc(tamanioTablaSegmento);
 
-	log_info(miRam_logger,"Agregar seg restante: Reserve la memoria");
-
 	segmentoNuevoRestante->base = base;
-
-	log_info(miRam_logger,"Agregar seg restante: Inicialice base");
 
 	segmentoNuevoRestante->limite = limite;
 
-	log_info(miRam_logger,"Agregar seg restante: Inicialice limite");
+	uint32_t diferenciaSegmentoRestante = segmentoNuevoRestante->limite - segmentoNuevoRestante->base;
+
+	printf("El tamanio del segmento restante es%d   \n",diferenciaSegmentoRestante);
 
 	segmentoNuevoRestante->ocupado = false;
-
-	log_info(miRam_logger,"Agregar seg restante: Inicialice ocupado");
 
 	list_add(tablaDeSegmentos,segmentoNuevoRestante);
 
@@ -367,25 +371,6 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 
 
 
-// LA SAQUE POR QUE EL NUEVO SEGMENTO YA ESTA AÑADIDO DESDE UN PRINCIPIO Y SE PUEDE
-// REALIZAR EL STRCPY DIRECTAMENTE EN GUARDAR COSA EN SEGMENTO
-
-
-
-/*
-void guardar_segmento_en_memoria_y_tabla(void* cosaAGuardar,t_tabla_segmentos* segmentoDeCosa)
-{
-	list_add(tablaDeSegmentos,segmentoDeCosa);
-	strcpy(segmentoDeCosa->base,cosaAGuardar);
-	segmentoDeCosa->ocupado = true;
-	//uint32_t tamanio_pcb = sizeof(cosaGuardar);
-
-	//t_tabla_segmentos* segmento_libre = buscar_segmento_libre_primer_ajuste(tamanio_pcb,tablaDeSegmentos);
-	//strcpy(segmento_libre->base,cosaGuardar);
-	//segmento_libre->ocupado = true;
-
-}
-*/
 
 
 
@@ -393,12 +378,11 @@ void guardar_segmento_en_memoria_y_tabla(void* cosaAGuardar,t_tabla_segmentos* s
 
 
 
-// NUEVA VERSION MULTI-CLIENTE DEL SERVIDOR  (VARIOS CLIENTES AL MISMO TIEMPO TENIENDO MISMO PUERTO DE ESCUCHA :))
 
 void prender_server()
 {
 
-	int puerto_escucha = config_get_int_value(miRam_config,"PUERTO_ESCUCHA");
+	int puerto_escucha = PUERTO_ESCUCHA_MIRAM;
 	int socket_interno = crearSocket();
 	log_info(miRam_logger,"SERVIDOR LISTO");
 	asignar_escuchas(socket_interno,puerto_escucha);
@@ -406,6 +390,191 @@ void prender_server()
 	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
 	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
 }
+
+
+
+
+
+
+
+
+//     RECEPCION DE MENSAJES DE MODULO DISCORDIADOS
+
+
+//                                     INICIAR PATOTA
+/*
+
+void iniciarPatota(uint32_t pid,void* tareas, void* tripulantes){
+
+//	int cantidadTareas = list_size(tareas);
+	//int cantidadTripulantes = list_size(tripulantes);
+	//int i;
+	//int j;
+	tipo_tarea nodoTarea;
+	nodoTarea.listaTareas= list_create();
+
+	for(i=0; i < cantidadTareas ; i++){
+
+	list_add(nodoTarea.listaTareas,tareas[i]);
+	}
+
+	for(j=0;j < cantidadTripulantes, j++){
+		crearTCB(tripulantes[i],pcb->);
+	}
+
+	//pcb* pcb1 = crear_PCB(pid,tareas);
+
+	//guardar_cosa_en_segmento_adecuado(pcb1,tamanioPCB);
+}
+*/
+
+//
+
+
+
+
+// NUEVA VERSION MULTI-CLIENTE DEL SERVIDOR  (VARIOS CLIENTES AL MISMO TIEMPO TENIENDO MISMO PUERTO DE ESCUCHA :))
+/*
+void asignar_escuchas(int conexion_server,int puerto)
+{
+		escuchaEn(conexion_server,puerto);
+		while(1)
+					{
+						 aceptar_tripulante(conexion_server);
+
+					}
+}
+void* atender_tripulante(Tripulante* trip)
+{
+	while(1)
+		{
+		int cod_op = recibir_operacion(trip->conexion);
+						switch(cod_op)
+						{
+						case MENSAJE:
+							recibir_mensaje_encriptado(trip->conexion,trip->log);
+							break;
+						case -1:
+							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
+							break;
+						default:
+							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							break;
+						}
+		}
+}
+
+
+
+void recibir_mensaje_encriptado(int cliente_fd,t_log* logg)
+{
+	char* mensaje;
+	char** mensaje_decriptado;
+
+	mensaje = recibir_y_guardar_mensaje(cliente_fd);
+
+	mensaje_decriptado = string_split(mensaje,",");
+
+
+	int hora = atoi(mensaje_decriptado[0]);
+	char* lugar = mensaje_decriptado[1];
+	int cant_participantes = atoi(mensaje_decriptado[2]);
+
+	hora += 18;
+
+	//"2" -> 2
+	//STRING -> INT
+
+	log_info(logg,"La hora es %d", hora);
+	log_info(logg,"La ubicacion es %s", lugar);
+	log_info(logg,"La cantidad de tripulantes es %d", cant_participantes);
+
+
+}
+
+
+
+void recibir_solicitud_tarea(int cliente,t_log* logg)
+{
+	char* mensaje;
+	char** mensaje_decriptado;
+	mensaje = recibir_y_guardar_mensaje(cliente);
+	mensaje_decriptado = string_split(mensaje,",");
+
+	iniciar_patota();
+
+
+
+
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+
+	pcb->primero = atoi(mensaje_decriptado[0]);
+	pcb->segundo = atoi(mensaje_decriptado[1]);
+	pcb->tercero = mensaje_decriptado[2];
+
+}
+
+
+
+
+void recibir_expulsar_tripulante(int cliente,t_log* logg)
+{
+	char* mensaje;
+	char** mensaje_decriptado;
+	mensaje = recibir_y_guardar_mensaje(cliente);
+	mensaje_decriptado = string_split(mensaje,",");
+
+	iniciar_patota();
+
+
+
+
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+
+	pcb->primero = atoi(mensaje_decriptado[0]);
+	pcb->segundo = atoi(mensaje_decriptado[1]);
+	pcb->tercero = mensaje_decriptado[2];
+
+}
+
+
+
+void recibir_posicion(int cliente,t_log* logg)
+{
+	char* mensaje;
+	char** mensaje_decriptado;
+	mensaje = recibir_y_guardar_mensaje(cliente);
+	mensaje_decriptado = string_split(mensaje,",");
+
+	iniciar_patota();
+
+
+
+
+	t_pcb* pcb = malloc(sizeof(t_pcb));
+
+	pcb->primero = atoi(mensaje_decriptado[0]);
+	pcb->segundo = atoi(mensaje_decriptado[1]);
+	pcb->tercero = mensaje_decriptado[2];
+
+}
+
+void recibir_iniciar_patota(int cliente,t_log* logg)
+{
+	char* mensaje;
+	char** mensaje_decriptado;
+	mensaje = recibir_y_guardar_mensaje(cliente);
+	mensaje_decriptado = string_split(mensaje,",");
+
+	iniciar_patota(atoi(mensaje_decriptado[0]),atoi(mensaje_decriptado[1]),mensaje_decriptado[2]);
+
+}
+
+*/
+
+
+
+
 
 
 // MENU
@@ -417,21 +586,25 @@ int main(){
 	iniciar_logger();
 	reservar_memoria();
 	crear_estructuras();
+	//prender_server();
+
+
+	// PRUEBA DE GUARDAR PCB EN SEGMENTO NUEVO CREADO Y AJUSTADO
+
+	//
+
 
 	pcb* bloquePatota = crear_PCB(1111,128);
 	guardar_cosa_en_segmento_adecuado(bloquePatota,tamanioPCB);
+	mostrarElemento();
 
-	existeSegmento();
-
-	int tamanioLista=list_size(tablaDeSegmentos);
-	printf("%d",tamanioLista);
 
     //guardar_cosa_en_segmento_adecuado(bloqueTripulante);
 
 
 
     //iniciar_mapa("Nivel Base",4,4);
-	//prender_server();
+
     return 0;
 }
 

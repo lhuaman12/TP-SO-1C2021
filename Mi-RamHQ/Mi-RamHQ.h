@@ -1,8 +1,4 @@
 
-
-
-
-
 #ifndef MIRAM_H_
 #define MIRAM_H_
 
@@ -26,10 +22,11 @@
 
 
 // VALORES GLOBALES DE CONFIG
+
 int PUERTO_ESCUCHA_MIRAM;
 char* ESQUEMA_MEMORIA;
 int TAMANIO_MEMORIA_RAM;
-char*  CRITERIO_ELECCION_DE_SEGMENTO;
+char* CRITERIO_ELECCION_DE_SEGMENTO;
 int tamanioPCB=8;
 int tamanioTCB=21;
 int tamanioTablaSegmento=9;
@@ -52,29 +49,19 @@ typedef struct tipo_tabla_segmentos{
 
 }t_tabla_segmentos;
 
-typedef struct tipo_segmento{
-
-	uint32_t numeroSegmento;
-	_Bool ocupado;
-	uint32_t* base;
-	uint32_t* limite;
-	void* cosa;
-
-}t_segmento;
-
 
 
 
 //  ESTRUCTURAS DE PCB , TCB Y CONJUNTO DE TAREAS
 
 //PATOTA CONTROL BLOCK
-typedef struct pcb{
+typedef struct{
 	uint32_t pid;
 	uint32_t tareas; // direccion logica del inicio de las tareas QUE CARAJO SE LE ASIGNA A UNA TAREA????
 }pcb;
 
 // TRIPULANTE CONTROL BLOCK
-typedef struct tcb{
+typedef struct{
 	uint32_t tid;
 	uint32_t posicionX;
 	uint32_t posicionY;
@@ -83,9 +70,24 @@ typedef struct tcb{
 	char estado;
 }tcb;
 
+// ESTRUCTURA NODO PRINCIPAL DE TAREAS
 
+typedef struct{
+	t_list* listaTareas;
+}tipo_tarea;
 
-// ENUMERACION DE FUNCIONES UTILIZADAS
+/*
+typedef struct{
+	uint32_t tid;
+
+}t_tripulante;
+
+typedef struct listaTareas{
+	void* tarea;
+};
+*/
+
+// DECLARACION DE FUNCIONES UTILIZADAS
 
 void iniciar_logger();
 void iniciar_config();
@@ -93,7 +95,8 @@ void reservar_memoria();
 void guardar_cosa_en_segmento_adecuado(void* cosa,uint32_t tamanioCosa);
 void prender_server();
 int existeSegmento();
-pcb* crear_PCB(uint32_t pid, uint32_t tareas);
+//pcb* crear_PCB(uint32_t pid, uint32_t tareas);
+//tcb* crear_TCB(void* direccionPCB);
 tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante,uint32_t proxInstruccion,uint32_t direccionPCB);
 void crear_estructuras();
 t_tabla_segmentos* crear_primer_segmento();
@@ -103,6 +106,19 @@ t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa);
 t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio);
 void agregarSegmentoRestanteATabla(void* limite,void* base);
 t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
+void mostrarElemento();
+
+
+//void iniciarPatota(uint32_t pid,void* tareas, void* tripulantes);
+
+
+//void recibir_mensaje_encriptado(int cliente_fd,t_log* logg);
+//void asignar_escuchas(int conexion_server,int puerto);
+//void* atender_tripulante(Tripulante* trip);
+//void recibir_iniciar_patota(int cliente,t_log* logg);
+//void recibir_solicitud_tarea(int cliente,t_log* logg);
+//void recibir_expulsar_tripulante(int cliente,t_log* logg);
+//void recibir_posicion(int cliente,t_log* logg);
 
 
 //int iniciar_mapa(char*,int,int);
