@@ -78,7 +78,6 @@ void* atender_tripulante(Tripulante* trip)
 }
 void expulsar_un_tripulante(Tripulante* trip)
 {
-	log_debug(trip->log,"prueba");
 	char* id = recibir_id(trip->conexion);
 	log_debug(trip->log,"SE EXPULSO EL TRIPULANTE %s",id);
 }
