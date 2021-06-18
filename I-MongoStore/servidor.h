@@ -78,7 +78,8 @@ void init_bloques();
 void init_directorios();
 
 void* atender_tripulante(Tripulante* trip);
-
+//DE MIRAM!!!
+void expulsar_un_tripulante(Tripulante* trip);
 
 
 #endif /* SERVIDOR_H_ */

@@ -61,7 +61,9 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-
+						case EXPULSAR_TRIPULANTE:
+							expulsar_un_tripulante(trip);
+						break;
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
 							break;
@@ -74,7 +76,12 @@ void* atender_tripulante(Tripulante* trip)
 						}
 		}
 }
-
+void expulsar_un_tripulante(Tripulante* trip)
+{
+	log_debug(trip->log,"prueba");
+	char* id = recibir_id(trip->conexion);
+	log_debug(trip->log,"SE EXPULSO EL TRIPULANTE %s",id);
+}
 
 void init_directorios()
 {

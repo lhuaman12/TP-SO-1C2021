@@ -1,47 +1,52 @@
-/*
- * discordiador.h
- *
- *  Created on: 26 abr. 2021
- *      Author: utnso
- */
-
 #ifndef DISCORDIADOR_H_
 #define DISCORDIADOR_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <commons/log.h>
+#include <commons/string.h>
+#include <commons/config.h>
+#include <readline/readline.h>
+#include <string.h>
+#include <semaphore.h>
+#include <commons/collections/list.h>
+
+
+#include <conections.h>
+#include <utils_cliente.h>
 
 
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<pthread.h>
-#include<commons/log.h>
-#include<commons/string.h>
-#include<commons/config.h>
-#include<readline/readline.h>
-#include<string.h>
+// dejo las configs en memoria por ahora
+typedef struct {
+	char *ip_ram;
+	char *puerto_ram;
+	char *ip_file_system;
+	char *puerto_file_system;
+	char *grado_multitarea;
+	char *algoritmo;
+	int quantum;
+	int duracion_sabotaje;
+	int retardo_ciclo_cpu;
 
-#include<conexiones.h>
-#include<conections.h>
-#include"utils_cliente.h"
+}t_config_user;
 
+int conexion_ram_hq;
+int conexion_mongo_store;
 
-
-#define IP "127.0.0.1" // Esto creo que habria que sacarlo del .config
-#define PUERTO_ESCUCHA_CLIENTE "4446"
-
-
-
-
-// Por lo general, a menos que tengan que tener recursos compartidos, no es buena práctica usar variables globales.
-//Nosotros lo estamos haciendo por la simplicidad del TP0 :)
-
+// logger y configs
 t_log* discordiador_logger;
-t_config* discordiador_config;
-pthread_t hilo_escucha;
+t_config_user* configuracion_user;
 
-//void* crear_escucha(int puerto);
-void iniciar_logger(void);
-void leer_config(void);
+// informacion para el discordiador
+t_list* lista_patotas;
+int tid_actual;
 
+void iniciar_logger(char* path);
+void leer_configs(void);
+void setear_configs();
+void iniciar_conexiones();
+void inicializar_estructuras();
 
 #endif /* DISCORDIADOR_H_ */
