@@ -107,7 +107,7 @@ t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio);
 void agregarSegmentoRestanteATabla(void* limite,void* base);
 t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
 void mostrarElemento();
-
+void* atender_tripulante(Tripulante* trip);
 
 //void iniciarPatota(uint32_t pid,void* tareas, void* tripulantes);
 

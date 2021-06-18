@@ -130,10 +130,6 @@ t_tabla_segmentos* crear_primer_segmento()
 }
 
 
-
-
-
-
 // ¿EXISTE ALGUN SEGMENTO EN LA TABLA DE SEGMENTOS?
 
 int existeSegmento(){
@@ -391,7 +387,26 @@ void prender_server()
 	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
 }
 
-
+//funcion atender un tripulante.
+void* atender_tripulante(Tripulante* trip)
+{
+	while(1)
+		{
+		int cod_op = recibir_operacion(trip->conexion);
+						switch(cod_op)
+						{
+					    case MENSAJE:
+							recibir_mensaje_encriptado(trip->conexion,trip->log);
+							break;
+						case -1:
+							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
+							break;
+						default:
+							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							break;
+						}
+		}
+}
 
 
 

@@ -17,7 +17,7 @@ void prender_server()
 	int puerto_escucha = atoi(PUERTO_ESCUCHA_SERVER);
 	int socket_interno = crearSocket();
 	log_info(log_IMONGO,"SERVIDOR LISTO");
-	asignar_escuchas(socket_interno,puerto_escucha);
+	asignar_escuchas(socket_interno,puerto_escucha,atender_tripulante);
 }
 
 void iniciar_filesystem()
@@ -54,7 +54,26 @@ void init_bitmap()
 	log_debug(log_IMONGO,"<> FIN CREACION BITMAP");
 
 }
+void* atender_tripulante(Tripulante* trip)
+{
+	while(1)
+		{
+		int cod_op = recibir_operacion(trip->conexion);
+						switch(cod_op)
+						{
 
+					    case MENSAJE:
+							recibir_mensaje_encriptado(trip->conexion,trip->log);
+							break;
+						case -1:
+							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
+							break;
+						default:
+							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							break;
+						}
+		}
+}
 
 
 void init_directorios()

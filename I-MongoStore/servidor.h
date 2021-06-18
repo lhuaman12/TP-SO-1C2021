@@ -77,6 +77,8 @@ void leer_super_bloque();
 void init_bloques();
 void init_directorios();
 
+void* atender_tripulante(Tripulante* trip);
+
 
 
 #endif /* SERVIDOR_H_ */
