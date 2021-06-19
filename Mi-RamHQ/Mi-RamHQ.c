@@ -53,20 +53,6 @@ pcb* crear_PCB(uint32_t pid, uint32_t tareas)
 	return nuevoPCB;
 }
 
-/*
-tcb* crear_TCB(uint32_t tid,uint32_t pos_x, uint32_t pos_y,char estadoTripulante,uint32_t proxInstruccion,uint32_t direccionPCB)
-{
-    tcb* nuevoTCB = malloc(tamanioTCB);
-    nuevoTCB->tid = tid;
-    nuevoTCB->posicionX = pos_x;
-	nuevoTCB->posicionY = pos_y;
-	nuevoTCB->estado = estadoTripulante;
-	nuevoTCB->idProxInstruccion = proxInstruccion;
-	nuevoTCB->ubicacionPCBtripulante = direccionPCB;
-    return nuevoTCB;
-}
-*/
-
 tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacionPCB) //   void* direccionPCB)
 {
     tcb* nuevoTCB = malloc(tamanioTCB);
@@ -184,7 +170,7 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		segmentoDisponible->tipo_dato = tipoCosa;
 
-        log_info(miRam_logger,"Ya lo guarde pa");
+        log_info(miRam_logger,"Ya guarde segmento en memoria y en segmento");
 
 	}
 	/*else{
@@ -195,7 +181,7 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 // MUESTRA EL ELEMENTO DEL PRIMER SEGMENTO OCUPADO
 
-void mostrarElemento(){
+void mostrarElSemento(){
 
 	bool segmentoOcupado(t_tabla_segmentos* segmento){
 		return segmento->ocupado==true;
@@ -374,7 +360,8 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 
 
 
-// ATIENDE Y RESPONDE LOS MENSAJES DE
+//      ATIENDE Y RESPONDE LOS MENSAJES CON UN HILO X TRIPULANTE. Y LOS MENSAJES SE IDENTIFICAN CON UN CÓDIGO.
+
 
 void* atender_tripulante(Tripulante* trip)
 {
@@ -383,12 +370,35 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-						/*case INICIAR_PATOTA:
+						case ENVIAR_PROXIMA_TAREA:
+
+						    if(list_size(tablaDeSegmentos) < 2){
+						    log_info(trip->log,"No hay tripulante disponible para enviar proxima tarea");
+						    }else{
+						    actualizarIdTareaARealizar(trip);
+						    }
+                        break;
+						case POSICION_TRIPULANTE_ACTUALIZADA:
+							/*if(list_size(tablaDeSegmentos) < 2){
+							log_info(trip->log,"No hay tripulante disponible para actualizar posiciones ;( ");
+							}else{
+							actualizar_posicion_tripulante(trip);
+							}*/
+							actualizar_posicion_tripulante(trip);
 
 						break;
+						case INICIAR_PATOTAS:
+
+                              // INICIAR TODAS LAS ESTRUCT
+						break;
 						case EXPULSAR_TRIPULANTE:
-							expulsar_tripulante(trip);
-						break;*/
+
+							if(list_size(tablaDeSegmentos) < 2){
+									log_info(trip->log,"No hay tripulante disponible para expulsar ;( ");
+							}else{
+								    expulsar_tripulante(trip);
+							}
+						break;
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
 							break;
@@ -401,12 +411,6 @@ void* atender_tripulante(Tripulante* trip)
 						}
 		}
 }
-void expulsar_tripulante(Tripulante* trip)
-{
-	char* id = recibir_id(trip->conexion);
-	log_debug(trip->log,"SE EXPULSO EL TRIPULANTE %s",id);
-}
-
 
 
 
@@ -431,12 +435,11 @@ void prender_server()
 
 
 
-//     RECEPCION DE MENSAJES DE MODULO DISCORDIADOS
+//                         RECEPCION DE MENSAJES DE MODULO DISCORDIADOR
 
 
 //                                     INICIAR PATOTA
 
-//t_list* enlistar_tripulantes
 
 
 void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
@@ -466,22 +469,99 @@ void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
 		crear_TCB(list_get(listaDeTripulante,j),1,pcb1);
 	}
 }
-/*
 
-void expulsar_tripulante(uint32_t idTripAExpulsar){
 
-	tcb* buscarTCB(t_tabla_segmentos* cosa){
+//                                  EXPULSAR TRIPULANTE SEGUN ID
 
-		if(cosa->tipoDato== TCB ){
+t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa){
 
-		}
+        if(cosa->tipo_dato== TCB){
+        	return cosa;
+        }else{
+        	return NULL;
+        }
+}
+
+
+void expulsar_tripulante(Tripulante* trip)
+{
+	char* id = recibir_id(trip->conexion);
+	int idDecriptado = atoi(id);
+
+
+	bool cumple_identificador(t_tabla_segmentos* cosa){
+
+		t_tabla_segmentos* segmentoConTcb;
+
+		segmentoConTcb = retornaTCB(cosa);
+
+		tcb* tcb = NULL;
+
+		memcpy(tcb,segmentoConTcb->base,sizeof(tamanioTCB));
+
+		return tcb->tid==idDecriptado;
 	}
 
+    list_remove_by_condition(tablaDeSegmentos,(void*)cumple_identificador);
 
-	list_find(tablaDeSegmentos,buscarTCB());
   }
+
+
+//                                  ACTUALIZAR POSICION DE TRIPULANTE
+
+
+
+void actualizar_posicion_tripulante(Tripulante* trip){
+
+	char* id = recibir_y_guardar_mensaje(trip->conexion);
+	char** mensaje_decriptado = string_split(id,",");
+	//t_tabla_segmentos* segmentoConTCBTripulante;
+	//uint32_t idTripDeMensaje = atoi(mensaje_decriptado[0]);
+
+	/*bool cumple_identificador(t_tabla_segmentos* cosa){
+
+			t_tabla_segmentos* segmentoConTcb;
+
+			segmentoConTcb = retornaTCB(cosa);
+
+			tcb* tcb = NULL;
+
+			memcpy(tcb,segmentoConTcb->base,sizeof(tamanioTCB));
+
+			return tcb->tid == idTripDeMensaje;
+		}
+
+    segmentoConTCBTripulante = list_find(tablaDeSegmentos,(void*)cumple_identificador);
+
+    tcb* tcb = NULL;
+
+    memcpy(tcb,segmentoConTCBTripulante->base,sizeof(tamanioTCB));
+
+    tcb->posicionX = atoi(mensaje_decriptado[1]);
+    tcb->posicionY = atoi(mensaje_decriptado[2]);*/
+
+	log_info(trip->log,"El id es x es: %d",atoi(mensaje_decriptado[0]));
+	log_info(trip->log,"La posicion en x es: %d",atoi(mensaje_decriptado[1]));
+	log_info(trip->log,"La posicion en y es: %d",atoi(mensaje_decriptado[2]));
+
+
+
+
+
 }
-*/
+
+
+//                     ACTUALIZAR PROXIMA TAREA A REALIZAR POR TRIPULANTE EN EL TCB
+
+
+void actualizarIdTareaARealizar(Tripulante* trip){
+
+
+	char* id = recibir_id(trip->conexion);
+    char** mensaje_decriptado = string_split(id,",");
+
+    // HAY QUE BUSCAR TCB DEL ID TRIPULANTE Y ACTUALIZAR ID DE LA PROX TAREA A EJECUTAR.
+}
 
 
 
@@ -493,16 +573,7 @@ void expulsar_tripulante(uint32_t idTripAExpulsar){
 
 
 
-
-
-
-
-
-
-
-
-
-// MENU
+//                                        MAIN
 
 int main(){
 
@@ -511,14 +582,7 @@ int main(){
 	iniciar_logger();
 	reservar_memoria();
 	crear_estructuras();
-	//prender_server();
-
-
-	// PRUEBA DE GUARDAR PCB EN SEGMENTO NUEVO CREADO Y AJUSTADO
-
-	pcb* bloquePatota = crear_PCB(1111,128);
-	guardar_cosa_en_segmento_adecuado(bloquePatota,tamanioPCB,PCB);
-	mostrarElemento();
+	prender_server();
 
     //guardar_cosa_en_segmento_adecuado(bloqueTripulante);
 

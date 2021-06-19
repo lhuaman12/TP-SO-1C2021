@@ -33,7 +33,7 @@ int validar_entrada(char **palabras_separadas) {
 	// TODO: chequeo aca si tipee bien... else if else if...
 	return 1;
 }
-
+/*
 void ejecutar_comando(char** lectura) {
 	if (strcmp(lectura[0], "INICIAR_PATOTA")==0)
 		iniciar_patota(lectura);
@@ -47,10 +47,56 @@ void ejecutar_comando(char** lectura) {
 		printf("Comando incorrecto\n");
 	}
 }
+*/
+
+void ejecutar_comando(char** lectura){
+	if (strcmp(lectura[0], "INICIAR_PATOTAS")==0)
+		iniciar_patota(lectura);
+	else if(strcmp(lectura[0],"LISTAR_TRIPULANTES")==0){
+		listar_tripulantes();
+	}else if(strcmp(lectura[0],"EXPULSAR_TRIPULANTE")==0){
+		log_warning(discordiador_logger,"ID_ %s",lectura[1]);
+		expulsar_tripulante(lectura[1]);
+	}else if(strcmp(lectura[0],"POSICION_TRIPULANTE_ACTUALIZADA")==0){
+		// funciones que haría el discordiador
+
+		//funcion para avisar a RAM
+		actualizar_posiciones_tripulante(lectura[1],lectura[2],lectura[3]);
+	}else if(strcmp(lectura[0],"ENVIAR_PROXIMA_TAREA")==0){
+		//funciones que haría el discordiador
+
+		//funcion para avisar a RAM
+		enviar_tarea_a_tripulante(lectura[1]);
+    }else {
+		printf("Comando incorrecto\n");
+	}
+}
+
 
 void expulsar_tripulante(char* id_tripulante)
 {
 	solicitar_expulsar_tripulante(id_tripulante,conexion_mongo_store);
+}
+
+void actualizar_posiciones_tripulante(char *id_tripulante,char* posicionX,char* posicionY)
+{
+	char* mensaje = malloc(sizeof(*mensaje));
+	mensaje	= string_new();
+	string_append(&mensaje,id_tripulante);
+	string_append(&mensaje,",");
+	string_append(&mensaje,posicionX);
+	string_append(&mensaje,",");
+	string_append(&mensaje,posicionY);
+
+
+	enviar_nuevas_posiciones_tripulante(mensaje,conexion_mongo_store);
+
+	free(mensaje);
+}
+
+void enviar_tarea_a_tripulante(char *id_tripulante)
+{
+	enviar_nueva_tarea_tripulante(id_tripulante,conexion_mongo_store);
 }
 
 void iniciar_patota(char ** argumentos) {

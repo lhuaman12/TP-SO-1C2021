@@ -121,6 +121,11 @@ void mostrarElemento();
 
 
 void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante);
+void expulsar_tripulante(Tripulante* trip);
+t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa);
+void actualizar_posicion_tripulante(Tripulante* trip);
+void actualizarIdTareaARealizar(Tripulante* trip);
+
 
 
 //void recibir_mensaje_encriptado(int cliente_fd,t_log* logg);

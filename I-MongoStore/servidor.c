@@ -54,6 +54,7 @@ void init_bitmap()
 	log_debug(log_IMONGO,"<> FIN CREACION BITMAP");
 
 }
+
 void* atender_tripulante(Tripulante* trip)
 {
 	while(1)
@@ -61,9 +62,6 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-						case EXPULSAR_TRIPULANTE:
-							expulsar_un_tripulante(trip);
-						break;
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
 							break;

@@ -28,5 +28,7 @@ void imprimir_estado_patota(t_patota* patota);
 
 
 void expulsar_tripulante(char* id_tripulante);
+void actualizar_posiciones_tripulante(char *id_tripulante,char* posicionX,char* posicionY);
+void enviar_tarea_a_tripulante(char *id_tripulante);
 
 #endif /* UTILS_CONSOLA_H_ */
