@@ -9,10 +9,8 @@
 
 #include"servidor.h"
 
+void guardarEnBloque(char* contenido,int id_bloque);
 
-int getBlockQuantity(char** arrayDeBlocks);
-char* getDatosDeBlocks(char** arrayDeBlocks, int size);
-char* getPathDeBlock(int bloque);
-void guardarDatosEnBlocks(char* contenidoNuevo, char** arrayDeBlocks);
+int calcularBloquesPorContenido(char* contenido);
 
 #endif /* SRC_BLOCKS_H_ */

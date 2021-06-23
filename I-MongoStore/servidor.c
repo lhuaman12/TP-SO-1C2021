@@ -3,13 +3,18 @@
 
 int main(void)
 {
-
-
 	iniciar_log();
 	leer_config();
 	iniciar_filesystem();
-	prender_server();
+	//prender_server();
+	//log_info(log_IMONGO,"gola");
 
+
+	/*CUANDDO HAGO UN LOG SE ROMPE O SE OCUPA LA MEMORIA, Y NO ME ANDA BIEN ESTA FUNCION :c*/
+
+	//char** palabra_cortada = cortarPalabras("holacomo",4);
+	//printf("PALABRA: %s\n",palabra_cortada[0]);
+	//printf("PALABRA: %s\n",palabra_cortada[1]);
 }
 
 void prender_server()
@@ -83,48 +88,45 @@ void expulsar_un_tripulante(Tripulante* trip)
 void init_directorios()
 {
 	mkdir(RUTA_FILES,S_IRWXU);
-	mkdir(RUTA_BLOCKS,S_IRWXU);
 	mkdir(RUTA_BITACORA,S_IRWXU);
 }
+
+
+char* crearBufferInicial(int numero)
+{
+	return string_repeat('X',numero);
+}
+
 
 void init_bloques()
 {
 	log_debug(log_IMONGO,"<> START: Creacion de bloques");
-	for(int i = 0; i < BLOCKS; i++)
+	FILE* bloques = fopen(RUTA_BLOCKS,"wb");
+
+	char* buffer = crearBufferInicial(BLOCK_SIZE);
+	for(int i = 0; i<BLOCKS; i++)
 	{
-		char* path = string_new();
-		string_append(&path, RUTA_BLOCKS);
-
-		char* numeroEnString = string_itoa(i);
-		string_append(&path, numeroEnString);
-		string_append(&path, ".bin");
-
-		FILE* bloqueACrear = fopen(path,"wb");
-		fclose(bloqueACrear);
-
-		free(numeroEnString);
-		free(path);
+		fwrite(buffer,BLOCK_SIZE,1,bloques);
+		fwrite(" ",1,1,bloques);
 	}
-	log_debug(log_IMONGO,"<> FIN: Creacion de bloques, se crearon %d",BLOCKS);
+	fclose(bloques);
 }
 
 void iniciar_log()
 {
-	log_IMONGO = log_create("log.log", "I-MONGO-STORE", 1, LOG_LEVEL_DEBUG);
+	log_IMONGO = log_create("imongo.log", "I-MONGO-STORE", 1, LOG_LEVEL_INFO);
 }
 
-void leer_config(void)
+void leer_config()
 {
 	config_IMONGO = config_create("../imongo.config");
-
 
 	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 	RUTA_BITMAP = string_from_format("%s/Metadata/Bitmap.bin",PUNTO_MONTAJE);
 	RUTA_SUPER_BLOQUE = string_from_format("%s/SuperBloque.ims",PUNTO_MONTAJE);
 	RUTA_FILES = string_from_format("%s/Files/",PUNTO_MONTAJE);
-	RUTA_BLOCKS = string_from_format("%s/Blocks/",PUNTO_MONTAJE);
+	RUTA_BLOCKS = string_from_format("%s/Blocks.ims",PUNTO_MONTAJE);
 	RUTA_BITACORA = string_from_format("%s/Files/Bitacora/",PUNTO_MONTAJE);
-
 }
 
 void leer_super_bloque()

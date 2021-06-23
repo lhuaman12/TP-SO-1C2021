@@ -62,7 +62,7 @@ void crearArchivo(char* filePath){
 	free(carpeta);
 	fclose(metadata);
 }
-
+/*
 void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* bloques, char* caracter){
 	char* carpeta = string_substring_until(filePath, strlen(filePath) - strlen("Metadata.bin"));
 	log_debug(log_IMONGO, "Se procede a crear la carpeta del metadata: %s", carpeta);
@@ -71,22 +71,17 @@ void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* 
 	FILE* metadata = fopen(filePath,"w+");
 
 	char* size = string_new();
-	string_append(&size,"SIZE=");
-	string_append(&size,tamanio);
-	string_append(&size,"\n");
+	string_append_with_format(&size,"SIZE=%s\n",tamanio);
+
 	char* block_count = string_new();
-	string_append(&size,"BLOCK_COUNT=");
-	string_append(&size,cant_bloques);
-	string_append(&size,"\n");
+	string_append_with_format(&size,"BLOCK_COUNT=%s\n",cant_bloques);
 
 	char* blocks = string_new();
-	string_append(&size,"BLOCKS=");
-	string_append(&size,bloques);
-	string_append(&size,"\n");
+	string_append_with_format(&size,"BLOCKS=%s\n",bloques);
+
 	char* caracter_llenado = string_new();
-	string_append(&size,"CARACTER_LLENADO=");
-	string_append(&size,caracter);
-	string_append(&size,"\n");
+	string_append_with_format(&size,"CARACTER_LLENADO=%s\n",caracter);
+
 	char* md5 = "MD5_ARCHIVO=0\n";
 
 	log_debug(log_IMONGO, "Se procede a escribir los atributos iniciales");
@@ -99,6 +94,41 @@ void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* 
 	log_info(log_IMONGO, "Se creo el metadata del recurso.");
 	fclose(metadata);
 }
+*/
+void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* bloques, char* caracter){
+
+	FILE* metadata = fopen(filePath,"wb+");
+
+	char* size = string_new();
+	string_append_with_format(&size,"SIZE=%s\n",tamanio);
+
+	char* block_count = string_new();
+	string_append_with_format(&size,"BLOCK_COUNT=%s\n",cant_bloques);
+
+	char* blocks = string_new();
+	string_append_with_format(&size,"BLOCKS=[%s]\n",bloques);
+
+	char* caracter_llenado = string_new();
+	string_append_with_format(&size,"CARACTER_LLENADO=%s\n",caracter);
+
+	char* md5 = "MD5_ARCHIVO=0\n";
+
+	log_debug(log_IMONGO, "Se procede a escribir los atributos iniciales");
+	fwrite(size, strlen(size), 1, metadata);
+	fwrite(block_count, strlen(block_count), 1, metadata);
+	fwrite(blocks, strlen(blocks), 1, metadata);
+	fwrite(caracter_llenado, strlen(caracter_llenado), 1, metadata);
+	fwrite(md5,strlen(md5),1,metadata);
+
+	log_info(log_IMONGO, "Se creo el metadata del recurso.");
+	fclose(metadata);
+}
+
+
+
+
+
+
 /*
 int checkArchivoExiste(char* filePath){
 

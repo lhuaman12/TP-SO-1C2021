@@ -8,16 +8,12 @@
 #ifndef INTERFAZ_H_
 #define INTERFAZ_H_
 
-#include<commons/log.h>
-#include<commons/string.h>
-#include<commons/config.h>
-#include<commons/collections/list.h>
-#include<commons/bitarray.h>
+#include<string.h>
 
 #include"servidor.h"
 
-int obtenerBytes(int cantidad);
-void guardarRecursos(char* recurso, int cantidad,char* nombre);
+char** cortarPalabras(char* palabra,int cantidad);
+void guardarContenido(char* contenido);
 
 
 #endif /* INTERFAZ_H_ */

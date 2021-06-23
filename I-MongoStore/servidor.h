@@ -27,6 +27,7 @@
 
 #include"archivos.h"
 #include"blocks.h"
+#include"interfaz.h"
 #include"bitmap.h"
 
 #define IP "127.0.0.1"
@@ -69,7 +70,7 @@ pthread_t hiloEscuchas;
 //FUNCIONES
 void prender_server();
 void iniciar_log();
-void leer_config(void);
+void leer_config();
 
 void iniciar_filesystem();
 void init_bitmap();
