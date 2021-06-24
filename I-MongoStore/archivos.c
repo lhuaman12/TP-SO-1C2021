@@ -124,7 +124,18 @@ void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* 
 	fclose(metadata);
 }
 
+void sobreEscribirSuperBloque(char* path,int bloques)
+{
+	FILE* metadata = fopen(path,"r+");
+	//fseek(metadata,7,SEEK_SET);
+	//fwrite("      ",6,1,metadata);
+	char* contenido = string_itoa(bloques);
+	string_append(&contenido,"\n");
+	fseek(metadata,7,SEEK_SET);
+	fwrite(contenido,strlen(contenido),1,metadata);
+	fclose(metadata);
 
+}
 
 
 

@@ -15,6 +15,6 @@
 
 void crearArchivo(char* filePath);
 void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* bloques, char* caracter);
-
+void sobreEscribirSuperBloque(char* path,int bloques);
 
 #endif /* SRC_ARCHIVOS_H_ */

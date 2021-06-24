@@ -10,7 +10,7 @@
 #include"servidor.h"
 
 void guardarEnBloque(char* contenido,int id_bloque);
-
+int contarBloques();
 int calcularBloquesPorContenido(char* contenido);
 
 #endif /* SRC_BLOCKS_H_ */

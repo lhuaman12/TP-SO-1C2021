@@ -23,7 +23,23 @@ int calcularBloquesPorContenido(char* contenido)
 	return strlen(contenido) / BLOCK_SIZE;
 }
 
-
+int contarBloques()
+{
+	log_debug(log_IMONGO,"<>START: Contar bloques");
+	FILE* bloque = fopen(RUTA_BLOCKS,"r+b");
+	int bloques = 0;
+	char valor;
+	while(!feof(bloque))
+	{
+		fread(&valor,sizeof(char),1,bloque);
+		if(valor == '-')
+		{
+			bloques++;
+		}
+	}
+	log_debug(log_IMONGO,"<>END: Contar bloques");
+	return bloques - 1;
+}
 
 
 

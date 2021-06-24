@@ -8,7 +8,7 @@
 #ifndef SERVIDOR_H_
 #define SERVIDOR_H_
 
-
+#include<signal.h>
 #include<stdio.h>
 #include<pthread.h>
 #include<stdlib.h>

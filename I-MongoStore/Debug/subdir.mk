@@ -7,6 +7,7 @@ C_SRCS += \
 ../archivos.c \
 ../bitmap.c \
 ../blocks.c \
+../fsck.c \
 ../interfaz.c \
 ../servidor.c 
 
@@ -14,6 +15,7 @@ OBJS += \
 ./archivos.o \
 ./bitmap.o \
 ./blocks.o \
+./fsck.o \
 ./interfaz.o \
 ./servidor.o 
 
@@ -21,6 +23,7 @@ C_DEPS += \
 ./archivos.d \
 ./bitmap.d \
 ./blocks.d \
+./fsck.d \
 ./interfaz.d \
 ./servidor.d 
 
