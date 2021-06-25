@@ -20,7 +20,16 @@ void guardarEnBloque(char* contenido,int id_bloque)
 
 int calcularBloquesPorContenido(char* contenido)
 {
-	return strlen(contenido) / BLOCK_SIZE;
+	int numero = strlen(contenido) / BLOCK_SIZE;
+	int resto = strlen(contenido) % BLOCK_SIZE;
+	if(resto != 0)
+	{
+		return numero + 1;
+	}
+	else
+	{
+		return numero;
+	}
 }
 
 int contarBloques()

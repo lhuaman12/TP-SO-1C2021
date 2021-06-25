@@ -29,6 +29,8 @@
 #include"blocks.h"
 #include"interfaz.h"
 #include"bitmap.h"
+#include"fsck.h"
+
 
 #define IP "127.0.0.1"
 #define PUERTO_ESCUCHA_SERVER "4444"
@@ -44,6 +46,8 @@ int PUERTO_ESCUCHA_IMONGO;
 char* RUTA_BITMAP;
 void* bufferBitArray;
 t_bitarray* bitarray;
+
+t_list* bloquesUsados;
 
 // *PARA LAS ESTRUCTURAS
 char* PUNTO_MONTAJE;
@@ -79,8 +83,6 @@ void init_bloques();
 void init_directorios();
 
 void* atender_tripulante(Tripulante* trip);
-//DE MIRAM!!!
-void expulsar_un_tripulante(Tripulante* trip);
 
 
 #endif /* SERVIDOR_H_ */

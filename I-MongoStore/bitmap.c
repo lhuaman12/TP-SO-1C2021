@@ -27,6 +27,8 @@ int solicitarBloque() {
 		fclose(bitmap);
 	}
 
+	//guardarBackup(bloquesUsados,bloqueEncontrado);
+
 	log_debug(log_IMONGO, "<> END: Solicitar bloque <>");
 
 	return bloqueEncontrado;
@@ -44,4 +46,37 @@ void liberarBloque(int bloqueALiberar){
 
 	log_debug(log_IMONGO, "<> END: Liberar bloque <>");
 }
+
+void guardarBackup(t_list* bitList,int bloque)
+{
+	bool criterio(int numero)
+	{
+		return numero == bloque;
+	}
+	if(list_find(bitList,criterio) == NULL)
+	{
+		log_warning(log_IMONGO,"SE GUARDO %d",bloque);
+		list_add(bitList,bloque);
+	}
+	else
+	{
+		log_warning(log_IMONGO,"YA ESTA OCUPADO ESE BIT");
+	}
+}
+
+void estaEnBitmap(int bloque)
+{
+	char valor;
+	FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
+	fseek(bitmap, bloque - 1, SEEK_SET);
+	fread(&valor,sizeof(char),1,bitmap);
+	if(valor != '1')
+	{
+		log_debug(log_IMONGO,"<> SE ENCONTRO DISCREPANCIA EN %d, REPARANDO...",bloque);
+		fwrite("1", 1, 1, bitmap);
+	}
+	fclose(bitmap);
+}
+
+
 

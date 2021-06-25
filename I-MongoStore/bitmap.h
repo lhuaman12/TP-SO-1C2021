@@ -27,4 +27,10 @@ int solicitarBloque(void);
  */
 void liberarBloque(int bloqueALiberar);
 
+
+void guardarBackup(t_list* bitList,int bloque);
+
+
+void estaEnBitmap(int bloque);
+
 #endif /* SRC_BITMAP_H_ */

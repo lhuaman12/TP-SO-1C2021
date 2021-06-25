@@ -10,4 +10,7 @@
 
 #include "servidor.h"
 
+void repararSuperBloque();
+void repararBitmap();
+
 #endif /* FSCK_H_ */

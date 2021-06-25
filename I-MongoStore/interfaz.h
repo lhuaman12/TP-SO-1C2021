@@ -13,7 +13,8 @@
 #include"servidor.h"
 
 char** cortarPalabras(char* palabra,int cantidad);
-void guardarContenido(char* contenido);
+void guardarContenido(char* path, char* contenido);
+void guardarRecurso(char* recurso,char* contenido);
 
 
 #endif /* INTERFAZ_H_ */

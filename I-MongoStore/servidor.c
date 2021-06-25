@@ -6,12 +6,20 @@ int main(void)
 	iniciar_log();
 	leer_config();
 	iniciar_filesystem();
+
+	solicitarBloque();
+	solicitarBloque();
+
+	guardarRecurso("Mate","se expulso al tripulante 4");
+	//sleep(10);
+	//guardarRecurso("Cava","PETEEEEE");
+
+
 	//prender_server();
 	/*CUANDDO HAGO UN LOG SE ROMPE O SE OCUPA LA MEMORIA, Y NO ME ANDA BIEN ESTA FUNCION :c*/
-/*
-	char** palabra_cortada = cortarPalabras("holacomo",4);
-	printf("PALABRA: %s\n",palabra_cortada[0]);
-	printf("PALABRA: %s\n",palabra_cortada[1]);*/
+	//char** palabra_cortada = cortarPalabras("hol",4);
+	//printf("PALABRA: %s\n",palabra_cortada[0]);
+	//printf("PALABRA: %s\n",palabra_cortada[1]);
 
 }
 
@@ -27,10 +35,6 @@ void prender_server()
 }
 
 
-void* comunicarDiscordiador()
-{
-}
-
 void iniciar_filesystem()
 {
 	leer_super_bloque();
@@ -43,6 +47,7 @@ void iniciar_filesystem()
 
 void init_bitmap()
 {
+	bloquesUsados = list_create();
 	log_debug(log_IMONGO,"<> INICIO CREACION BITMAP");
 	FILE* bitmapFile = fopen(RUTA_BITMAP,"w+");
 
@@ -85,11 +90,6 @@ void* atender_tripulante(Tripulante* trip)
 						}
 		}
 }
-void expulsar_un_tripulante(Tripulante* trip)
-{
-	char* id = recibir_id(trip->conexion);
-	log_debug(trip->log,"SE EXPULSO EL TRIPULANTE %s",id);
-}
 
 void init_directorios()
 {
@@ -98,7 +98,7 @@ void init_directorios()
 }
 
 
-char* crearBufferInicial(int numero)
+char* crearBufferInicial(uint32_t numero)
 {
 	return string_repeat('X',numero);
 }
@@ -126,7 +126,7 @@ void iniciar_log()
 
 void leer_config()
 {
-	config_IMONGO = config_create("../imongo.config");
+	config_IMONGO = config_create("./imongo.config");
 	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 	RUTA_BITMAP = string_from_format("%s/Metadata/Bitmap.bin",PUNTO_MONTAJE);
 	RUTA_SUPER_BLOQUE = string_from_format("%s/SuperBloque.ims",PUNTO_MONTAJE);
@@ -141,7 +141,6 @@ void leer_super_bloque()
 	BLOCKS = config_get_int_value(super_config,"BLOCKS");
 	BLOCK_SIZE = config_get_int_value(super_config,"BLOCK_SIZE");
 	config_destroy(super_config);
-	//log_info(log_IMONGO,"<> TERMINO DE LEER SUPER BLOQUE");
 
 }
 
