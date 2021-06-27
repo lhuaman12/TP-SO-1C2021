@@ -18,7 +18,7 @@
 #include <nivel-gui/tad_nivel.h>
 #include <curses.h>
 #include <stdbool.h>
-
+#include <inttypes.h>
 
 // VALORES GLOBALES DE CONFIG
 
@@ -29,13 +29,19 @@ char* CRITERIO_ELECCION_DE_SEGMENTO;
 int tamanioPCB=8;
 int tamanioTCB=21;
 int tamanioTablaSegmento=9;
+uint32_t tam_frame;
 
 // DECLARACIÓN DE LOG,CONFIG,RAM, LISTAS Y TIPOS DE SEGMENTOS.
 
 t_log* miRam_logger;
 t_config* miRam_config;
 uint32_t* ram;
-t_list* tablaDeSegmentos;
+t_list* tablaDeSegmentosLibres;
+t_list* listaDeTablas;
+
+
+
+t_list* l_tablas;
 
 //ESTRUCTURAS TIPOS DE SEGMENTOS
 
@@ -53,6 +59,7 @@ typedef struct {
 	uint32_t* base;
 	uint32_t* limite;
 	tipo_dato_guardado tipo_dato;
+	int pid;
 
 }t_tabla_segmentos;
 
@@ -97,14 +104,28 @@ typedef struct{
 
 
 
+typedef struct{
+	uint32_t nroFrame;
+	uint32_t desplazamiento;
+}t_pagina;
+
+
+typedef struct{
+	uint32_t pid;
+	t_pagina* paginas;
+}tabla_paginas_proceso;
+
+
+
+
 
 // DECLARACION DE FUNCIONES UTILIZADAS
 
 void iniciar_logger();
 void iniciar_config();
 void reservar_memoria();
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa);
-void prender_server();
+void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa,t_list* tablaDeProceso);
+//void prender_server();
 int existeSegmento();
 pcb* crear_PCB(uint32_t pid, uint32_t tareas);
 tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacionPCB);
@@ -120,8 +141,10 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
 void mostrarElemento();
 
 
-void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante);
+
+void iniciarPatota(Tripulante* trip);
 void expulsar_tripulante(Tripulante* trip);
+void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid);
 t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa);
 void actualizar_posicion_tripulante(Tripulante* trip);
 void actualizarIdTareaARealizar(Tripulante* trip);
@@ -139,6 +162,14 @@ void actualizarIdTareaARealizar(Tripulante* trip);
 
 //int iniciar_mapa(char*,int,int);
 //int iniciar_escucha_a_tripulantes();
+
+
+
+
+uint32_t* obtener_pos_frame(int numeroDeFrame);
+
+
+
 
 
 #endif MIRAM_H

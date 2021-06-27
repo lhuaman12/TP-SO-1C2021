@@ -1,5 +1,22 @@
 #include "Mi-RamHQ.h"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // INICIO DE LOGGER
 
 void iniciar_logger()
@@ -22,7 +39,9 @@ void iniciar_config()
 
     TAMANIO_MEMORIA_RAM = config_get_int_value(miRam_config,"TAMANIO_MEMORIA_RAM");
 
-    CRITERIO_ELECCION_DE_SEGMENTO =  config_get_string_value(miRam_config,"CRITERIO_ELECCION_DE_SEGMENTO");
+    CRITERIO_ELECCION_DE_SEGMENTO = config_get_string_value(miRam_config,"CRITERIO_ELECCION_DE_SEGMENTO");
+
+
 }
 
 
@@ -72,27 +91,123 @@ tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacion
 
 void crear_estructuras()
 {
-	char* esquema_de_memoria=config_get_string_value(miRam_config,"ESQUEMA_MEMORIA");
 
-    /*
-	if(strcmp(esquema_de_memoria,"PAGINACION"))
+
+	if(strcmp(ESQUEMA_MEMORIA,"PAGINACION"))
 	{
-	}
-    */
+		tam_frame= config_get_int_value(miRam_config,"TAMANIO_PAGINA");
+		int cant_frames = TAMANIO_MEMORIA_RAM/tam_frame;
+		bool tablaDeEstadoDeFrame[cant_frames];
+		l_tablas =list_create();
+		int i;
+		for(i=0;i<=cant_frames;i++){
+			tablaDeEstadoDeFrame[i]=0;
+			printf("frame:%d",tablaDeEstadoDeFrame[i]);
+		}
 
-	if(strcmp(esquema_de_memoria,"SEGMENTACION")){
+
+
+	}else if(strcmp(ESQUEMA_MEMORIA,"SEGMENTACION")){
+
 		t_tabla_segmentos* primerSegmento;
-		tablaDeSegmentos = list_create();
+		tablaDeSegmentosLibres = list_create();
+		listaDeTablas = list_create();
+
 		log_info(miRam_logger,"Cree lista de segmentos");
 		primerSegmento = crear_primer_segmento();
 		log_info(miRam_logger,"Ya cree el primer segmento con sus respectivas direcciones en memoria");
-		list_add(tablaDeSegmentos,primerSegmento);
+		list_add(tablaDeSegmentosLibres,primerSegmento);
 		log_info(miRam_logger,"Ya guarde el segmento en lista");
 		//free(primerSegmento);  BORRA LO QUE ESTA ADENTRO DEL LISTADD?
 		//log_info(miRam_logger,"Pude liberar");
 
 	}
 }
+
+
+/*
+
+uint32_t* obtener_pos_frame(int numeroDeFrame){
+
+	return ram + (numeroDeFrame*tam_frame);
+}
+
+
+
+
+int main(){
+
+	uint32_t numero;
+	uint32_t frameDos;
+	iniciar_config();
+	iniciar_logger();
+	reservar_memoria();
+	crear_estructuras();
+
+	printf("ram %u",ram);
+	numero=obtener_pos_frame(0);
+	printf("posicionFrame %u",numero);
+	frameDos=obtener_pos_frame(1);
+	printf("posicionFrame %u",frameDos);
+
+
+    return 0;
+}
+
+
+
+// busca en la lista de tablas de paginas si ya existe alguna con ese idProceso, si existe la retorna, sino la crea y la retorna.
+
+tabla_paginas_proceso* buscar_tabla_proceso(uint32_t idProceso)
+{
+	bool tabla_con_id(tabla_paginas_proceso* procesoExistente)
+	{
+		return procesoExistente->pid == idProceso;
+	}
+
+	tabla_paginas_proceso* tablaBuscada = list_find(l_tablas,tabla_con_id);
+	if(tablaBuscada != NULL){
+		return tablaBuscada;
+
+	}else{
+		tabla_paginas_proceso* nuevaTabla;
+		nuevaTabla->pid = idProceso;
+		list_add(l_tablas,nuevaTabla);
+		return nuevaTabla;
+	}
+}
+
+uint32_t* buscar_frame_libre(int cant_paginas,bool tablaDeEstadoDeFrame[])
+{
+	uint32_t* pos_frame_libre;
+	int i=0;
+		while(i<=cant_paginas && tablaDeEstadoDeFrame[i]!=0){
+			i++;
+}
+		pos_frame_libre = obtener_pos_frame(i);
+		return pos_frame_libre;
+}
+
+guardar_cosa_en_memoria()
+{
+	buscar_tabla_proceso();// -> Se desdobla: si existe tabla la devuelve, sino la crea
+	buscar_pagina_libre();// -> Se desdobla: Si el proceso ya ocupa una pagina,pero no completa, aprovecha ese espacio vacio
+						// -> si no le alcanza se debe asegurar de encontrar otro frame y agregar a la tabla de paginas, la pagina de ese frame
+						// -> si el proceso no tiene una pagina con espacio vacio debe buscar un nuevo frame y agregar la pagina a la tabla
+
+
+
+}
+*/
+
+
+
+
+
+
+
+
+
 
 
 // CREA PRIMER SEGMENTO Y LO INICIALIZA VACÍO DE CONETENIDO PERO DE TAMANIO COMO LA RAM
@@ -120,11 +235,11 @@ t_tabla_segmentos* crear_primer_segmento()
 
 
 
-// ¿EXISTE ALGUN SEGMENTO EN LA TABLA DE SEGMENTOS?
+// ¿EXISTE ALGUN SEGMENTO EN LA TABLA DE SEGMENTOS? -----> FUNCION DE TEST
 
 int existeSegmento(){
 
-	int result = list_is_empty(tablaDeSegmentos);
+	int result = list_is_empty(tablaDeSegmentosLibres);
 	int tamanioLista;
 
 	if(result==1){
@@ -136,21 +251,39 @@ int existeSegmento(){
 		log_info(miRam_logger,"La lista contiene al menos 1 segmento");
 
 	}
-	tamanioLista = list_size(tablaDeSegmentos);
+	tamanioLista = list_size(tablaDeSegmentosLibres);
 	return tamanioLista;
 }
+
+
+
+// MUESTRA EL ELEMENTO DEL PRIMER SEGMENTO OCUPADO ----> FUNCION DE TEST
+
+void mostrarElSemento(){
+
+	bool segmentoOcupado(t_tabla_segmentos* segmento){
+		return segmento->ocupado==true;
+	}
+
+
+	pcb* pcb= malloc(tamanioPCB);
+	t_tabla_segmentos* segmento = list_find(tablaDeSegmentosLibres,(void*) segmentoOcupado);
+
+	memcpy(pcb,segmento->base,sizeof(8));
+
+	printf("Un campo del valor guardado en segmento es %d  \n", pcb->pid);
+}
+
+
+
 
 
 
 
 // GUARDA LA COSA EN LA TABLA DE SEGMENTOS Y EN MEMORIA SI EXISTE EL SEGMENTO VACIO
 
-/*
- The C library function void *memcpy(void *dest, const void *src, size_t n) copies n characters
- from memory area src to memory area dest.
- **/
 
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa)
+void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa,t_list* tablaDeProceso)
 {
 	//int indiceDeGuardado;
 
@@ -168,7 +301,12 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		segmentoDisponible->ocupado = true;
 
-		segmentoDisponible->tipo_dato = tipoCosa;
+		segmentoDisponible->tipo_dato = tipoDeCosa;
+
+		list_add(tablaDeProceso, segmentoDisponible);
+
+
+		// 2. Remover segmento de la tabla de segmentos libres
 
         log_info(miRam_logger,"Ya guarde segmento en memoria y en segmento");
 
@@ -179,22 +317,6 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 	}*/
 }
 
-// MUESTRA EL ELEMENTO DEL PRIMER SEGMENTO OCUPADO
-
-void mostrarElSemento(){
-
-	bool segmentoOcupado(t_tabla_segmentos* segmento){
-		return segmento->ocupado==true;
-	}
-
-
-	pcb* pcb= malloc(tamanioPCB);
-	t_tabla_segmentos* segmento = list_find(tablaDeSegmentos,(void*) segmentoOcupado);
-
-	memcpy(pcb,segmento->base,sizeof(8));
-
-	printf("Un campo del valor guardado en segmento es %d  \n", pcb->pid);
-}
 
 
 
@@ -210,7 +332,7 @@ bool existe_segmento_libre(uint32_t tamanioCosa)
 		return tamanioCosa <= tamanio_segmento_tabla && segmento->ocupado == false;
 	}
 
-	return list_any_satisfy(tablaDeSegmentos,(void*) segmento_vacio_de_tamanio);
+	return list_any_satisfy(tablaDeSegmentosLibres,(void*) segmento_vacio_de_tamanio);
 }
 
 
@@ -241,7 +363,7 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 	    }else if(tamanio < tamanioDeSegmentoExistente){
 
-		log_info(miRam_logger,"Recortar: El tamanio de la cosa a guardar es menor que el tamanio del segmento");
+
 
 		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio);
 
@@ -288,7 +410,8 @@ void agregarSegmentoRestanteATabla(void* limite,void* base){
 
 	segmentoNuevoRestante->ocupado = false;
 
-	list_add(tablaDeSegmentos,segmentoNuevoRestante);
+	list_add(tablaDeSegmentosLibres,segmentoNuevoRestante); // A partir del indice hay que mover todos un indice mas arriba
+															//--> List add in index
 
 
 }
@@ -322,7 +445,7 @@ bool segmento_vacio_de_tamanio( t_tabla_segmentos* segmento)
 	return tamanio <= tamanio_segmento_tabla && segmento->ocupado == false;
 }
 	t_tabla_segmentos* segmentoLibre= malloc(sizeof(t_tabla_segmentos));
-	segmentoLibre = list_find(tablaDeSegmentos,(void*) segmento_vacio_de_tamanio);
+	segmentoLibre = list_find(tablaDeSegmentosLibres,(void*) segmento_vacio_de_tamanio);
 
 	return segmentoLibre; // SI ES NULL HAY QUE COMPACTAR
 
@@ -338,7 +461,7 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 	}
 
 	t_list* listaDeVacios;
-	listaDeVacios = list_filter(tablaDeSegmentos,(void*)segmento_vacio);
+	listaDeVacios = list_filter(tablaDeSegmentosLibres,(void*)segmento_vacio);
 
 	t_tabla_segmentos* segmento_que_mejor_se_ajusta(t_tabla_segmentos* segmento,t_tabla_segmentos* otroSegmento)
 	{
@@ -351,7 +474,7 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 		}
 	}
 
-	return  list_fold(listaDeVacios,(void*)list_get(tablaDeSegmentos,0),(void*)segmento_que_mejor_se_ajusta); // AGREGAR QUE SI ES NULL HAY QUE COMPACTAR
+	return  list_fold(listaDeVacios,(void*)list_get(tablaDeSegmentosLibres,0),(void*)segmento_que_mejor_se_ajusta); // AGREGAR QUE SI ES NULL HAY QUE COMPACTAR
 }
 
 
@@ -372,18 +495,11 @@ void* atender_tripulante(Tripulante* trip)
 						{
 						case ENVIAR_PROXIMA_TAREA:
 
-						    if(list_size(tablaDeSegmentos) < 2){
-						    log_info(trip->log,"No hay tripulante disponible para enviar proxima tarea");
-						    }else{
-						    actualizarIdTareaARealizar(trip);
-						    }
+							actualizarIdTareaARealizar(trip);
+
                         break;
 						case POSICION_TRIPULANTE_ACTUALIZADA:
-							/*if(list_size(tablaDeSegmentos) < 2){
-							log_info(trip->log,"No hay tripulante disponible para actualizar posiciones ;( ");
-							}else{
-							actualizar_posicion_tripulante(trip);
-							}*/
+
 							actualizar_posicion_tripulante(trip);
 
 						break;
@@ -393,11 +509,8 @@ void* atender_tripulante(Tripulante* trip)
 						break;
 						case EXPULSAR_TRIPULANTE:
 
-							if(list_size(tablaDeSegmentos) < 2){
-									log_info(trip->log,"No hay tripulante disponible para expulsar ;( ");
-							}else{
 								    expulsar_tripulante(trip);
-							}
+
 						break;
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
@@ -441,33 +554,37 @@ void prender_server()
 //                                     INICIAR PATOTA
 
 
-
-void iniciarPatota(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
-
-	int cantidadTareas = list_size(tareas);
-	int cantidadTripulantes = list_size(listaDeTripulante);
+void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
+{
+	char* mensaje = recibir_y_guardar_mensaje(trip->conexion);
+	char** mensaje_decriptado = string_split(mensaje,",");
+	uint32_t pid = atoi(mensaje_decriptado[1]);
+	t_list* tareas;
 	int i,j;
 
-	tipo_tarea nodoTarea;
-
-	pcb* pcb1 = crear_PCB(pid,&tareas);
-
-	guardar_cosa_en_segmento_adecuado(pcb1,tamanioPCB,PCB);
 
 
-	// ESTO IRÍA EN RECIBIR INICIAR PATOTA.
-	/*nodoTarea.listaTareas= list_create();
+	for(i=0; i<mensaje_decriptado[1] ; i++ ){
 
-	for(i=0; i < cantidadTareas ; i++){
+		list_add(tareas, mensaje_decriptado[i+4]);
+		}
 
-	list_add(nodoTarea.listaTareas,tareas);
+	pcb* pcb = crear_PCB(pid,&tareas);
 
-	}*/
+		t_list* tablaDeProceso = list_create();
 
-	for(j=0;j < cantidadTripulantes; j++){
+		guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
 
-		crear_TCB(list_get(listaDeTripulante,j),1,pcb1);
-	}
+		t_tripulante* nuevoTripulante;
+		nuevoTripulante->pos_x = atoi(mensaje_decriptado[4+atoi(mensaje_decriptado[3])]);
+		nuevoTripulante->pos_y = atoi(mensaje_decriptado[5+atoi(mensaje_decriptado[3])]);
+		nuevoTripulante->estado = mensaje_decriptado[6+atoi(mensaje_decriptado[3])];
+		nuevoTripulante->tid = atoi(mensaje_decriptado[3+atoi(mensaje_decriptado[3])]);
+
+
+		crear_TCB(nuevoTripulante,&mensaje_decriptado[4],pcb);
+
+	list_add_in_index(listaDeTablas,tablaDeProceso,pid);
 }
 
 
@@ -485,26 +602,48 @@ t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa){
 
 void expulsar_tripulante(Tripulante* trip)
 {
-	char* id = recibir_id(trip->conexion);
-	int idDecriptado = atoi(id);
+	char* mensaje = recibir_y_guardar_mensaje(trip->conexion);
+	char** mensaje_decriptado = string_split(mensaje,",") ;
+	uint32_t pid = atoi(mensaje_decriptado[2]);
+	uint32_t tid = atoi(mensaje_decriptado[1]);
 
 
-	bool cumple_identificador(t_tabla_segmentos* cosa){
-
-		t_tabla_segmentos* segmentoConTcb;
-
-		segmentoConTcb = retornaTCB(cosa);
-
-		tcb* tcb = NULL;
-
-		memcpy(tcb,segmentoConTcb->base,sizeof(tamanioTCB));
-
-		return tcb->tid==idDecriptado;
-	}
-
-    list_remove_by_condition(tablaDeSegmentos,(void*)cumple_identificador);
+	expulsar_tripulante_de_patota(tid, pid);
 
   }
+
+
+
+void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid)
+{
+
+	bool cumple_id_tripulante(t_tabla_segmentos* segmentoGuardado){
+
+
+		if(segmentoGuardado->tipo_dato==TCB){
+
+		tcb* tcbAlmacenado;
+		memcpy(tcbAlmacenado,segmentoGuardado->base,tamanioTCB);
+
+
+
+		return tcbAlmacenado->tid == tid;
+
+		}
+
+	}
+
+	t_list* tablaBuscada = list_get(listaDeTablas, pid);
+	list_remove_by_condition(tablaBuscada, (void*) cumple_id_tripulante);
+
+
+}
+
+
+
+
+
+
 
 
 //                                  ACTUALIZAR POSICION DE TRIPULANTE
@@ -515,38 +654,39 @@ void actualizar_posicion_tripulante(Tripulante* trip){
 
 	char* id = recibir_y_guardar_mensaje(trip->conexion);
 	char** mensaje_decriptado = string_split(id,",");
-	//t_tabla_segmentos* segmentoConTCBTripulante;
-	//uint32_t idTripDeMensaje = atoi(mensaje_decriptado[0]);
 
-	/*bool cumple_identificador(t_tabla_segmentos* cosa){
+	uint32_t pid = atoi(mensaje_decriptado[2]);
+	uint32_t tid = atoi(mensaje_decriptado[1]);
+	tcb* tripulanteAlmacenado;
+	t_list* tablaBuscada;
+	t_tabla_segmentos* segmentoDelTripulante;
 
-			t_tabla_segmentos* segmentoConTcb;
+	bool cumple_id_tripulante(t_tabla_segmentos* segmentoGuardado){
 
-			segmentoConTcb = retornaTCB(cosa);
 
-			tcb* tcb = NULL;
+			if(segmentoGuardado->tipo_dato==TCB){
 
-			memcpy(tcb,segmentoConTcb->base,sizeof(tamanioTCB));
+			tcb* tcbAlmacenado;
+			memcpy(tcbAlmacenado,segmentoGuardado->base,tamanioTCB);
 
-			return tcb->tid == idTripDeMensaje;
+
+
+			return tcbAlmacenado->tid == tid;
+
+			}
+
 		}
 
-    segmentoConTCBTripulante = list_find(tablaDeSegmentos,(void*)cumple_identificador);
+		tablaBuscada = list_get(listaDeTablas, pid);
+		segmentoDelTripulante = list_find(tablaBuscada, (void*) cumple_id_tripulante);
 
-    tcb* tcb = NULL;
-
-    memcpy(tcb,segmentoConTCBTripulante->base,sizeof(tamanioTCB));
-
-    tcb->posicionX = atoi(mensaje_decriptado[1]);
-    tcb->posicionY = atoi(mensaje_decriptado[2]);*/
-
-	log_info(trip->log,"El id es x es: %d",atoi(mensaje_decriptado[0]));
-	log_info(trip->log,"La posicion en x es: %d",atoi(mensaje_decriptado[1]));
-	log_info(trip->log,"La posicion en y es: %d",atoi(mensaje_decriptado[2]));
+		memcpy(tripulanteAlmacenado,segmentoDelTripulante->base,tamanioTCB);
 
 
+		tripulanteAlmacenado->posicionX = atoi(mensaje_decriptado[3]);
+		tripulanteAlmacenado->posicionY = atoi(mensaje_decriptado[4]);
 
-
+		memcpy(segmentoDelTripulante->base,tripulanteAlmacenado,tamanioTCB);
 
 }
 
@@ -575,6 +715,7 @@ void actualizarIdTareaARealizar(Tripulante* trip){
 
 //                                        MAIN
 
+
 int main(){
 
 
@@ -591,10 +732,10 @@ int main(){
     return 0;
 }
 
-
-
-
 /*
+
+
+
 
 
 int iniciar_mapa(char* nombreNivel,int columnas,int filas)
@@ -626,8 +767,8 @@ int iniciar_mapa(char* nombreNivel,int columnas,int filas)
 	}
 
 
-}
+}*/
 
-*/
+
 
 
