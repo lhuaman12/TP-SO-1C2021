@@ -34,8 +34,26 @@ void repararSize(char* recurso)
 	char* path = PUNTO_MONTAJE;
 	string_append_with_format(&path,"/Files/%s.ims",recurso);
 	FILE* metadata = fopen(path,"r+b");
-
-
-
 }
 
+
+void responder_bitacora(Tripulante* trip)
+{
+
+char* id = recibir_id(trip->conexion);
+
+log_info(trip->log,"<> Buscando la bitacora de %s",id);
+char* buffer[] = {"Se movio el tripulante a 1|2","Diego es puto","Luis es capo","Bruno es puto tamnien"};
+int tamanio = 4;
+//buffer = exportarBitacora();
+
+char* mensaje = string_new();
+string_append_with_format(&mensaje,"%s,",string_itoa(tamanio+1));
+
+for(int i=0;i<tamanio;i++)
+{
+	string_append_with_format(&mensaje,"%s,",buffer[i]);
+}
+
+enviar_mensaje_por_codigo(mensaje,BITACORA,trip->conexion);
+}

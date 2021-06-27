@@ -5,27 +5,19 @@ int main(void)
 {
 	iniciar_log();
 	leer_config();
-	iniciar_filesystem();
-
-	solicitarBloque();
-	solicitarBloque();
-
-	guardarRecurso("Mate","se expulso al tripulante 4");
-	//sleep(10);
-	//guardarRecurso("Cava","PETEEEEE");
+	//iniciar_filesystem();
 
 
-	//prender_server();
+	prender_server();
+
 	/*CUANDDO HAGO UN LOG SE ROMPE O SE OCUPA LA MEMORIA, Y NO ME ANDA BIEN ESTA FUNCION :c*/
-	//char** palabra_cortada = cortarPalabras("hol",4);
-	//printf("PALABRA: %s\n",palabra_cortada[0]);
-	//printf("PALABRA: %s\n",palabra_cortada[1]);
-
+	//char** palabra_cortada = cortarPalabras("holapete",4);
+	//log_info(log_IMONGO,"Palabra: %s",palabra_cortada[0]);
+	//log_info(log_IMONGO,"Palabra: %s",palabra_cortada[1]);
 }
 
 void prender_server()
 {
-	pthread_t hiloSignal;
 	int puerto_escucha = atoi(PUERTO_ESCUCHA_SERVER);
 	int socket_interno = crearSocket();
 	log_info(log_IMONGO,"SERVIDOR LISTO");
@@ -78,9 +70,13 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
+
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
 							break;
+					    case OBTENER_BITACORA:
+					    	responder_bitacora(trip);
+					    	break;
 						case -1:
 							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
 							break;
@@ -126,7 +122,7 @@ void iniciar_log()
 
 void leer_config()
 {
-	config_IMONGO = config_create("./imongo.config");
+	config_IMONGO = config_create("../imongo.config");
 	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 	RUTA_BITMAP = string_from_format("%s/Metadata/Bitmap.bin",PUNTO_MONTAJE);
 	RUTA_SUPER_BLOQUE = string_from_format("%s/SuperBloque.ims",PUNTO_MONTAJE);

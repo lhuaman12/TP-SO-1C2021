@@ -12,5 +12,5 @@
 
 void repararSuperBloque();
 void repararBitmap();
-
+void responder_bitacora(Tripulante* trip);
 #endif /* FSCK_H_ */
