@@ -34,6 +34,21 @@ int solicitarBloque() {
 	return bloqueEncontrado;
 }
 
+void solicitarBloquePorNumero(int id) {
+	log_debug(log_IMONGO, "<> START: Solicitar bloque %d <>",id);
+
+	int bloqueEncontrado = id;
+
+	bitarray_set_bit(bitarray, bloqueEncontrado);
+
+	FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
+	fseek(bitmap, bloqueEncontrado, SEEK_SET);
+	fwrite("1", 1, 1, bitmap);
+	fclose(bitmap);
+
+	log_debug(log_IMONGO, "<> END: Solicitar bloque %d <>",id);
+}
+
 void liberarBloque(int bloqueALiberar){
 	log_debug(log_IMONGO, "<> START: Liberar bloque <>");
 
@@ -77,6 +92,7 @@ void estaEnBitmap(int bloque)
 	}
 	fclose(bitmap);
 }
+
 
 
 

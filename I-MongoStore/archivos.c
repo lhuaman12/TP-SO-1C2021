@@ -38,6 +38,31 @@ char* crearRecurso(char* recurso){
 	fclose(metadata);
 	return filePath;
 }
+
+/*
+char* obtenerBitacora(char* id)
+{
+	char* filePath = PUNTO_MONTAJE;
+	string_append_with_format(&filePath,"/Files/Bitacora/Tripulante%s.ims",id);
+
+	t_config* bitacora = config_create(filePath);
+	char* bloques[] = config_get_array_value(bitacora,"BLOCKS");
+	int tamanio = sizeof(bloques)/sizeof(bloques[0]);
+
+	char* mensaje = string_new();
+	char* mensaje_local;
+
+	for(int i=0;i<tamanio;i++)
+	{
+		mensaje_local = leerBloque();
+		string_append()
+	}
+
+	return mensaje;
+
+}
+*/
+
 /*
 void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* bloques, char* caracter){
 	char* carpeta = string_substring_until(filePath, strlen(filePath) - strlen("Metadata.bin"));

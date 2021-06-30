@@ -11,6 +11,13 @@
 #include"servidor.h"
 
 
+typedef struct
+{
+	int id_bit;
+	int usado;
+}t_bit;
+
+
 //LOGICA DE BITMAP
 
 /* Setea el bloque en uso en la estructura de bitarray
@@ -27,6 +34,7 @@ int solicitarBloque(void);
  */
 void liberarBloque(int bloqueALiberar);
 
+void solicitarBloquePorNumero(int id);
 
 void guardarBackup(t_list* bitList,int bloque);
 

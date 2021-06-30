@@ -9,7 +9,26 @@
 
 #include"servidor.h"
 
+
+typedef struct
+{
+	int id;
+	int size;
+	int libre;
+	char* contenido;
+
+} t_bloque;
+//BLOQUES EN MEMORIA
+void cargarBLoqueEnMemoria(char* contenido,int id_bloque);
+void liberarBloque(int id_bloque);
+void liberarBloqueMemoria(int id_bloque);
+void copiarADisco();
+void copiarAMemoria();
+
+//BLOQUES EN DISCO
 void guardarEnBloque(char* contenido,int id_bloque);
+
+
 int contarBloques();
 int calcularBloquesPorContenido(char* contenido);
 

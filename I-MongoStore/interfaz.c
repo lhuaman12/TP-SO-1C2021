@@ -35,8 +35,7 @@ void guardarContenido(char* path, char* contenido)
 	int cantidadBloques = calcularBloquesPorContenido(contenido);
 	char* bloquesGuardados = string_new();
 	char** contendidoCortado = cortarPalabras(contenido,BLOCK_SIZE);
-	int bloque = -1;//= malloc(sizeof(char**)); //
-	//contendidoCortado[0]=contenido;
+	int bloque = -1;
 	for(int i = 0; i<cantidadBloques;i++)
 	{
 		bloque = solicitarBloque();
@@ -44,7 +43,8 @@ void guardarContenido(char* path, char* contenido)
 		{
 			log_error(log_IMONGO,"<> NO HAY SUFICIENTES BLOQUES PARA GUARDAR ESO");
 		}
-		guardarEnBloque(contendidoCortado[i],bloque);
+		//guardarEnBloque(contendidoCortado[i],bloque);
+		cargarBLoqueEnMemoria(contendidoCortado[i],bloque);
 		string_append_with_format(&bloquesGuardados,"%d,",bloque);
 	}
 	free(bloquesGuardados);

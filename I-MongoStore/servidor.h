@@ -34,9 +34,13 @@
 #define IP "127.0.0.1"
 #define PUERTO_ESCUCHA_SERVER "4444"
 
+
+
 //VARIABLES GLOBALES
 int BLOCKS;
 int BLOCK_SIZE;
+int NUEVO_FS;
+char* BITMAP;
 
 // *PARA LA CONEXION
 int PUERTO_ESCUCHA_IMONGO;
@@ -56,7 +60,7 @@ char* RUTA_BLOCKS;
 char* RUTA_BITACORA;
 
 // *PARA LOS BLOQUES
-
+t_list* bloques;
 
 // *SEMAFOROS
 
@@ -78,8 +82,12 @@ void leer_config();
 void iniciar_filesystem();
 void init_bitmap();
 void leer_super_bloque();
-void init_bloques();
 void init_directorios();
+
+void crear_super_bloque();
+void init_bloques_vacio();
+void init_bitmap();
+void init_bloques_usado();
 
 void* atender_tripulante(Tripulante* trip);
 

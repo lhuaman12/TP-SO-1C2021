@@ -44,6 +44,7 @@ char* id = recibir_id(trip->conexion);
 
 log_info(trip->log,"<> Buscando la bitacora de %s",id);
 char* buffer[] = {"Se movio el tripulante a 1|2","Diego es puto","Luis es capo","Bruno es puto tamnien"};
+//char* buffer[] = obtenerBitacora(id);
 int tamanio = 4;
 //buffer = exportarBitacora();
 
