@@ -18,16 +18,13 @@ void crearBitacora(char* nombre)
 	fclose(metadata);
 }
 
-char* crearRecurso(char* recurso){
-	char* filePath = PUNTO_MONTAJE;
-	string_append_with_format(&filePath,"/Files/%s.ims",recurso);
-
+void crearRecurso(char* filePath, char* recurso){
 	FILE* metadata = fopen(filePath,"w+b");
-	char* size = "SIZE=0\n";
-	char* block_count = "BLOCK_COUNT=0\n";
-	char* blocks = "BLOCKS=[]\n";
-	char* caracter_llenado = "CARACTER_LLENADO=N\n";
-	char* md5 = "MD5_ARCHIVO=0\n";
+	char* size = "SIZE=\n";
+	char* block_count = "BLOCK_COUNT=\n";
+	char* blocks = "BLOCKS=\n";
+	char* caracter_llenado = "CARACTER_LLENADO=\n";
+	char* md5 = "MD5_ARCHIVO=\n";
 	fwrite(size, strlen(size), 1, metadata);
 	fwrite(block_count, strlen(block_count), 1, metadata);
 	fwrite(blocks, strlen(blocks), 1, metadata);
@@ -36,7 +33,6 @@ char* crearRecurso(char* recurso){
 
 	log_info(log_IMONGO, "<> SE CREO EL RECURSO %s.",recurso);
 	fclose(metadata);
-	return filePath;
 }
 
 /*
@@ -136,6 +132,19 @@ void sobreEscribirSuperBloque(char* path,int bloques)
 	fclose(metadata);
 
 }
+void agregarBloquesFile(char* path,char* bloquesUsados)
+{
+	log_debug(log_IMONGO,"Se inicia la agregacion insta");
+	t_config* recurso = config_create(path);
+	char* bloquesitos = config_get_string_value(recurso,"BLOCKS");
+	string_append(&bloquesitos,bloquesUsados);
+
+	log_info(log_IMONGO,"SON_: %s",bloquesitos);
+
+	config_set_value(recurso,"BLOCKS",bloquesitos);
+}
+
+
 void sobreEscribirRecurso(char* path,int bloques)
 {
 	FILE* metadata = fopen(path,"r+");

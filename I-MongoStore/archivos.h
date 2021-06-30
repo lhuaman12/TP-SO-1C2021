@@ -13,9 +13,10 @@
 #include"servidor.h"
 
 void crearBitacora(char* nombre);
-char* crearRecurso(char* recurso);
+void crearRecurso(char* filePath, char* recurso);
 void crearArchivoMetadata(char* filePath,char* tamanio,char* cant_bloques,char* bloques, char* caracter);
 void sobreEscribirSuperBloque(char* path,int bloques);
 void sobreEscribirRecurso(char* path,int bloques);
+void agregarBloquesFile(char* path,char* bloquesUsados);
 
 #endif /* SRC_ARCHIVOS_H_ */

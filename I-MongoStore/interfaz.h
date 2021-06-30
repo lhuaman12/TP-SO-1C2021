@@ -16,5 +16,9 @@ char** cortarPalabras(char* palabra,int cantidad);
 void guardarContenido(char* path, char* contenido);
 void guardarRecurso(char* recurso,char* contenido);
 
+bool existeArchivo(char* nombre);
+
+
+void generarOxigeno(int cantidad);
 
 #endif /* INTERFAZ_H_ */

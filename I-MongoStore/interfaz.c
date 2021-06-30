@@ -22,11 +22,37 @@ char** cortarPalabras(char* palabra,int cantidad)
 
 }
 
+bool existeArchivo(char* path)
+{
+	return access(path,F_OK) == 0;
+}
+
+
+void generarOxigeno(int cantidad)
+{
+	char* nombre = "Oxigeno";
+	char* filePath = "/home/utnso/polus/Files/Oxigeno.ims";
+	if(existeArchivo(filePath))
+	{
+		char* buffer = malloc(cantidad);
+		buffer = string_repeat('O',cantidad);
+		guardarContenido(filePath,buffer);
+
+	}
+	else{
+		crearRecurso(filePath,nombre);
+		char* buffer = malloc(cantidad+1);
+		buffer = string_repeat('O',cantidad+1);
+		guardarContenido(filePath,buffer);
+	}
+}
+
+
 void guardarRecurso(char* recurso,char* contenido)
 {
-	char* filePath = crearRecurso(recurso);
-	guardarContenido(filePath,contenido);
-	free(filePath);
+	//crearRecurso(recurso);
+	//guardarContenido(filePath,contenido);
+	//free(filePath);
 }
 
 void guardarContenido(char* path, char* contenido)
@@ -43,10 +69,11 @@ void guardarContenido(char* path, char* contenido)
 		{
 			log_error(log_IMONGO,"<> NO HAY SUFICIENTES BLOQUES PARA GUARDAR ESO");
 		}
-		//guardarEnBloque(contendidoCortado[i],bloque);
 		cargarBLoqueEnMemoria(contendidoCortado[i],bloque);
 		string_append_with_format(&bloquesGuardados,"%d,",bloque);
 	}
+
+	//agregarBloquesFile(path,bloquesGuardados);
 	free(bloquesGuardados);
 	free(contendidoCortado);
 }
