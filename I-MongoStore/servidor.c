@@ -7,15 +7,14 @@ int main(void)
 	leer_config();
 	iniciar_filesystem();
 
-
-
-	//generarOxigeno(5);
+	generarOxigeno(7);
 	//generarOxigeno(2);
 
-	// copiarADisco();
+	copiarADisco();
 	//prender_server();
-	/*CUANDDO HAGO UN LOG SE ROMPE O SE OCUPA LA MEMORIA, Y NO ME ANDA BIEN ESTA FUNCION :c*/
-	//char** palabra_cortada = cortarPalabras("holapete",4);
+	//log_info(log_IMONGO,"GOLA");
+
+	//char palabra_cortada = cortarPalabras("holaCOMOandas",4);
 	//log_info(log_IMONGO,"Palabra: %s",palabra_cortada[0]);
 	//log_info(log_IMONGO,"Palabra: %s",palabra_cortada[1]);
 }
@@ -66,7 +65,7 @@ void init_bitmap()
 
 	FILE* bitmapFile = fopen(RUTA_BITMAP,"w+b");
 
-	int cantidad_bits = BLOCKS / 8;
+	int cantidad_bits = BLOCKS;
 
 	for(int i = 0; i<BLOCKS; i++)
 	{
@@ -160,7 +159,7 @@ void iniciar_log()
 
 void leer_config()
 {
-	config_IMONGO = config_create("../imongo.config");
+	config_IMONGO = config_create("./imongo.config");
 	//PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 	PUNTO_MONTAJE = "/home/utnso/polus";
 	RUTA_BITMAP = string_from_format("%s/Bitmap.ims",PUNTO_MONTAJE);
@@ -173,26 +172,44 @@ void leer_config()
 
 void crear_super_bloque()
 {
-	char* buffer = string_new();
-	char* blocks = string_new();
-	char* block_size = string_new();
-	char* bitmap = "BITMAP=\n";
-
-	printf("\n<> Ingrese la cantidad de bloques\n");
-	buffer = readline(">");
-	string_append_with_format(&blocks,"BLOCKS=%s\n");
-	printf("\n<> Ingrese el tamaño de los bloques\n");
-	buffer = readline(">");
-	string_append_with_format(&blocks,"BLOCK_SIZE=%s\n");
+	char blocks[] = "BLOCKS=\n";
+	char block_size[]= "BLOCK_SIZE=\n";
+	char bitmap[] = "BITMAP=\n";
 
 	FILE* super_bloque = fopen(RUTA_SUPER_BLOQUE,"w+b");
 	fwrite(blocks, strlen(blocks), 1, super_bloque);
 	fwrite(block_size, strlen(block_size), 1, super_bloque);
 	fwrite(bitmap, strlen(bitmap), 1, super_bloque);
 	fclose(super_bloque);
-	free(buffer);
-	free(blocks);
-	free(block_size);
+
+	escribir_super_bloque();
+}
+
+void escribir_super_bloque()
+{
+	char* bloques;
+	char* tamanio;
+
+	printf("\n<> Ingrese la cantidad de bloques\n");
+	bloques = readline(">");
+	printf("\n<> Ingrese el tamaño de los bloques\n");
+	tamanio = readline(">");
+
+
+	super_config = config_create(RUTA_SUPER_BLOQUE);
+	config_set_value(super_config,"BLOCKS",bloques);
+	config_set_value(super_config,"BLOCK_SIZE",tamanio);
+
+	config_save(super_config);
+	config_destroy(super_config);
+
+/*
+	FILE* super_bloque= fopen(RUTA_SUPER_BLOQUE,"r+b");
+	fseek(super_bloque,7,SEEK_SET);
+	fwrite(bloques,strlen(bloques),1,super_bloque);
+	fwrite("\n",sizeof(char),1,super_bloque);
+	fclose(super_bloque);
+*/
 }
 
 void leer_super_bloque()

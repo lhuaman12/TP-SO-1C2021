@@ -85,6 +85,7 @@ void leer_super_bloque();
 void init_directorios();
 
 void crear_super_bloque();
+void escribir_super_bloque();
 void init_bloques_vacio();
 void init_bitmap();
 void init_bloques_usado();

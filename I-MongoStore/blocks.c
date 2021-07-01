@@ -36,12 +36,12 @@ void cargarBLoqueEnMemoria(char* contenido,int id_bloque)
 
 void copiarAMemoria()
 {
-	int posicion;
+	int posicion = 0;
 	char* bloqueVacio = malloc(BLOCK_SIZE);
 	bloqueVacio = crearBufferInicial(BLOCK_SIZE);
 
-	char* buffer = malloc(BLOCK_SIZE);
-	FILE* metadata = fopen(RUTA_BLOCKS,"r+b");
+	char buffer[BLOCK_SIZE];
+	FILE* metadata = fopen(RUTA_BLOCKS,"r+");
 
 	for(int i = 0; i<BLOCKS;i++)
 	{
@@ -60,7 +60,7 @@ void copiarAMemoria()
 
 	fclose(metadata);
 	free(bloqueVacio);
-	free(buffer);
+	//free(buffer);
 
 }
 

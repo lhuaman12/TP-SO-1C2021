@@ -12,7 +12,7 @@
 
 #include"servidor.h"
 
-char** cortarPalabras(char* palabra,int cantidad);
+char cortarPalabras(char* palabra,int cantidad);
 void guardarContenido(char* path, char* contenido);
 void guardarRecurso(char* recurso,char* contenido);
 

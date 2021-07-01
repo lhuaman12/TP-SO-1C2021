@@ -5,8 +5,8 @@ int solicitarBloque() {
 
 	int bloqueEncontrado = -1;
 	int cantidadBloques = bitarray_get_max_bit(bitarray);
-
-	for (int i = 0; i < cantidadBloques; i++) {
+	int i = 0;
+	for (i = 0; i < cantidadBloques; i++) {
 		if (!bitarray_test_bit(bitarray, i)) {
 			bitarray_set_bit(bitarray, i);
 			bloqueEncontrado = i;
