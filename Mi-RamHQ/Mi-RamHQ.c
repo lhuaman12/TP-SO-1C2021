@@ -4,25 +4,15 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // INICIO DE LOGGER
 
 void iniciar_logger()
 {
 	miRam_logger=log_create("miRam.log", "Mi-Ram", 1, LOG_LEVEL_INFO);
-	log_info(miRam_logger,"Ya me inicie");
+
+//	iniciar_mapa("Nivel Base",4,4);
+
+	log_info(miRam_logger,"Log inicializado");
 
 
 }
@@ -31,7 +21,10 @@ void iniciar_logger()
 
 void iniciar_config()
 {
-	miRam_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Mi-RamHQ/miRam.config");
+	//miRam_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Mi-RamHQ/miRam.config");
+
+	miRam_config = config_create("../miRam.config");
+
 
 	PUERTO_ESCUCHA_MIRAM =config_get_int_value(miRam_config,"PUERTO_ESCUCHA_MIRAM");
 
@@ -92,7 +85,7 @@ tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacion
 void crear_estructuras()
 {
 
-
+/*
 	if(strcmp(ESQUEMA_MEMORIA,"PAGINACION"))
 	{
 		tam_frame= config_get_int_value(miRam_config,"TAMANIO_PAGINA");
@@ -107,17 +100,17 @@ void crear_estructuras()
 
 
 
-	}else if(strcmp(ESQUEMA_MEMORIA,"SEGMENTACION")){
+	}else */if(strcmp(ESQUEMA_MEMORIA,"SEGMENTACION")){
 
 		t_tabla_segmentos* primerSegmento;
 		tablaDeSegmentosLibres = list_create();
+
 		listaDeTablas = list_create();
 
-		log_info(miRam_logger,"Cree lista de segmentos");
+		log_info(miRam_logger,"Cree lista tabla de procesos");
 		primerSegmento = crear_primer_segmento();
-		log_info(miRam_logger,"Ya cree el primer segmento con sus respectivas direcciones en memoria");
 		list_add(tablaDeSegmentosLibres,primerSegmento);
-		log_info(miRam_logger,"Ya guarde el segmento en lista");
+		log_info(miRam_logger,"Cree y guarde el  primer segmento");
 		//free(primerSegmento);  BORRA LO QUE ESTA ADENTRO DEL LISTADD?
 		//log_info(miRam_logger,"Pude liberar");
 
@@ -289,11 +282,11 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 	if(existe_segmento_libre(tamanioCosa))
 	{
-		log_info(miRam_logger,"Encontre un segmento libre");
+		log_info(miRam_logger,"Encontre un segmento libre /n");
 
 		t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
 
-		log_info(miRam_logger,"Devolvi segmento disponible y recortado para ocupar");
+		log_info(miRam_logger,"Devolvi segmento recortado para ocupar /n");
 
 		memcpy(segmentoDisponible->base,cosa,tamanioCosa);
 
@@ -301,20 +294,21 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		segmentoDisponible->ocupado = true;
 
+		log_info(miRam_logger,"Ya guarde segmento en tabla de proceso %i",segmentoDisponible->ocupado);
+
 		segmentoDisponible->tipo_dato = tipoDeCosa;
 
 		list_add(tablaDeProceso, segmentoDisponible);
 
+	   // 2. Remover segmento de la tabla de segmentos libres
 
-		// 2. Remover segmento de la tabla de segmentos libres
+        log_info(miRam_logger,"Ya guarde segmento en tabla de proceso");
 
-        log_info(miRam_logger,"Ya guarde segmento en memoria y en segmento");
-
-	}
-	/*else{
+	    }
+	    /*else{
 		printf("No hay un segmento de ese tamaño");
 		//compactar();
-	}*/
+	    }*/
 }
 
 
@@ -362,8 +356,6 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 		return segmentoVacioExistente;
 
 	    }else if(tamanio < tamanioDeSegmentoExistente){
-
-
 
 		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio);
 
@@ -421,12 +413,14 @@ void agregarSegmentoRestanteATabla(void* limite,void* base){
 
 t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 
-		if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO ,"FIRSTFIT"))
+
+
+	if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO ,"FIRSTFIT")==0)
 		{
 			log_info(miRam_logger,"llegue a buscar");
 			return buscar_segmento_libre_primer_ajuste(tamanioCosa);
 		}
-		else if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO,"BESTFIT"))
+		else if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO,"BESTFIT")==0)
 		{
 			return buscar_segmento_libre_mejor_ajuste(tamanioCosa);
 		}
@@ -439,6 +433,8 @@ t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio)
 {
 	log_info(miRam_logger,"llegue a buscar primer ajuste");
+
+
 bool segmento_vacio_de_tamanio( t_tabla_segmentos* segmento)
 {
 	uint32_t tamanio_segmento_tabla = segmento->limite - segmento->base;
@@ -460,8 +456,8 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 		return segmento->ocupado == false;
 	}
 
-	t_list* listaDeVacios;
-	listaDeVacios = list_filter(tablaDeSegmentosLibres,(void*)segmento_vacio);
+	t_list* listaDeVacios = list_create();
+	listaDeVacios = list_filter(tablaDeSegmentosLibres, (void*) segmento_vacio);
 
 	t_tabla_segmentos* segmento_que_mejor_se_ajusta(t_tabla_segmentos* segmento,t_tabla_segmentos* otroSegmento)
 	{
@@ -475,6 +471,8 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 	}
 
 	return  list_fold(listaDeVacios,(void*)list_get(tablaDeSegmentosLibres,0),(void*)segmento_que_mejor_se_ajusta); // AGREGAR QUE SI ES NULL HAY QUE COMPACTAR
+
+	list_destroy(listaDeVacios);
 }
 
 
@@ -488,12 +486,16 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 
 void* atender_tripulante(Tripulante* trip)
 {
+
+
 	while(1)
 		{
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
+
 						case ENVIAR_PROXIMA_TAREA:
+
 
 							actualizarIdTareaARealizar(trip);
 
@@ -505,24 +507,27 @@ void* atender_tripulante(Tripulante* trip)
 						break;
 						case INICIAR_PATOTAS:
 
-                              // INICIAR TODAS LAS ESTRUCT
+                            iniciarPatota(trip);
+
 						break;
 						case EXPULSAR_TRIPULANTE:
 
-								    expulsar_tripulante(trip);
+					        expulsar_tripulante(trip);
 
 						break;
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
 							break;
-						case -1:
+						/*case -1:
 							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
 							break;
 						default:
-							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
-							break;
+							log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							break;*/
 						}
+
 		}
+
 }
 
 
@@ -543,11 +548,6 @@ void prender_server()
 
 
 
-
-
-
-
-
 //                         RECEPCION DE MENSAJES DE MODULO DISCORDIADOR
 
 
@@ -556,25 +556,66 @@ void prender_server()
 
 void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
 {
-	char* mensaje = recibir_y_guardar_mensaje(trip->conexion);
-	char** mensaje_decriptado = string_split(mensaje,",");
-	uint32_t pid = atoi(mensaje_decriptado[1]);
-	t_list* tareas;
-	int i,j;
+
+	char* mensaje = malloc(200);
+
+	mensaje = recibir_y_guardar_mensaje(trip->conexion);
+
+	printf("El mensaje es %s",mensaje);
+
+	char** mensaje_decriptado = malloc(sizeof(char)*strlen(mensaje));
+
+	mensaje_decriptado = string_split(mensaje,",");
+
+	mensaje_decriptado[1]= malloc(sizeof(int));
+
+	log_info(miRam_logger,"Decripte el mensaje");
+
+	t_list* tareas =  malloc(sizeof(tareas));
+
+    tareas = list_create();
+
+	log_info(miRam_logger,"Cree lista de tareas");
+
+	t_list*  tablaDeProceso  = malloc(sizeof(tablaDeProceso)*3);
 
 
+	tablaDeProceso = list_create();
 
-	for(i=0; i<mensaje_decriptado[1] ; i++ ){
+	log_info(miRam_logger,"Cree lista de tabla de proceso");
+
+	int i,cantidadDeTareas;
+
+	//cantidadDeTareas = atoi(mensaje_decriptado[1]);
+
+	int pid = atoi(mensaje_decriptado[1]); // 10
+
+
+	printf("/n  EL valor del pid es %d  \n ",atoi( mensaje_decriptado[1]));
+
+
+	log_info(miRam_logger,"Inicialize contador de tareas y pid");
+
+        for(i=0 ; i<1; i++ ){
+
+
+        log_info(miRam_logger,"Estoy por añadir la tarea %i",i+1);
 
 		list_add(tareas, mensaje_decriptado[i+4]);
+
+
 		}
 
-	pcb* pcb = crear_PCB(pid,&tareas);
 
-		t_list* tablaDeProceso = list_create();
+        log_info(miRam_logger,"Agregue la/s tareas a la lista de tareas");
 
-		guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
+	   guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
 
+
+	   pcb* pcb = crear_PCB(pid,&tareas);
+
+	  // guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
+/*
 		t_tripulante* nuevoTripulante;
 		nuevoTripulante->pos_x = atoi(mensaje_decriptado[4+atoi(mensaje_decriptado[3])]);
 		nuevoTripulante->pos_y = atoi(mensaje_decriptado[5+atoi(mensaje_decriptado[3])]);
@@ -583,8 +624,12 @@ void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* lis
 
 
 		crear_TCB(nuevoTripulante,&mensaje_decriptado[4],pcb);
+*/
+//      list_add_in_index(listaDeTablas,tablaDeProceso,pid);
 
-	list_add_in_index(listaDeTablas,tablaDeProceso,pid);
+	//SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
+	   log_destroy(miRam_logger);
+	   log_destroy(trip->log);
 }
 
 
@@ -598,6 +643,7 @@ t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa){
         	return NULL;
         }
 }
+
 
 
 void expulsar_tripulante(Tripulante* trip)
@@ -723,14 +769,30 @@ int main(){
 	iniciar_logger();
 	reservar_memoria();
 	crear_estructuras();
-	prender_server();
+	t_list* tareas = list_create();
+	t_list*  tablaDeProceso = list_create();
+	char* tarea = "HACERCACOTA";
+	t_tripulante* tripulante= malloc(sizeof(t_tripulante));
+	tripulante->estado ='R';
+	tripulante->pos_x = 0;
+	tripulante->pos_y = 0;
+	tripulante->tid= 10;
+	pcb* pcb = crear_PCB(10,2020);
+	tcb* tcb = crear_TCB(tripulante,&tareas[1],pcb);
 
-    //guardar_cosa_en_segmento_adecuado(bloqueTripulante);
+    list_add(tareas,tarea);
+    guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
+    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
+	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+    //prender_server();
 
-    //iniciar_mapa("Nivel Base",4,4);
+
+
+
 
     return 0;
 }
+
 
 /*
 

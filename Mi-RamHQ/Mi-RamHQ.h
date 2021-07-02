@@ -125,7 +125,7 @@ void iniciar_logger();
 void iniciar_config();
 void reservar_memoria();
 void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa,t_list* tablaDeProceso);
-//void prender_server();
+void prender_server();
 int existeSegmento();
 pcb* crear_PCB(uint32_t pid, uint32_t tareas);
 tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacionPCB);
@@ -139,7 +139,7 @@ t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio);
 void agregarSegmentoRestanteATabla(void* limite,void* base);
 t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
 void mostrarElemento();
-
+void* atender_tripulante(Tripulante* trip);
 
 
 void iniciarPatota(Tripulante* trip);
