@@ -339,7 +339,7 @@ bool existe_segmento_libre(uint32_t tamanioCosa)
 
 t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 {
-
+		int indice;
 		t_tabla_segmentos* segmentoVacioExistente = buscar_segmento_segun_criterio(tamanio);
 
 	    uint32_t tamanioDeSegmentoExistente = segmentoVacioExistente->limite - segmentoVacioExistente->base;
@@ -357,7 +357,9 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 	    }else if(tamanio < tamanioDeSegmentoExistente){
 
-		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio);
+	    indice = encontrar_indice(segmentoVacioExistente);
+
+		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio, indice);
 
 		log_info(miRam_logger,"Recortar: Agregue segmento restante a tabla con sus nuevas direcciones");
 
@@ -388,7 +390,11 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 
 
-void agregarSegmentoRestanteATabla(void* limite,void* base){
+void agregarSegmentoRestanteATabla(void* limite,void* base, int indiceLimite){
+
+	int i;
+	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
+
 
 	t_tabla_segmentos* segmentoNuevoRestante= malloc(sizeof(*segmentoNuevoRestante));
 
@@ -402,14 +408,42 @@ void agregarSegmentoRestanteATabla(void* limite,void* base){
 
 	segmentoNuevoRestante->ocupado = false;
 
-	list_add(tablaDeSegmentosLibres,segmentoNuevoRestante); // A partir del indice hay que mover todos un indice mas arriba
-															//--> List add in index
+//	list_add(tablaDeSegmentosLibres,segmentoNuevoRestante);
+
+	for(i=list_size(tablaDeSegmentosLibres)+1; i>indiceLimite; i--){
+
+		segmentoAux = list_get(tablaDeSegmentosLibres,i-1);
+		list_add_in_index(tablaDeSegmentosLibres,segmentoAux,i);
+
+
+	}
+	free(segmentoAux);
+
 
 
 }
 
 
+int encontrar_indice(t_tabla_segmentos* segmentoBuscado)
+{
+	int i;
+	int tamanioTabla;
+	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
 
+	for(i=0; i<tamanioTabla; i++){
+		segmentoAux = list_get(tablaDeSegmentosLibres,i);
+		if(segmentoBuscado->base == segmentoAux->base){
+
+			return i;
+		}else{
+
+			return -1;
+		}
+	}
+	free(segmentoAux);
+
+
+}
 
 t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 
@@ -635,7 +669,8 @@ void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* lis
 
 //                                  EXPULSAR TRIPULANTE SEGUN ID
 
-t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa){
+t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa)
+{
 
         if(cosa->tipo_dato== TCB){
         	return cosa;
@@ -696,7 +731,8 @@ void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid)
 
 
 
-void actualizar_posicion_tripulante(Tripulante* trip){
+void actualizar_posicion_tripulante(Tripulante* trip)
+{
 
 	char* id = recibir_y_guardar_mensaje(trip->conexion);
 	char** mensaje_decriptado = string_split(id,",");
@@ -740,7 +776,8 @@ void actualizar_posicion_tripulante(Tripulante* trip){
 //                     ACTUALIZAR PROXIMA TAREA A REALIZAR POR TRIPULANTE EN EL TCB
 
 
-void actualizarIdTareaARealizar(Tripulante* trip){
+void actualizarIdTareaARealizar(Tripulante* trip)
+{
 
 
 	char* id = recibir_id(trip->conexion);
@@ -750,6 +787,39 @@ void actualizarIdTareaARealizar(Tripulante* trip){
 }
 
 
+/*
+void compactar()
+{
+	int cantDeSegmentos=list_size(tablaDeSegmentosLibres);
+	int i;
+	t_tabla_segmentos* primerSegmento = malloc(sizeof(t_tabla_segmentos));
+	t_tabla_segmentos* segundoSegmento = malloc(sizeof(t_tabla_segmentos));
+
+	for(i=0; i<=cantDeSegmentos; i++){
+
+		primerSegmento = tablaDeSegmentosLibres[i];
+
+		if(primerSegmento->ocupado == false ){
+			segundoSegmento = tablaDeSegmentosLibres[i+1];
+
+			if(segundoSegmento->ocupado == false){
+
+				primerSegmento->limite = segundoSegmento-> limite;
+				// eliminar_segmento[i+1];
+
+			}else{
+
+				//reacomodar(tablaDeSegmentosLibres[i],tablaDeSegmentosLibres[i+1]); Este tiene que llevar el segmento ocupado para arriba.
+				// RECORDAR : reacomodar tiene que implementar "actualizarTablaDelSegmento" para que la info de ambas tablas concuerde.
+
+			}
+
+		}
+
+	}
+
+
+}*/
 
 
 
