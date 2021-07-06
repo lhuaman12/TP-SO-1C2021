@@ -31,6 +31,7 @@ int tamanioTCB=21;
 int tamanioTablaSegmento=9;
 uint32_t tam_frame;
 
+
 // DECLARACIÓN DE LOG,CONFIG,RAM, LISTAS Y TIPOS DE SEGMENTOS.
 
 t_log* miRam_logger;
@@ -142,6 +143,9 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio);
 void mostrarElemento();
 void* atender_tripulante(Tripulante* trip);
 
+void reacomodar(t_tabla_segmentos* segmentoLibre,t_tabla_segmentos* segmentoOcupado);
+void eliminar_segmento_compactacion(int indice);
+void compactar();
 
 void iniciarPatota(Tripulante* trip);
 void expulsar_tripulante(Tripulante* trip);

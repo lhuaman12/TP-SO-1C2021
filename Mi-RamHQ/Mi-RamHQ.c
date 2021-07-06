@@ -23,7 +23,7 @@ void iniciar_config()
 {
 	//miRam_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Mi-RamHQ/miRam.config");
 
-	miRam_config = config_create("../miRam.config");
+	miRam_config = config_create("./miRam.config");
 
 
 	PUERTO_ESCUCHA_MIRAM =config_get_int_value(miRam_config,"PUERTO_ESCUCHA_MIRAM");
@@ -279,7 +279,7 @@ void mostrarElSemento(){
 void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa,t_list* tablaDeProceso)
 {
 	//int indiceDeGuardado;
-
+	log_info(miRam_logger,"check");
 	if(existe_segmento_libre(tamanioCosa))
 	{
 		log_info(miRam_logger,"Encontre un segmento libre /n");
@@ -304,7 +304,11 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
         log_info(miRam_logger,"Ya guarde segmento en tabla de proceso");
 
+	    }else{
+
+	    	log_info(miRam_logger,"No hay un segmento de ese tamaño");
 	    }
+
 	    /*else{
 		printf("No hay un segmento de ese tamaño");
 		//compactar();
@@ -357,6 +361,7 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 	    }else if(tamanio < tamanioDeSegmentoExistente){
 
+
 	    indice = encontrar_indice(segmentoVacioExistente);
 
 		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio, indice);
@@ -408,26 +413,33 @@ void agregarSegmentoRestanteATabla(void* limite,void* base, int indiceLimite){
 
 	segmentoNuevoRestante->ocupado = false;
 
-//	list_add(tablaDeSegmentosLibres,segmentoNuevoRestante);
+	if(segmentoNuevoRestante->limite == ram + TAMANIO_MEMORIA_RAM)
+	{
+	list_add(tablaDeSegmentosLibres,segmentoNuevoRestante);
+
+	}else{
 
 	for(i=list_size(tablaDeSegmentosLibres)+1; i>indiceLimite; i--){
+
 
 		segmentoAux = list_get(tablaDeSegmentosLibres,i-1);
 		list_add_in_index(tablaDeSegmentosLibres,segmentoAux,i);
 
 
 	}
-	free(segmentoAux);
-
+	list_add_in_index(tablaDeSegmentosLibres,segmentoNuevoRestante,i++);
+	}
+//	free(segmentoAux);
 
 
 }
 
 
+
 int encontrar_indice(t_tabla_segmentos* segmentoBuscado)
 {
 	int i;
-	int tamanioTabla;
+	int tamanioTabla= list_size(tablaDeSegmentosLibres);
 	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
 
 	for(i=0; i<tamanioTabla; i++){
@@ -821,10 +833,70 @@ void compactar()
 
 }*/
 
+void compactar()
+{
+	int cantDeSegmentos=list_size(tablaDeSegmentosLibres);
+	int i;
+	t_tabla_segmentos* segmentoLibre = malloc(sizeof(t_tabla_segmentos));
+	t_tabla_segmentos* segundoSegmento = malloc(sizeof(t_tabla_segmentos));
+
+	for(i=0; i< cantDeSegmentos;i++){
+
+	segmentoLibre = buscar_segmento_libre_primer_ajuste(0);
+	i = encontrar_indice(segmentoLibre);
+	segundoSegmento = list_get(tablaDeSegmentosLibres,i+1);
+
+			if(segundoSegmento->ocupado == false){
+
+				segmentoLibre->limite = segundoSegmento-> limite;
+
+				eliminar_segmento_compactacion(i+1);
+
+			}else{
+
+				//reacomodar(tablaDeSegmentosLibres[i],tablaDeSegmentosLibres[i+1]); Este tiene que llevar el segmento ocupado para arriba.
+				// RECORDAR : reacomodar tiene que implementar "actualizarTablaDelSegmento" para que la info de ambas tablas concuerde.
+
+			}
+	}
+}
+
+// Mueve los segmentos de la tabla de segmentos libres para agrandar segmeto libre durante la compactacion
+void eliminar_segmento_compactacion(int indice){
+	int i;
+
+	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
+
+	for(i=indice; i>list_size(tablaDeSegmentosLibres); i++){
+
+			segmentoAux = list_get(tablaDeSegmentosLibres,i+1);
+			list_add_in_index(tablaDeSegmentosLibres,segmentoAux,i);
+
+		}
 
 
+}
+
+void reacomodar(t_tabla_segmentos* segmentoLibre,t_tabla_segmentos* segmentoOcupado){
 
 
+	t_tabla_segmentos* segmentoAux = segmentoLibre;
+
+	int indiceOcupado= encontrar_indice(segmentoOcupado);
+	int indiceLibre= encontrar_indice(segmentoOcupado);
+
+	segmentoOcupado->base = segmentoLibre->base;
+	segmentoOcupado->limite = segmentoOcupado-> limite - (segmentoLibre->limite - segmentoLibre->base);
+
+	list_add_in_index(tablaDeSegmentosLibres, segmentoLibre, indiceOcupado);
+	memcpy(segmentoLibre->base, segmentoOcupado, sizeof(t_tabla_segmentos));
+
+	segmentoLibre->base = segmentoOcupado->limite;
+	segmentoLibre->limite = segmentoLibre-> base + (segmentoAux->limite - segmentoAux->base);
+	list_add_in_index(tablaDeSegmentosLibres, segmentoOcupado, indiceLibre);
+
+
+}
 
 
 
@@ -852,13 +924,61 @@ int main(){
 
     list_add(tareas,tarea);
     guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
+    log_info(miRam_logger,"Primer guardar cosa");
+    int i;
+    for(i=0;i<list_size(tablaDeSegmentosLibres); i++ ){
+
+    	t_tabla_segmentos* segmentoAux = list_get(tablaDeSegmentosLibres,i);
+    	log_info(miRam_logger,"el tamanio de la base es %i", segmentoAux->base);
+    	log_info(miRam_logger,"el tamanio de la base es %i", segmentoAux->ocupado);
+    }
+
     guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
+    log_info(miRam_logger,"Segundo guardar cosa");
 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+
+
     //prender_server();
 
 
 
+/*
 
+	t_list* listaDePrueba = list_create();
+	int *numeroDePrueba = 9;
+	int *numeroDePruebaU = 6;
+	int *numeroDePruebaD = 8;
+	int *numeroDePruebaT = 4;
+	int *numeroDePruebaC = 5;
+	list_add(listaDePrueba, numeroDePrueba);
+	list_add(listaDePrueba, numeroDePruebaU);
+	list_add(listaDePrueba, numeroDePruebaD);
+	list_add(listaDePrueba, numeroDePruebaT);
+	list_add(listaDePrueba, numeroDePruebaC);
+
+//	list_remove(listaDePrueba,1);
+	list_remove_and_destroy_element(listaDePrueba,0,free);
+	int tamanio = list_size(listaDePrueba);
+	printf("Tamanio listaDePrueba %d",tamanio);
+
+
+	printf("Numero de prueba %d",list_get(listaDePrueba,0));
+	printf("Numero de prueba %d",list_get(listaDePrueba,1));
+	printf("Numero de prueba %d",list_get(listaDePrueba,2));
+	printf("Numero de prueba %d",list_get(listaDePrueba,3));
+	printf("Numero de prueba %d",list_get(listaDePrueba,4));
+	printf("Numero de prueba %d",list_get(listaDePrueba,5));
+
+
+
+*/
+/*
+	for(int i=0; i<=10;i++){
+
+		printf("Numero de prueba %d",listaDePrueba[i]);
+	}
+
+*/
 
     return 0;
 }
