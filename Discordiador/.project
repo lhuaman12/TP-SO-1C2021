@@ -3,6 +3,7 @@
 	<name>Discordiador</name>
 	<comment></comment>
 	<projects>
+		<project>SharedUtils</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

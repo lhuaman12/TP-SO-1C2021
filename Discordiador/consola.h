@@ -8,11 +8,29 @@
 #include <string.h>
 #include <stdlib.h>
 #include <commons/string.h>
+#include <commons/collections/list.h>
 #include "./estructuras.h"
 #include "discordiador.h"
-#include <commons/collections/list.h>
+#include <commons/collections/queue.h>
+#include <unistd.h>
 
+// para pausar el planificador
+pthread_mutex_t mutex_pausa;
+pthread_cond_t planificacion_pausa;
+int levantar_hilo_planificacion; //comandos
+int pausado; // esto solo para comandos
+int planificador_pausado; //esto va en el hilo
+/////
+typedef struct{
+	int hay_sabotaje;
+	t_posicion* posicion;
+}t_sabotaje;
 
+t_sabotaje* sabotaje;
+
+///
+char** normalizar_tarea(char* tarea);
+void submodulo_tripulante(t_tripulante* tripulante);
 void consola_discordiador();
 void liberar_recursos(char **input);
 void ejecutar_comando(char** lectura);
@@ -24,11 +42,26 @@ char** buscar_tareas(char* path);
 int validar_entrada(char **palabras_separadas);
 void listar_tripulantes();
 void imprimir_estado_patota(t_patota* patota);
-//void ejecutar_iniciar_patota(t_patota* patota,int socket);
-
-
-void expulsar_tripulante(char* id_tripulante);
-void actualizar_posiciones_tripulante(char *id_tripulante,char* posicionX,char* posicionY);
-void enviar_tarea_a_tripulante(char *id_tripulante);
-
+void iniciar_planificacion_fifo();
+void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea);
+char** normalizar_tarea(char* tarea);
+int es_una_tarea_io(char* tarea);
+void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion);
+void resolver_tarea_io(t_tripulante* tripulante,int rafaga_de_io);
+void resolver_tarea_cpu(t_tripulante* tripulante,int rafaga_de_cpu);
+void iniciar_planificacion();
+bool tripulante_sin_tareas(t_tripulante* tripulante);
+bool tripulante_pide_bloqueo(t_tripulante* tripulante);
+void log_tripulantes_pidiendo_bloqueo(t_tripulante* tripulante);
+void ejecutar_tripulante(t_tripulante* tripulante);
+void log_tripulante_sin_tareas(t_tripulante* tripulante);
+void pausar_planificacion();
+void expulsar_tripulante(char* tid_tripulante);
+bool ordenar_tripulante_segun_tid(t_tripulante* tripulante1,t_tripulante* tripulante2);
+void iniciar_resolucion_sabotaje();
+t_tripulante* tripulante_mas_cercano_al_sabotaje(t_tripulante* tripulante1,t_tripulante* tripulante2);
+t_queue* list_to_queue(t_list* list);
+t_list* queue_to_list(t_queue* queue);
+void resolver_sabotaje(t_tripulante* tripulante,t_posicion* posicion);
+void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje);
 #endif /* UTILS_CONSOLA_H_ */

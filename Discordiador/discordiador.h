@@ -13,10 +13,6 @@
 #include <commons/collections/list.h>
 
 
-#include <conections.h>
-#include <utils_cliente.h>
-
-
 
 // dejo las configs en memoria por ahora
 typedef struct {
@@ -24,7 +20,7 @@ typedef struct {
 	char *puerto_ram;
 	char *ip_file_system;
 	char *puerto_file_system;
-	char *grado_multitarea;
+	int grado_multitarea;
 	char *algoritmo;
 	int quantum;
 	int duracion_sabotaje;
@@ -32,21 +28,27 @@ typedef struct {
 
 }t_config_user;
 
-int conexion_ram_hq;
-int conexion_mongo_store;
-
 // logger y configs
 t_log* discordiador_logger;
 t_config_user* configuracion_user;
 
 // informacion para el discordiador
 t_list* lista_patotas;
-int tid_actual;
+int tid_contador;
+////// sabotajes
+//int hay_sabotajes; //mutex aca
+
+
+/// Para sincronizacion de los tripulantes y los ciclos de cpu
+
+pthread_t planificacion_hilo;
+
 
 void iniciar_logger(char* path);
 void leer_configs(void);
 void setear_configs();
 void iniciar_conexiones();
 void inicializar_estructuras();
+void configurar_planificacion();
 
 #endif /* DISCORDIADOR_H_ */

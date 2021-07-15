@@ -24,11 +24,14 @@ endif
 # All Target
 all: Discordiador
 
+dependents:
+	-cd /home/utnso/shared-library-so/SharedUtils/Debug && $(MAKE) all
+
 # Tool invocations
-Discordiador: $(OBJS) $(USER_OBJS)
+Discordiador: $(OBJS) $(USER_OBJS) /home/utnso/shared-library-so/SharedUtils/Debug/libSharedUtils.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L/home/utnso/shared-library-so/SharedUtils/Debug -L"/home/utnso/shared-library-so/SharedUtils/Debug" -o "Discordiador" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "Discordiador" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -38,5 +41,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
+/home/utnso/shared-library-so/SharedUtils/Debug/libSharedUtils.so:
 
 -include ../makefile.targets

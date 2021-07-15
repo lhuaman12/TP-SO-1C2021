@@ -1,30 +1,27 @@
-#include "discordiador.h"
+//#include "discordiador.h"
 #include "consola.h"
 
-
+int conexion_ram_hq;
+int conexion_mongo_store;
 
 // la estructura de los tripulantes tiene que ser una cola porque es fifo por defecto
 
 
 int main(void) {
 	pthread_t consola;
-	//pthread_t escucha_ramhq, escucha_mongostore;
-	iniciar_logger("disc.log");
-	inicializar_estructuras();
+	iniciar_logger("logs/disc.log");
 	setear_configs();
-	char* ip = "127.0.0.1";
-	conexion_mongo_store = crearSocket();
-	conectar_envio(conexion_mongo_store,ip,4444);
-	//iniciar_conexiones();
-	//consola_discordiador();
-	//pthread_create(&hilo_escucha_ramhq, NULL, (void*) hilo_escucha_ramhq, NULL);
+	//inicializar_estructuras();
+	configurar_planificacion();
 	//TODO: levantar conexion con mi mongostore
+	//iniciar_conexiones();
+	//pthread_create(&hilo_escucha_ramhq, NULL, (void*) hilo_escucha_ramhq, NULL);
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
+
 	pthread_join(consola,NULL);
-	//pthread_detach(consola);
-	//pthread_detach(escucha_ramhq);
 
 	/*
+	 * //pthread_detach(escucha_ramhq);
 	 pthread_create(&hilo_escucha,NULL,crear_escucha,PUERTO_ESCUCHA);
 	 int codigoDeConexion = crearSocket();
 	 conectar_envio(codigoDeConexion,ip,PUERTO_PARA_ENVIAR,discordiador_logger);
@@ -32,8 +29,6 @@ int main(void) {
 	 pthread_join(hilo_escucha,NULL);
 	 terminar_programa(codigoDeConexion,discordiador_config,discordiador_logger);
 	 */
-
-
 	return 0;
 }
 
@@ -51,77 +46,60 @@ void setear_configs() {
 	configuracion_user = malloc(sizeof(t_config_user));
 
 	//inicializar la config
-	discordiador_config = config_create("../discordiador.config");
+	discordiador_config = config_create("configs/discordiador.config");
 
 	//obtener las configs
-	//configuracion_user->ip_file_system = config_get_string_value(discordiador_config,"IP");
-	//configuracion_user->ip_ram = config_get_string_value(discordiador_config,"IP_MI_RAM_HQ");
-	//configuracion_user->puerto_ram = config_get_string_value(discordiador_config, "PUERTO_MI_RAM_HQ");
-	//printf("%s", configuracion_user->ip_ram);
-//	printf("%s", configuracion_user->puerto_ram);
-	//TODO:crear las demas
-	//TODO:en caso que no exista alguna configs loguear y señalar error (abortar ejecucion)
+	configuracion_user->ip_ram = config_get_string_value(discordiador_config,"IP_MI_RAM_HQ");
+	configuracion_user->puerto_ram = config_get_string_value(discordiador_config,"PUERTO_MI_RAM_HQ");
+	configuracion_user->algoritmo=config_get_string_value(discordiador_config,"ALGORITMO");
+	configuracion_user->retardo_ciclo_cpu = atoi(config_get_string_value(discordiador_config,"RETARDO_CICLO_CPU"));
+	configuracion_user->grado_multitarea=atoi(config_get_string_value(discordiador_config,"GRADO_MULTITAREA"));
 
-	///
+	/////
 	inicializar_estructuras();
-
-	config_destroy(discordiador_config);
+	// si yo destruyo las configs tambien se va el espacio reservado
+	//config_destroy(discordiador_config);
 }
 
-/// conexion bidireccional discordiador cliente y ramhq servidor
-/*
-void iniciar_conexiones(void) {
-	conexion_ram_hq = crear_conexion(configuracion_user->ip_ram,
-			configuracion_user->puerto_ram);
-	log_info(logger, "conexion con ram hq establecida\n");
-	conexion_mongo_store=crear_conexion(configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
-	 log_info(logger,"conexion con ram hq establecida\n");
-
-}
-*/
-/*
-void hilo_escucha_ramhq(void) {
-	int op;
-	char *mensaje;
-	char **mensaje_descifrado;
-
-	while (1) {
-		op = recibir_operacion(conexion_ram_hq);
-		switch (op) {
-		case CONFIRMACION_INICIAR_PATOTA:
-			printf("holis"); // TODO: ACCION poner tripulantes en ready
-			break;
-		}
-		case -1:
-			printf("Error");
-			break;
-		default:
-			printf("Operacion Desconocida");
-			break;
-
-	}
-}
-*/
-void iniciar_planificacion(){
+void configurar_planificacion(){
 	if(strcmp(configuracion_user->algoritmo,"FIFO")==0){
-		//TODO:configurar fifo
-		printf("FIFO");
+		estructura_planificacion=malloc(sizeof(t_estructura_fifo));
+		estructura_planificacion->cola_tripulantes_block=queue_create();
+		estructura_planificacion->cola_tripulantes_new=queue_create();
+		estructura_planificacion->cola_tripulantes_ready=queue_create();
+		estructura_planificacion->tripulantes_exec=list_create();
+		estructura_planificacion->cola_tripulantes_block_emergencia = queue_create();
 	}
-	else if(strcmp(configuracion_user->algoritmo,"RR")==0){
-		//TODO:configurar RR
-		printf("RR");
-	}
-	else {
-		log_warning(discordiador_logger,"Error al abrir configuracion de planificacion");
-		exit(1);
-	}
+	else
+		log_warning(discordiador_logger,"Error al leer el algoritmo de planificacion");
 
 }
 
 
 void inicializar_estructuras(){
 	lista_patotas=list_create();
-	tid_actual=0;
+	//// contador
+	tid_contador=0;
+	/// TODO: sacar cuando conectamos a ram
+	tareas_io = malloc(sizeof(char*)*6);
+	tareas_io[0]=string_duplicate("GENERAR_OXIGENO");
+	tareas_io[1]=string_duplicate("CONSUMIR_OXIGENO");
+	tareas_io[2]=string_duplicate("GENERAR_COMIDA");
+	tareas_io[3]=string_duplicate("CONSUMIR_COMIDA");
+	tareas_io[4]=string_duplicate("GENERAR_BASURA");
+	tareas_io[5]=string_duplicate("DESCARTAR_BASURA");
+
+	//// para pausar la planificacion
+	pthread_mutex_init(&mutex_pausa,NULL);
+	pthread_cond_init(&planificacion_pausa,NULL);
+	planificador_pausado=0;
+	levantar_hilo_planificacion=1;
+	pausado=0;
+	//
+	sabotaje=malloc(sizeof(t_sabotaje));
+	sabotaje->hay_sabotaje=0;
+	sabotaje->posicion=malloc(sizeof(t_posicion));
+
 
 }
 
@@ -159,3 +137,39 @@ void inicializar_estructuras(){
  }
 
  */
+
+
+/// conexion bidireccional discordiador cliente y ramhq servidor
+/*
+void iniciar_conexiones(void) {
+	conexion_ram_hq = crear_conexion(configuracion_user->ip_ram,
+			configuracion_user->puerto_ram);
+	log_info(logger, "conexion con ram hq establecida\n");
+	conexion_mongo_store=crear_conexion(configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
+	 log_info(logger,"conexion con ram hq establecida\n");
+
+}
+*/
+/*
+void hilo_escucha_ramhq(void) {
+	int op;
+	char *mensaje;
+	char **mensaje_descifrado;
+
+	while (1) {
+		op = recibir_operacion(conexion_ram_hq);
+		switch (op) {
+		case CONFIRMACION_INICIAR_PATOTA:
+			printf("holis");
+			break;
+		}
+		case -1:
+			printf("Error");
+			break;
+		default:
+			printf("Operacion Desconocida");
+			break;
+
+	}
+}
+*/
