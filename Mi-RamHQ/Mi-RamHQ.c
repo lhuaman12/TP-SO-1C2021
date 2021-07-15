@@ -21,7 +21,6 @@ void iniciar_logger()
 
 void iniciar_config()
 {
-	//miRam_config = config_create("/home/utnso/tp-2021-1c-bastardosSinGloria/Mi-RamHQ/miRam.config");
 
 	miRam_config = config_create("./miRam.config");
 
@@ -52,8 +51,6 @@ void reservar_memoria()
 
 
 
-
-
 // FUNCIONES PARA CREAR ESTRUCTURAS PCB, TCB E INSTRUCCIONES
 
 pcb* crear_PCB(uint32_t pid, uint32_t tareas)
@@ -65,58 +62,19 @@ pcb* crear_PCB(uint32_t pid, uint32_t tareas)
 	return nuevoPCB;
 }
 
-tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacionPCB) //   void* direccionPCB)
+tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,uint32_t ubicacionPCB) //   void* direccionPCB)
 {
     tcb* nuevoTCB = malloc(tamanioTCB);
     nuevoTCB->tid = tripulante->tid;//tripulante->tid;
     nuevoTCB->posicionX = tripulante->pos_x; //tripulante->pos_x;
 	nuevoTCB->posicionY = tripulante->pos_y; //tripulante->pos_y;
-	nuevoTCB->estado = tripulante->estado; //tripulante->estadoTripulante;
 	nuevoTCB->idProxInstruccion = proxInstruccion;//tripulante->proxInstruccion;
-	nuevoTCB->ubicacionPCBtripulante = ubicacionPCB;//direccionPCB;
+	nuevoTCB->ubicacionPCBtripulante = ubicacionPCB;
+
     return nuevoTCB;
 
 }
 
-
-
-
-// CREACION DE LISTA DE SEGMENTOS
-
-void crear_estructuras()
-{
-
-/*
-	if(strcmp(ESQUEMA_MEMORIA,"PAGINACION"))
-	{
-		tam_frame= config_get_int_value(miRam_config,"TAMANIO_PAGINA");
-		int cant_frames = TAMANIO_MEMORIA_RAM/tam_frame;
-		bool tablaDeEstadoDeFrame[cant_frames];
-		l_tablas =list_create();
-		int i;
-		for(i=0;i<=cant_frames;i++){
-			tablaDeEstadoDeFrame[i]=0;
-			printf("frame:%d",tablaDeEstadoDeFrame[i]);
-		}
-
-
-
-	}else */if(strcmp(ESQUEMA_MEMORIA,"SEGMENTACION")){
-
-		t_tabla_segmentos* primerSegmento;
-		tablaDeSegmentosLibres = list_create();
-
-		listaDeTablas = list_create();
-
-		log_info(miRam_logger,"Cree lista tabla de procesos");
-		primerSegmento = crear_primer_segmento();
-		list_add(tablaDeSegmentosLibres,primerSegmento);
-		log_info(miRam_logger,"Cree y guarde el  primer segmento");
-		//free(primerSegmento);  BORRA LO QUE ESTA ADENTRO DEL LISTADD?
-		//log_info(miRam_logger,"Pude liberar");
-
-	}
-}
 
 
 /*
@@ -193,6 +151,47 @@ guardar_cosa_en_memoria()
 
 }
 */
+
+
+
+
+
+// CREACION DE LISTA DE SEGMENTOS
+
+void crear_estructuras()
+{
+
+/*
+	if(strcmp(ESQUEMA_MEMORIA,"PAGINACION"))
+	{
+		tam_frame= config_get_int_value(miRam_config,"TAMANIO_PAGINA");
+		int cant_frames = TAMANIO_MEMORIA_RAM/tam_frame;
+		bool tablaDeEstadoDeFrame[cant_frames];
+		l_tablas =list_create();
+		int i;
+		for(i=0;i<=cant_frames;i++){
+			tablaDeEstadoDeFrame[i]=0;
+			printf("frame:%d",tablaDeEstadoDeFrame[i]);
+		}
+
+
+
+	}else */if(strcmp(ESQUEMA_MEMORIA,"SEGMENTACION")){
+
+		t_tabla_segmentos* primerSegmento;
+		tablaDeSegmentosLibres = list_create();
+
+		listaDeTablas = list_create();
+
+		log_info(miRam_logger,"Cree lista tabla de procesos");
+		primerSegmento = crear_primer_segmento();
+		list_add(tablaDeSegmentosLibres,primerSegmento);
+		log_info(miRam_logger,"Cree y guarde el  primer segmento");
+		//free(primerSegmento);  BORRA LO QUE ESTA ADENTRO DEL LISTADD?
+		//log_info(miRam_logger,"Pude liberar");
+
+	}
+}
 
 
 
@@ -285,7 +284,11 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
 
+
+
 		log_info(miRam_logger,"Devolvi segmento recortado para ocupar /n");
+
+		segmentoDisponible->base = malloc(tamanioCosa);
 
 		memcpy(segmentoDisponible->base,cosa,tamanioCosa);
 
@@ -524,6 +527,127 @@ t_tabla_segmentos* buscar_segmento_libre_mejor_ajuste(uint32_t tamanio)
 	list_destroy(listaDeVacios);
 }
 
+
+
+
+
+void compactar()
+{
+	int cantDeSegmentos=list_size(tablaDeSegmentosLibres);
+	int i;
+	t_tabla_segmentos* segmentoLibre = malloc(sizeof(t_tabla_segmentos));
+	t_tabla_segmentos* segundoSegmento = malloc(sizeof(t_tabla_segmentos));
+
+	t_tabla_segmentos* segundoSegmentoSinActualizar = malloc(sizeof(t_tabla_segmentos));
+	segundoSegmentoSinActualizar = segundoSegmento;
+
+	for(i=0; i< cantDeSegmentos;i++){
+
+	segmentoLibre = buscar_segmento_libre_primer_ajuste(0);
+	i = encontrar_indice(segmentoLibre);
+	segundoSegmento = list_get(tablaDeSegmentosLibres,i+1);
+
+			if(segundoSegmento->ocupado == false){
+
+				segmentoLibre->limite = segundoSegmento-> limite;
+
+				eliminar_segmento_compactacion(i+1);
+
+			}else{
+
+				reacomodar(segmentoLibre,segundoSegmento); //Este tiene que llevar el segmento ocupado para arriba.
+
+				actualizar_posiciones_en_tabla_proceso(segundoSegmentoSinActualizar,segundoSegmento);
+
+			}
+
+	}
+}
+
+// Mueve los segmentos de la tabla de segmentos libres para agrandar segmeto libre durante la compactacion
+void eliminar_segmento_compactacion(int indice){
+	int i;
+
+	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
+
+	for(i=indice; i>list_size(tablaDeSegmentosLibres); i++){
+
+			segmentoAux = list_get(tablaDeSegmentosLibres,i+1);
+			list_add_in_index(tablaDeSegmentosLibres,segmentoAux,i);
+
+		}
+
+
+}
+
+void reacomodar(t_tabla_segmentos* segmentoLibre,t_tabla_segmentos* segmentoOcupado){
+
+
+	t_tabla_segmentos* segmentoAux = segmentoLibre;
+
+	int indiceOcupado= encontrar_indice(segmentoOcupado);
+	int indiceLibre= encontrar_indice(segmentoOcupado);
+
+	segmentoOcupado->base = segmentoLibre->base;
+	segmentoOcupado->limite = segmentoOcupado-> limite - (segmentoLibre->limite - segmentoLibre->base);
+
+	list_add_in_index(tablaDeSegmentosLibres, segmentoLibre, indiceOcupado);
+	memcpy(segmentoLibre->base, segmentoOcupado, sizeof(t_tabla_segmentos));
+
+	segmentoLibre->base = segmentoOcupado->limite;
+	segmentoLibre->limite = segmentoLibre-> base + (segmentoAux->limite - segmentoAux->base);
+	list_add_in_index(tablaDeSegmentosLibres, segmentoOcupado, indiceLibre);
+
+
+}
+
+
+//                MOSTRAR ELEMENTOS DE MEMORIA SEGUN TIPO DE COSA GUARDADA
+
+void mostrarTablaDeSegmentos(){
+	int tamanioLista = list_size(tablaDeSegmentosLibres);
+	int i;
+	for(i=0;i<tamanioLista;i++){
+		t_tabla_segmentos* tablita = list_get(tablaDeSegmentosLibres,i);
+
+		int tipoDeCosa= tablita->tipo_dato;
+		switch(tipoDeCosa){
+		case TAREAS:
+			printf("\n Lo que hay en este espacio de memoria es una TAREA");
+			break;
+		case TCB:
+			printf("\n Lo que hay en este espacio de memoria es un TCB");
+			break;
+		case PCB:
+			printf("\n Lo que hay en este espacio de memoria es un PCB");
+			break;
+		}
+	}
+}
+
+
+
+
+
+void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSinActualizar,t_tabla_segmentos*  segundoSegmento)
+{
+	t_list* tablaBuscada;
+	t_tabla_segmentos* segmentoBuscadoParaActualizar;
+
+	bool coincide_base_de_segmento(t_tabla_segmentos* segmentoGuardado){
+
+				return segmentoGuardado->base == segundoSegmentoSinActualizar->base;
+
+		}
+
+				tablaBuscada = list_get(listaDeTablas, segundoSegmentoSinActualizar->pid);
+				segmentoBuscadoParaActualizar = list_find(tablaBuscada, (void*) coincide_base_de_segmento);
+
+				segmentoBuscadoParaActualizar = segundoSegmento;
+
+				// memcpy(segmentoBuscadoParaActualizar,segundoSegmento,sizeof(t_tabla_segmentos)); Si no funciona se manda esta
+
+}
 
 
 
@@ -804,119 +928,6 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 }
 
 
-void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSinActualizar,t_tabla_segmentos*  segundoSegmento)
-{
-	t_list* tablaBuscada;
-	t_tabla_segmentos* segmentoBuscadoParaActualizar;
-
-	bool coincide_base_de_segmento(t_tabla_segmentos* segmentoGuardado){
-
-				return segmentoGuardado->base == segundoSegmentoSinActualizar->base;
-
-		}
-
-				tablaBuscada = list_get(listaDeTablas, segundoSegmentoSinActualizar->pid);
-				segmentoBuscadoParaActualizar = list_find(tablaBuscada, (void*) coincide_base_de_segmento);
-
-				segmentoBuscadoParaActualizar = segundoSegmento;
-
-				// memcpy(segmentoBuscadoParaActualizar,segundoSegmento,sizeof(t_tabla_segmentos)); Si no funciona se manda esta
-
-}
-
-void compactar()
-{
-	int cantDeSegmentos=list_size(tablaDeSegmentosLibres);
-	int i;
-	t_tabla_segmentos* segmentoLibre = malloc(sizeof(t_tabla_segmentos));
-	t_tabla_segmentos* segundoSegmento = malloc(sizeof(t_tabla_segmentos));
-
-	t_tabla_segmentos* segundoSegmentoSinActualizar = malloc(sizeof(t_tabla_segmentos));
-	segundoSegmentoSinActualizar = segundoSegmento;
-
-	for(i=0; i< cantDeSegmentos;i++){
-
-	segmentoLibre = buscar_segmento_libre_primer_ajuste(0);
-	i = encontrar_indice(segmentoLibre);
-	segundoSegmento = list_get(tablaDeSegmentosLibres,i+1);
-
-			if(segundoSegmento->ocupado == false){
-
-				segmentoLibre->limite = segundoSegmento-> limite;
-
-				eliminar_segmento_compactacion(i+1);
-
-			}else{
-
-				reacomodar(segmentoLibre,segundoSegmento); //Este tiene que llevar el segmento ocupado para arriba.
-
-				actualizar_posiciones_en_tabla_proceso(segundoSegmentoSinActualizar,segundoSegmento);
-
-			}
-
-	}
-}
-
-// Mueve los segmentos de la tabla de segmentos libres para agrandar segmeto libre durante la compactacion
-void eliminar_segmento_compactacion(int indice){
-	int i;
-
-	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
-
-	for(i=indice; i>list_size(tablaDeSegmentosLibres); i++){
-
-			segmentoAux = list_get(tablaDeSegmentosLibres,i+1);
-			list_add_in_index(tablaDeSegmentosLibres,segmentoAux,i);
-
-		}
-
-
-}
-
-void reacomodar(t_tabla_segmentos* segmentoLibre,t_tabla_segmentos* segmentoOcupado){
-
-
-	t_tabla_segmentos* segmentoAux = segmentoLibre;
-
-	int indiceOcupado= encontrar_indice(segmentoOcupado);
-	int indiceLibre= encontrar_indice(segmentoOcupado);
-
-	segmentoOcupado->base = segmentoLibre->base;
-	segmentoOcupado->limite = segmentoOcupado-> limite - (segmentoLibre->limite - segmentoLibre->base);
-
-	list_add_in_index(tablaDeSegmentosLibres, segmentoLibre, indiceOcupado);
-	memcpy(segmentoLibre->base, segmentoOcupado, sizeof(t_tabla_segmentos));
-
-	segmentoLibre->base = segmentoOcupado->limite;
-	segmentoLibre->limite = segmentoLibre-> base + (segmentoAux->limite - segmentoAux->base);
-	list_add_in_index(tablaDeSegmentosLibres, segmentoOcupado, indiceLibre);
-
-
-}
-
-void mostrarTablaDeSegmentos(){
-	int tamanioLista = list_size(tablaDeSegmentosLibres);
-	int i;
-	for(i=0;i<tamanioLista;i++){
-		t_tabla_segmentos* tablita = list_get(tablaDeSegmentosLibres,i);
-
-		int x= tablita->tipo_dato;
-		switch(x){
-		case TAREAS:
-			printf("\n Lo que hay en memoria es una tarea");
-			break;
-		}
-
-
-		/*
-		log_info(miRam_logger,"\n Lo que hay en memoria es :  ", tablita->pid);
-		printf("\n Lo que hay en memoria es :  %i",tablita->pid);
-		log_info(miRam_logger,"\n Lo que hay en memoria es : ", tablita->base);
-		log_info(miRam_logger,"\n Lo que hay en memoria es : ", tablita->ocupado);
-		log_info(miRam_logger,"\n Lo que hay en memoria es : ", tablita->tipo_dato);*/
-	}
-}
-
 //                                        MAIN
 
 
@@ -929,9 +940,20 @@ int main(){
 	crear_estructuras();
 
 	t_list* tareas= list_create();
+
+	//char* tareas[50];
+
 	t_list* tablaDeProceso = list_create();
 
-	char* tarea = "HACERCACOTA";
+	tipo_tarea* tarea= malloc(tarea);
+	tarea->nombreTarea = "Generar oxigeno";
+	tarea->idTarea = 1;
+
+	tipo_tarea* tarea1= malloc(tarea);
+		tarea->nombreTarea = "Descartar oxigeno oxigeno";
+		tarea->idTarea = 2;
+
+//	char* tarea = "HACERCACOTA";
 
 	t_tripulante* tripulante = malloc(sizeof(t_tripulante));
 
@@ -941,24 +963,157 @@ int main(){
 	tripulante->tid= 10;
 
 	pcb* pcb = crear_PCB(10,2020);
-	tcb* tcb = crear_TCB(tripulante,&tareas[1],pcb);
-	int i,j;
 
-    list_add(tareas,tarea);
+	list_add(tareas,tarea);
+
+
+
 /*
+	tipo_tarea()
+
+
+	printf("La tarea es %s   \n",list_get(tareas,0));
+*/
+
+	tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
+
+//	printf("La tarea es %s   \n",);
+	printf("La tarea es %s   \n",list_get(tareas,0));
+	printf("La tarea es %s   \n",list_get(tareas,0));
+
+	int j;
+
+
     guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
 
     guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
-*/
-    for(j=0;j<10;j++){
+
+ 	//guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+
+	list_add_in_index(tareas,0,tarea1);
+
+	for(j=0;j<56;j++){
+
+		guardar_cosa_en_segmento_adecuado(tareas,4,TAREAS,tablaDeProceso);
+
+	}
+	/*	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);*/
+ /*	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+ 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);*/
+
+
+
+
+   /* for(j=0;j<10;j++){
 
       //  pcb* pcb = crear_PCB(j+5,2020);
 
-    	list_add(tablaDeProceso,j);
+    	//list_add(tablaDeProceso,j);
 
        	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
 
-       }
+       }*/
 
     mostrarTablaDeSegmentos();
     //prender_server();
@@ -972,8 +1127,8 @@ int main(){
 */
 
     return 0;
-    //list_destroy_and_destroy_elements(tareas,(void*)free);
-    //list_destroy_and_destroy_elements(tablaDeProceso,(void*)free);
+    list_destroy_and_destroy_elements(tareas,(void*)free);
+    list_destroy_and_destroy_elements(tablaDeProceso,(void*)free);
 }
 
 
