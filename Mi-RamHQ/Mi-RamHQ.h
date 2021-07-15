@@ -85,6 +85,7 @@ TAREAS
 typedef struct {
 
 	bool ocupado;
+
 	uint32_t* base;
 	uint32_t* limite;
 	tipo_dato_guardado tipo_dato;

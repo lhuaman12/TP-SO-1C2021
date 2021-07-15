@@ -669,7 +669,6 @@ void* atender_tripulante(Tripulante* trip)
 
 						case ENVIAR_PROXIMA_TAREA:
 
-
 							actualizarIdTareaARealizar(trip);
 
                         break;
