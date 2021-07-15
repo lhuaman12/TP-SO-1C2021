@@ -75,6 +75,7 @@ tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,void* ubicacion
 	nuevoTCB->idProxInstruccion = proxInstruccion;//tripulante->proxInstruccion;
 	nuevoTCB->ubicacionPCBtripulante = ubicacionPCB;//direccionPCB;
     return nuevoTCB;
+
 }
 
 
@@ -208,13 +209,9 @@ guardar_cosa_en_memoria()
 t_tabla_segmentos* crear_primer_segmento()
 {
 
-	t_tabla_segmentos* primerSegmento= malloc(sizeof(*primerSegmento));
-
-	primerSegmento->base = malloc(sizeof(*primerSegmento->base));
+	t_tabla_segmentos* primerSegmento = malloc(sizeof(t_tabla_segmentos));
 
     primerSegmento->base = ram;
-
-	primerSegmento->limite = malloc(sizeof(*primerSegmento->base));
 
 	primerSegmento->limite = ram + TAMANIO_MEMORIA_RAM;
 
@@ -278,8 +275,10 @@ void mostrarElSemento(){
 
 void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa,t_list* tablaDeProceso)
 {
-	//int indiceDeGuardado;
+	int indiceDeGuardado;
+
 	log_info(miRam_logger,"check");
+
 	if(existe_segmento_libre(tamanioCosa))
 	{
 		log_info(miRam_logger,"Encontre un segmento libre /n");
@@ -298,21 +297,25 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		segmentoDisponible->tipo_dato = tipoDeCosa;
 
-		list_add(tablaDeProceso, segmentoDisponible);
+		log_info(miRam_logger,"Asigne tipo de dato a segmento");
 
-	   // 2. Remover segmento de la tabla de segmentos libres
+		list_add(tablaDeProceso, segmentoDisponible);
 
         log_info(miRam_logger,"Ya guarde segmento en tabla de proceso");
 
 	    }else{
 
-	    	log_info(miRam_logger,"No hay un segmento de ese tamaño");
+		//printf("No hay un segmento de ese tamaño");
+
+        log_info(miRam_logger,"EStoy por compactar");
+
+		compactar();
+
+		log_info(miRam_logger,"Ya compacte ");
+
 	    }
 
-	    /*else{
-		printf("No hay un segmento de ese tamaño");
-		//compactar();
-	    }*/
+	 log_info(miRam_logger,"Guarde todo pa");
 }
 
 
@@ -329,6 +332,7 @@ bool existe_segmento_libre(uint32_t tamanioCosa)
 		//uint32_t tamanio_segmento_tabla = sizeof(segmento);
 		return tamanioCosa <= tamanio_segmento_tabla && segmento->ocupado == false;
 	}
+
 
 	return list_any_satisfy(tablaDeSegmentosLibres,(void*) segmento_vacio_de_tamanio);
 }
@@ -361,7 +365,6 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 	    }else if(tamanio < tamanioDeSegmentoExistente){
 
-
 	    indice = encontrar_indice(segmentoVacioExistente);
 
 		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio, indice);
@@ -383,7 +386,7 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
         log_info(miRam_logger,"Recortar: Reasigné limite del primer segmento");
 
-        return(segmentoVacioExistente);
+        return segmentoVacioExistente;
 
 	}
 	 else{
@@ -398,10 +401,11 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 void agregarSegmentoRestanteATabla(void* limite,void* base, int indiceLimite){
 
 	int i;
+
 	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
 
 
-	t_tabla_segmentos* segmentoNuevoRestante= malloc(sizeof(*segmentoNuevoRestante));
+	t_tabla_segmentos* segmentoNuevoRestante= malloc(sizeof(t_tabla_segmentos));
 
 	segmentoNuevoRestante->base = base;
 
@@ -415,22 +419,23 @@ void agregarSegmentoRestanteATabla(void* limite,void* base, int indiceLimite){
 
 	if(segmentoNuevoRestante->limite == ram + TAMANIO_MEMORIA_RAM)
 	{
+
 	list_add(tablaDeSegmentosLibres,segmentoNuevoRestante);
 
 	}else{
 
-	for(i=list_size(tablaDeSegmentosLibres)+1; i>indiceLimite; i--){
+	for(i=list_size(tablaDeSegmentosLibres); i>indiceLimite; i--){
 
 
 		segmentoAux = list_get(tablaDeSegmentosLibres,i-1);
 		list_add_in_index(tablaDeSegmentosLibres,segmentoAux,i);
 
-
 	}
-	list_add_in_index(tablaDeSegmentosLibres,segmentoNuevoRestante,i++);
-	}
-//	free(segmentoAux);
 
+
+	list_add_in_index(tablaDeSegmentosLibres,segmentoNuevoRestante,indiceLimite+1);
+	}
+free(segmentoAux);
 
 }
 
@@ -440,7 +445,7 @@ int encontrar_indice(t_tabla_segmentos* segmentoBuscado)
 {
 	int i;
 	int tamanioTabla= list_size(tablaDeSegmentosLibres);
-	t_tabla_segmentos* segmentoAux = malloc(sizeof(t_tabla_segmentos));
+	t_tabla_segmentos* segmentoAux; //= malloc(sizeof(t_tabla_segmentos));
 
 	for(i=0; i<tamanioTabla; i++){
 		segmentoAux = list_get(tablaDeSegmentosLibres,i);
@@ -452,8 +457,6 @@ int encontrar_indice(t_tabla_segmentos* segmentoBuscado)
 			return -1;
 		}
 	}
-	free(segmentoAux);
-
 
 }
 
@@ -486,7 +489,7 @@ bool segmento_vacio_de_tamanio( t_tabla_segmentos* segmento)
 	uint32_t tamanio_segmento_tabla = segmento->limite - segmento->base;
 	return tamanio <= tamanio_segmento_tabla && segmento->ocupado == false;
 }
-	t_tabla_segmentos* segmentoLibre= malloc(sizeof(t_tabla_segmentos));
+	t_tabla_segmentos* segmentoLibre; //= malloc(sizeof(t_tabla_segmentos));
 	segmentoLibre = list_find(tablaDeSegmentosLibres,(void*) segmento_vacio_de_tamanio);
 
 	return segmentoLibre; // SI ES NULL HAY QUE COMPACTAR
@@ -710,15 +713,13 @@ void expulsar_tripulante(Tripulante* trip)
 void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid)
 {
 
+	t_tabla_segmentos* segmentoAEliminar;
 	bool cumple_id_tripulante(t_tabla_segmentos* segmentoGuardado){
-
 
 		if(segmentoGuardado->tipo_dato==TCB){
 
 		tcb* tcbAlmacenado;
 		memcpy(tcbAlmacenado,segmentoGuardado->base,tamanioTCB);
-
-
 
 		return tcbAlmacenado->tid == tid;
 
@@ -730,8 +731,12 @@ void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid)
 	list_remove_by_condition(tablaBuscada, (void*) cumple_id_tripulante);
 
 
-}
+	segmentoAEliminar = list_find(tablaDeSegmentosLibres,(void*) cumple_id_tripulante);
 
+	segmentoAEliminar->ocupado = false;
+
+
+}
 
 
 
@@ -799,39 +804,25 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 }
 
 
-/*
-void compactar()
+void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSinActualizar,t_tabla_segmentos*  segundoSegmento)
 {
-	int cantDeSegmentos=list_size(tablaDeSegmentosLibres);
-	int i;
-	t_tabla_segmentos* primerSegmento = malloc(sizeof(t_tabla_segmentos));
-	t_tabla_segmentos* segundoSegmento = malloc(sizeof(t_tabla_segmentos));
+	t_list* tablaBuscada;
+	t_tabla_segmentos* segmentoBuscadoParaActualizar;
 
-	for(i=0; i<=cantDeSegmentos; i++){
+	bool coincide_base_de_segmento(t_tabla_segmentos* segmentoGuardado){
 
-		primerSegmento = tablaDeSegmentosLibres[i];
-
-		if(primerSegmento->ocupado == false ){
-			segundoSegmento = tablaDeSegmentosLibres[i+1];
-
-			if(segundoSegmento->ocupado == false){
-
-				primerSegmento->limite = segundoSegmento-> limite;
-				// eliminar_segmento[i+1];
-
-			}else{
-
-				//reacomodar(tablaDeSegmentosLibres[i],tablaDeSegmentosLibres[i+1]); Este tiene que llevar el segmento ocupado para arriba.
-				// RECORDAR : reacomodar tiene que implementar "actualizarTablaDelSegmento" para que la info de ambas tablas concuerde.
-
-			}
+				return segmentoGuardado->base == segundoSegmentoSinActualizar->base;
 
 		}
 
-	}
+				tablaBuscada = list_get(listaDeTablas, segundoSegmentoSinActualizar->pid);
+				segmentoBuscadoParaActualizar = list_find(tablaBuscada, (void*) coincide_base_de_segmento);
 
+				segmentoBuscadoParaActualizar = segundoSegmento;
 
-}*/
+				// memcpy(segmentoBuscadoParaActualizar,segundoSegmento,sizeof(t_tabla_segmentos)); Si no funciona se manda esta
+
+}
 
 void compactar()
 {
@@ -839,6 +830,9 @@ void compactar()
 	int i;
 	t_tabla_segmentos* segmentoLibre = malloc(sizeof(t_tabla_segmentos));
 	t_tabla_segmentos* segundoSegmento = malloc(sizeof(t_tabla_segmentos));
+
+	t_tabla_segmentos* segundoSegmentoSinActualizar = malloc(sizeof(t_tabla_segmentos));
+	segundoSegmentoSinActualizar = segundoSegmento;
 
 	for(i=0; i< cantDeSegmentos;i++){
 
@@ -854,10 +848,12 @@ void compactar()
 
 			}else{
 
-				//reacomodar(tablaDeSegmentosLibres[i],tablaDeSegmentosLibres[i+1]); Este tiene que llevar el segmento ocupado para arriba.
-				// RECORDAR : reacomodar tiene que implementar "actualizarTablaDelSegmento" para que la info de ambas tablas concuerde.
+				reacomodar(segmentoLibre,segundoSegmento); //Este tiene que llevar el segmento ocupado para arriba.
+
+				actualizar_posiciones_en_tabla_proceso(segundoSegmentoSinActualizar,segundoSegmento);
 
 			}
+
 	}
 }
 
@@ -898,8 +894,28 @@ void reacomodar(t_tabla_segmentos* segmentoLibre,t_tabla_segmentos* segmentoOcup
 
 }
 
+void mostrarTablaDeSegmentos(){
+	int tamanioLista = list_size(tablaDeSegmentosLibres);
+	int i;
+	for(i=0;i<tamanioLista;i++){
+		t_tabla_segmentos* tablita = list_get(tablaDeSegmentosLibres,i);
+
+		int x= tablita->tipo_dato;
+		switch(x){
+		case TAREAS:
+			printf("\n Lo que hay en memoria es una tarea");
+			break;
+		}
 
 
+		/*
+		log_info(miRam_logger,"\n Lo que hay en memoria es :  ", tablita->pid);
+		printf("\n Lo que hay en memoria es :  %i",tablita->pid);
+		log_info(miRam_logger,"\n Lo que hay en memoria es : ", tablita->base);
+		log_info(miRam_logger,"\n Lo que hay en memoria es : ", tablita->ocupado);
+		log_info(miRam_logger,"\n Lo que hay en memoria es : ", tablita->tipo_dato);*/
+	}
+}
 
 //                                        MAIN
 
@@ -911,7 +927,8 @@ int main(){
 	iniciar_logger();
 	reservar_memoria();
 	crear_estructuras();
-	t_list* tareas = list_create();
+
+	t_list* tareas= list_create();
 	t_list*  tablaDeProceso = list_create();
 	char* tarea = "HACERCACOTA";
 	t_tripulante* tripulante= malloc(sizeof(t_tripulante));
@@ -921,57 +938,26 @@ int main(){
 	tripulante->tid= 10;
 	pcb* pcb = crear_PCB(10,2020);
 	tcb* tcb = crear_TCB(tripulante,&tareas[1],pcb);
+	int i,j;
 
     list_add(tareas,tarea);
+/*
     guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
-    log_info(miRam_logger,"Primer guardar cosa");
-    int i;
-    for(i=0;i<list_size(tablaDeSegmentosLibres); i++ ){
-
-    	t_tabla_segmentos* segmentoAux = list_get(tablaDeSegmentosLibres,i);
-    	log_info(miRam_logger,"el tamanio de la base es %i", segmentoAux->base);
-    	log_info(miRam_logger,"el tamanio de la base es %i", segmentoAux->ocupado);
-    }
 
     guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
-    log_info(miRam_logger,"Segundo guardar cosa");
-	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+*/
+    for(j=0;j<60;j++){
 
+    //	pcb* pcb = crear_PCB(10,2020);
 
+    	list_add(tablaDeProceso,j);
+
+       	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+       }
+
+    mostrarTablaDeSegmentos();
     //prender_server();
 
-
-
-/*
-
-	t_list* listaDePrueba = list_create();
-	int *numeroDePrueba = 9;
-	int *numeroDePruebaU = 6;
-	int *numeroDePruebaD = 8;
-	int *numeroDePruebaT = 4;
-	int *numeroDePruebaC = 5;
-	list_add(listaDePrueba, numeroDePrueba);
-	list_add(listaDePrueba, numeroDePruebaU);
-	list_add(listaDePrueba, numeroDePruebaD);
-	list_add(listaDePrueba, numeroDePruebaT);
-	list_add(listaDePrueba, numeroDePruebaC);
-
-//	list_remove(listaDePrueba,1);
-	list_remove_and_destroy_element(listaDePrueba,0,free);
-	int tamanio = list_size(listaDePrueba);
-	printf("Tamanio listaDePrueba %d",tamanio);
-
-
-	printf("Numero de prueba %d",list_get(listaDePrueba,0));
-	printf("Numero de prueba %d",list_get(listaDePrueba,1));
-	printf("Numero de prueba %d",list_get(listaDePrueba,2));
-	printf("Numero de prueba %d",list_get(listaDePrueba,3));
-	printf("Numero de prueba %d",list_get(listaDePrueba,4));
-	printf("Numero de prueba %d",list_get(listaDePrueba,5));
-
-
-
-*/
 /*
 	for(int i=0; i<=10;i++){
 
@@ -981,6 +967,8 @@ int main(){
 */
 
     return 0;
+    //list_destroy_and_destroy_elements(tareas,(void*)free);
+    //list_destroy_and_destroy_elements(tablaDeProceso,(void*)free);
 }
 
 

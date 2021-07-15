@@ -146,6 +146,8 @@ void* atender_tripulante(Tripulante* trip);
 void reacomodar(t_tabla_segmentos* segmentoLibre,t_tabla_segmentos* segmentoOcupado);
 void eliminar_segmento_compactacion(int indice);
 void compactar();
+void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSinActualizar,t_tabla_segmentos*  segundoSegmento);
+
 
 void iniciarPatota(Tripulante* trip);
 void expulsar_tripulante(Tripulante* trip);
@@ -154,7 +156,7 @@ t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa);
 void actualizar_posicion_tripulante(Tripulante* trip);
 void actualizarIdTareaARealizar(Tripulante* trip);
 
-
+void mostrarTablaDeSegmentos();
 
 //void recibir_mensaje_encriptado(int cliente_fd,t_log* logg);
 //void asignar_escuchas(int conexion_server,int puerto);
