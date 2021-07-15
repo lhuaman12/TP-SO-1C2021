@@ -25,11 +25,16 @@ void liberarBloqueMemoria(int id_bloque);
 void copiarADisco();
 void copiarAMemoria();
 
+void borrarContenido(char* id);
+void sacarCantidad(int id,int cantidad,char* path);
+
+char* limpiarContenido(char* buffer);
+int buscarSizeContenido(char* id);
 //BLOQUES EN DISCO
 void guardarEnBloque(char* contenido,int id_bloque);
 
 
 int contarBloques();
 int calcularBloquesPorContenido(char* contenido);
-
+int calcularBloquesPorTamanio(int tamanio);
 #endif /* SRC_BLOCKS_H_ */

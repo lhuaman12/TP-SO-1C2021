@@ -28,7 +28,6 @@ typedef struct
  */
 int solicitarBloque(void);
 
-
 /* Libera el bloque indicado la estructura de bitarray
  * Setea en "0" el bloque indicado en el archivo Bitmap.bin
  */
@@ -36,9 +35,5 @@ void liberarBloque(int bloqueALiberar);
 
 void solicitarBloquePorNumero(int id);
 
-void guardarBackup(t_list* bitList,int bloque);
-
-
-void estaEnBitmap(int bloque);
 
 #endif /* SRC_BITMAP_H_ */

@@ -7,28 +7,32 @@ int main(void)
 	leer_config();
 	iniciar_filesystem();
 
-	generarOxigeno(7);
-	//generarOxigeno(2);
 
-	copiarADisco();
-	//prender_server();
-	//log_info(log_IMONGO,"GOLA");
+	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
-	//char palabra_cortada = cortarPalabras("holaCOMOandas",4);
-	//log_info(log_IMONGO,"Palabra: %s",palabra_cortada[0]);
-	//log_info(log_IMONGO,"Palabra: %s",palabra_cortada[1]);
+	prender_server();
+
+	pthread_join(hiloSincro,NULL);
+
+
 }
 
 void prender_server()
 {
-	int puerto_escucha = atoi(PUERTO_ESCUCHA_SERVER);
+	int puerto_escucha = PUERTO_DISC;
 	int socket_interno = crearSocket();
+
 	log_info(log_IMONGO,"SERVIDOR LISTO");
-	//pthread_create(&hiloSignal,NULL,comunicarDiscordiador,NULL);
-	//pthread_detach(hiloSignal);
 	asignar_escuchas(socket_interno,puerto_escucha,atender_tripulante);
 }
-
+void* sincronizarDisco()
+{
+	while(1)
+	{
+		sleep(TIEMPO_SINCRO);
+		copiarADisco();
+	}
+}
 
 void iniciar_filesystem()
 {
@@ -41,7 +45,7 @@ void iniciar_filesystem()
 		crear_super_bloque();
 		leer_super_bloque();
 		init_directorios();
-		//init_semaforos();
+		init_semaforos();
 		init_bitmap();
 		init_bloques_vacio();
 
@@ -49,18 +53,26 @@ void iniciar_filesystem()
 	{
 		leer_super_bloque();
 		init_directorios();
-		//init_semaforos();
+		init_semaforos();
 		init_bitmap();
 		init_bloques_usado();
 	}
 
-
+	free(buffer);
 }
+
+void init_semaforos()
+{
+
+	pthread_mutex_init(&semaforoBlock,NULL);
+	pthread_mutex_init(&semaforoBitmap,NULL);
+	pthread_mutex_init(&semaforoSuperBloque,NULL);
+	pthread_mutex_init(&semaforoFiles,NULL);
+}
+
 
 void init_bitmap()
 {
-	bloquesUsados = list_create();
-
 	log_debug(log_IMONGO,"<> INICIO CREACION BITMAP");
 
 	FILE* bitmapFile = fopen(RUTA_BITMAP,"w+b");
@@ -81,8 +93,6 @@ void init_bitmap()
 		bitarray_clean_bit(bitarray,i);
 	}
 
-	//free(bufferBitArray);
-
 	log_debug(log_IMONGO,"<> FIN CREACION BITMAP");
 
 }
@@ -94,6 +104,25 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
+
+						case GENERAR_OXIGENO:
+							generarOxigeno(atoi(recibir_id(trip->conexion)));
+							break;
+						case GENERAR_COMIDA:
+							generarComida(atoi(recibir_id(trip->conexion)));
+							break;
+						case GENERAR_BASURA:
+							generarBasura(atoi(recibir_id(trip->conexion)));
+							break;
+						case CONSUMIR_OXIGENO:
+							consumirOxigeno(atoi(recibir_id(trip->conexion)));
+							break;
+						case CONSUMIR_COMIDA:
+							consumirComida(atoi(recibir_id(trip->conexion)));
+							break;
+						case CONSUMIR_BASURA:
+							consumirBasura(atoi(recibir_id(trip->conexion)));
+							break;
 
 					    case MENSAJE:
 							recibir_mensaje_encriptado(trip->conexion,trip->log);
@@ -160,14 +189,19 @@ void iniciar_log()
 void leer_config()
 {
 	config_IMONGO = config_create("./imongo.config");
-	//PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
-	PUNTO_MONTAJE = "/home/utnso/polus";
+	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
+
+	TIEMPO_SINCRO = config_get_int_value(config_IMONGO,"TIEMPO_SINCRONIZACION");
+	PUERTO_DISC = config_get_int_value(config_IMONGO,"PUERTO");
+
+	POSICIONES_SABOTAJE = config_get_string_value(config_IMONGO,"POSICIONES_SABOTAJE");
+
 	RUTA_BITMAP = string_from_format("%s/Bitmap.ims",PUNTO_MONTAJE);
 	RUTA_SUPER_BLOQUE = string_from_format("%s/SuperBloque.ims",PUNTO_MONTAJE);
 	RUTA_FILES = string_from_format("%s/Files/",PUNTO_MONTAJE);
 	RUTA_BLOCKS = string_from_format("%s/Blocks.ims",PUNTO_MONTAJE);
+
 	RUTA_BITACORA = string_from_format("%s/Files/Bitacora/",PUNTO_MONTAJE);
-	NUEVO_FS = 0;
 }
 
 void crear_super_bloque()
@@ -176,11 +210,15 @@ void crear_super_bloque()
 	char block_size[]= "BLOCK_SIZE=\n";
 	char bitmap[] = "BITMAP=\n";
 
+	pthread_mutex_lock(&semaforoBlock);
+
 	FILE* super_bloque = fopen(RUTA_SUPER_BLOQUE,"w+b");
 	fwrite(blocks, strlen(blocks), 1, super_bloque);
 	fwrite(block_size, strlen(block_size), 1, super_bloque);
 	fwrite(bitmap, strlen(bitmap), 1, super_bloque);
 	fclose(super_bloque);
+
+	pthread_mutex_unlock(&semaforoBlock);
 
 	escribir_super_bloque();
 }
@@ -195,6 +233,7 @@ void escribir_super_bloque()
 	printf("\n<> Ingrese el tamaño de los bloques\n");
 	tamanio = readline(">");
 
+	pthread_mutex_lock(&semaforoBlock);
 
 	super_config = config_create(RUTA_SUPER_BLOQUE);
 	config_set_value(super_config,"BLOCKS",bloques);
@@ -203,22 +242,22 @@ void escribir_super_bloque()
 	config_save(super_config);
 	config_destroy(super_config);
 
-/*
-	FILE* super_bloque= fopen(RUTA_SUPER_BLOQUE,"r+b");
-	fseek(super_bloque,7,SEEK_SET);
-	fwrite(bloques,strlen(bloques),1,super_bloque);
-	fwrite("\n",sizeof(char),1,super_bloque);
-	fclose(super_bloque);
-*/
+	pthread_mutex_unlock(&semaforoBlock);
+
 }
 
 void leer_super_bloque()
 {
+
+	pthread_mutex_lock(&semaforoSuperBloque);
+
 	super_config = config_create(RUTA_SUPER_BLOQUE);
 	BLOCKS = config_get_int_value(super_config,"BLOCKS");
 	BLOCK_SIZE = config_get_int_value(super_config,"BLOCK_SIZE");
 	//BITMAP = config_get_string_value(super_config,"BITMAP");
 	config_destroy(super_config);
+
+	pthread_mutex_unlock(&semaforoSuperBloque);
 
 }
 

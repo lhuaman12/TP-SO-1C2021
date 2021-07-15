@@ -9,6 +9,7 @@ C_SRCS += \
 ../blocks.c \
 ../fsck.c \
 ../interfaz.c \
+../md5.c \
 ../servidor.c 
 
 OBJS += \
@@ -17,6 +18,7 @@ OBJS += \
 ./blocks.o \
 ./fsck.o \
 ./interfaz.o \
+./md5.o \
 ./servidor.o 
 
 C_DEPS += \
@@ -25,6 +27,7 @@ C_DEPS += \
 ./blocks.d \
 ./fsck.d \
 ./interfaz.d \
+./md5.d \
 ./servidor.d 
 
 

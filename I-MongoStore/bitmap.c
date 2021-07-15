@@ -21,10 +21,15 @@ int solicitarBloque() {
 	else{
 		log_info(log_IMONGO, "Bloque libre encontrado: [%d]", bloqueEncontrado);
 
+
+		pthread_mutex_lock(&semaforoBitmap);
+
 		FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
 		fseek(bitmap, bloqueEncontrado, SEEK_SET);
 		fwrite("1", 1, 1, bitmap);
 		fclose(bitmap);
+		pthread_mutex_unlock(&semaforoBitmap);
+
 	}
 
 	//guardarBackup(bloquesUsados,bloqueEncontrado);
@@ -41,10 +46,14 @@ void solicitarBloquePorNumero(int id) {
 
 	bitarray_set_bit(bitarray, bloqueEncontrado);
 
+	pthread_mutex_lock(&semaforoBitmap);
+
 	FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
 	fseek(bitmap, bloqueEncontrado, SEEK_SET);
 	fwrite("1", 1, 1, bitmap);
 	fclose(bitmap);
+
+	pthread_mutex_unlock(&semaforoBitmap);
 
 	log_debug(log_IMONGO, "<> END: Solicitar bloque %d <>",id);
 }
@@ -54,44 +63,18 @@ void liberarBloque(int bloqueALiberar){
 
 	bitarray_clean_bit(bitarray, bloqueALiberar);
 
+	pthread_mutex_lock(&semaforoBitmap);
+
 	FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
 	fseek(bitmap, bloqueALiberar, SEEK_SET);
 	fwrite("0", 1, 1, bitmap);
 	fclose(bitmap);
 
+	pthread_mutex_unlock(&semaforoBitmap);
+
 	log_debug(log_IMONGO, "<> END: Liberar bloque <>");
 }
 
-void guardarBackup(t_list* bitList,int bloque)
-{
-	bool criterio(int numero)
-	{
-		return numero == bloque;
-	}
-	if(list_find(bitList,criterio) == NULL)
-	{
-		log_warning(log_IMONGO,"SE GUARDO %d",bloque);
-		list_add(bitList,bloque);
-	}
-	else
-	{
-		log_warning(log_IMONGO,"YA ESTA OCUPADO ESE BIT");
-	}
-}
-
-void estaEnBitmap(int bloque)
-{
-	char valor;
-	FILE* bitmap = fopen(RUTA_BITMAP, "r+w");
-	fseek(bitmap, bloque - 1, SEEK_SET);
-	fread(&valor,sizeof(char),1,bitmap);
-	if(valor != '1')
-	{
-		log_debug(log_IMONGO,"<> SE ENCONTRO DISCREPANCIA EN %d, REPARANDO...",bloque);
-		fwrite("1", 1, 1, bitmap);
-	}
-	fclose(bitmap);
-}
 
 
 

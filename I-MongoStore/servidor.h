@@ -32,7 +32,14 @@
 
 
 #define IP "127.0.0.1"
-#define PUERTO_ESCUCHA_SERVER "4444"
+
+
+//VARIABLES DEL CONFIG
+int PUERTO_DISC;
+int TIEMPO_SINCRO;
+char* PUNTO_MONTAJE;
+char* POSICIONES_SABOTAJE;
+
 
 
 
@@ -42,18 +49,13 @@ int BLOCK_SIZE;
 int NUEVO_FS;
 char* BITMAP;
 
-// *PARA LA CONEXION
-int PUERTO_ESCUCHA_IMONGO;
-
 // *PARA EL BITMAP
 char* RUTA_BITMAP;
 void* bufferBitArray;
 t_bitarray* bitarray;
 
-t_list* bloquesUsados;
 
 // *PARA LAS ESTRUCTURAS
-char* PUNTO_MONTAJE;
 char* RUTA_SUPER_BLOQUE;
 char* RUTA_FILES;
 char* RUTA_BLOCKS;
@@ -63,22 +65,28 @@ char* RUTA_BITACORA;
 t_list* bloques;
 
 // *SEMAFOROS
-
+pthread_mutex_t semaforoBitmap;
+pthread_mutex_t semaforoBlock;
+pthread_mutex_t semaforoSuperBloque;
+pthread_mutex_t semaforoFiles;
+pthread_mutex_t semaforoBitacoras;
 
 // *LOGS, CONFIG E HILOS
 
 t_log* log_IMONGO;
 t_config* config_IMONGO;
 t_config* super_config;
-pthread_t hiloEscuchas;
+pthread_t hiloSincro;
 
 
 
 //FUNCIONES
+void* sincronizarDisco();
 void prender_server();
 void iniciar_log();
 void leer_config();
 
+void init_semaforos();
 void iniciar_filesystem();
 void init_bitmap();
 void leer_super_bloque();
