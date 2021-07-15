@@ -929,13 +929,17 @@ int main(){
 	crear_estructuras();
 
 	t_list* tareas= list_create();
-	t_list*  tablaDeProceso = list_create();
+	t_list* tablaDeProceso = list_create();
+
 	char* tarea = "HACERCACOTA";
-	t_tripulante* tripulante= malloc(sizeof(t_tripulante));
+
+	t_tripulante* tripulante = malloc(sizeof(t_tripulante));
+
 	tripulante->estado ='R';
 	tripulante->pos_x = 0;
 	tripulante->pos_y = 0;
 	tripulante->tid= 10;
+
 	pcb* pcb = crear_PCB(10,2020);
 	tcb* tcb = crear_TCB(tripulante,&tareas[1],pcb);
 	int i,j;
@@ -946,13 +950,14 @@ int main(){
 
     guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
 */
-    for(j=0;j<60;j++){
+    for(j=0;j<10;j++){
 
-    //	pcb* pcb = crear_PCB(10,2020);
+      //  pcb* pcb = crear_PCB(j+5,2020);
 
     	list_add(tablaDeProceso,j);
 
        	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+
        }
 
     mostrarTablaDeSegmentos();
