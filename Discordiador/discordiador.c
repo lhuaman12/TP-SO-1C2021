@@ -1,20 +1,22 @@
 //#include "discordiador.h"
 #include "consola.h"
 
-int conexion_ram_hq;
-int conexion_mongo_store;
 
 // la estructura de los tripulantes tiene que ser una cola porque es fifo por defecto
 
 
 int main(void) {
 	pthread_t consola;
-	iniciar_logger("logs/disc.log");
+	iniciar_logger("disc.log");
 	setear_configs();
 	//inicializar_estructuras();
 	configurar_planificacion();
 	//TODO: levantar conexion con mi mongostore
-	//iniciar_conexiones();
+
+	int conexion_mongo_store = crearSocket();
+	conectar_envio(conexion_mongo_store,"127.0.0.1",4444);
+	enviar_prueba(conexion_mongo_store);
+
 	//pthread_create(&hilo_escucha_ramhq, NULL, (void*) hilo_escucha_ramhq, NULL);
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
 
@@ -46,7 +48,7 @@ void setear_configs() {
 	configuracion_user = malloc(sizeof(t_config_user));
 
 	//inicializar la config
-	discordiador_config = config_create("configs/discordiador.config");
+	discordiador_config = config_create("../discordiador.config");
 
 	//obtener las configs
 	configuracion_user->ip_ram = config_get_string_value(discordiador_config,"IP_MI_RAM_HQ");

@@ -26,6 +26,11 @@ typedef struct{
 	t_posicion* posicion;
 }t_sabotaje;
 
+
+
+
+
+
 t_sabotaje* sabotaje;
 
 ///

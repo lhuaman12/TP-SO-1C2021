@@ -10,6 +10,7 @@ C_SRCS += \
 ../fsck.c \
 ../interfaz.c \
 ../md5.c \
+../recibir_paquete.c \
 ../servidor.c 
 
 OBJS += \
@@ -19,6 +20,7 @@ OBJS += \
 ./fsck.o \
 ./interfaz.o \
 ./md5.o \
+./recibir_paquete.o \
 ./servidor.o 
 
 C_DEPS += \
@@ -28,6 +30,7 @@ C_DEPS += \
 ./fsck.d \
 ./interfaz.d \
 ./md5.d \
+./recibir_paquete.d \
 ./servidor.d 
 
 

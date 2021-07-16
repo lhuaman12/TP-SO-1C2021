@@ -34,6 +34,10 @@ int validar_entrada(char **palabras_separadas) {
 void ejecutar_comando(char** lectura) {
 	if (strcmp(lectura[0], "INICIAR_PATOTA")==0)
 		iniciar_patota(lectura);
+	else if(strcmp(lectura[0],"PRUEBA_PATOTA")==0)
+	{
+
+	}
 	else if(strcmp(lectura[0],"LISTAR_TRIPULANTES")==0){
 		listar_tripulantes();
 	}
@@ -405,7 +409,6 @@ void iniciar_patota(char ** argumentos) {
 			nueva_patota(argumentos[1],NULL);
 		}
 	}
-
 
 	/*
 

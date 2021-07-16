@@ -6,17 +6,20 @@
 C_SRCS += \
 ../consola.c \
 ../discordiador.c \
-../estructuras.c 
+../estructuras.c \
+../paquetes.c 
 
 OBJS += \
 ./consola.o \
 ./discordiador.o \
-./estructuras.o 
+./estructuras.o \
+./paquetes.o 
 
 C_DEPS += \
 ./consola.d \
 ./discordiador.d \
-./estructuras.d 
+./estructuras.d \
+./paquetes.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

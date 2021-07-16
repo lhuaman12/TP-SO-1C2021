@@ -30,6 +30,7 @@
 #include"bitmap.h"
 #include"fsck.h"
 
+#include "recibir_paquete.h"
 
 #define IP "127.0.0.1"
 

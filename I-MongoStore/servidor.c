@@ -104,7 +104,10 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-
+						case INICIAR_PATOTAS:
+							log_debug(log_IMONGO,"LLEGO UNA PATOTA");
+							recibir_patota(trip->conexion);
+							break;
 						case GENERAR_OXIGENO:
 							generarOxigeno(atoi(recibir_id(trip->conexion)));
 							break;
@@ -188,7 +191,7 @@ void iniciar_log()
 
 void leer_config()
 {
-	config_IMONGO = config_create("./imongo.config");
+	config_IMONGO = config_create("../imongo.config");
 	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 
 	TIEMPO_SINCRO = config_get_int_value(config_IMONGO,"TIEMPO_SINCRONIZACION");

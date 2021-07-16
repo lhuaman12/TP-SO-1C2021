@@ -11,7 +11,9 @@
 #include <string.h>
 #include <semaphore.h>
 #include <commons/collections/list.h>
+#include <conections.h>
 
+#include "paquetes.h"
 
 
 // dejo las configs en memoria por ahora
@@ -38,7 +40,8 @@ int tid_contador;
 ////// sabotajes
 //int hay_sabotajes; //mutex aca
 
-
+int conexion_ram_hq;
+int conexion_mongo_store;
 /// Para sincronizacion de los tripulantes y los ciclos de cpu
 
 pthread_t planificacion_hilo;

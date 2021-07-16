@@ -683,7 +683,7 @@ void* atender_tripulante(Tripulante* trip)
                             iniciarPatota(trip);
 
 						break;
-						case EXPULSAR_TRIPULANTE:
+						case EXPULSAR_TRIPULANTES:
 
 					        expulsar_tripulante(trip);
 
@@ -727,7 +727,7 @@ void prender_server()
 //                                     INICIAR PATOTA
 
 
-void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
+void iniciarPatota(Tripulante* trip)//t_patota_envio* patota //(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
 {
 
 	char* mensaje = malloc(200);
