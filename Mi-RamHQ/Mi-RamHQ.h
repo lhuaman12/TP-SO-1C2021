@@ -51,10 +51,12 @@ t_list* l_tablas;
 
 
 //PATOTA CONTROL BLOCK
+
 typedef struct{
 	uint32_t pid;
 	uint32_t tareas; // direccion logica del inicio de las tareas QUE CARAJO SE LE ASIGNA A UNA TAREA????
 }pcb;
+
 
 // TRIPULANTE CONTROL BLOCK
 typedef struct{
@@ -64,6 +66,7 @@ typedef struct{
 	uint32_t idProxInstruccion;
 	uint32_t ubicacionPCBtripulante;
 }tcb;
+
 
 typedef struct{
 	uint32_t tid;

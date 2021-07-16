@@ -641,6 +641,7 @@ void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSi
 		}
 
 				tablaBuscada = list_get(listaDeTablas, segundoSegmentoSinActualizar->pid);
+
 				segmentoBuscadoParaActualizar = list_find(tablaBuscada, (void*) coincide_base_de_segmento);
 
 				segmentoBuscadoParaActualizar = segundoSegmento;
@@ -735,56 +736,55 @@ void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* lis
 
 	printf("El mensaje es %s",mensaje);
 
-	char** mensaje_decriptado = malloc(sizeof(char)*strlen(mensaje));
+	char** mensaje_decriptado = malloc(sizeof(char));
+	//strlen(mensaje))
 
 	mensaje_decriptado = string_split(mensaje,",");
 
 	mensaje_decriptado[1]= malloc(sizeof(int));
 
-	log_info(miRam_logger,"Decripte el mensaje");
+	int pid = atoi(mensaje_decriptado[1]);
 
-	t_list* tareas =  malloc(sizeof(tareas));
-
-    tareas = list_create();
-
-	log_info(miRam_logger,"Cree lista de tareas");
-
-	t_list*  tablaDeProceso  = malloc(sizeof(tablaDeProceso)*3);
+	int cantidadDeTareas = atoi(mensaje_decriptado[1]);
 
 
-	tablaDeProceso = list_create();
+	    t_list* tareas= list_create();
 
-	log_info(miRam_logger,"Cree lista de tabla de proceso");
+		t_list* tablaDeProceso = list_create();
 
-	int i,cantidadDeTareas;
+		tipo_tarea* tarea= malloc(tarea);
 
-	//cantidadDeTareas = atoi(mensaje_decriptado[1]);
+		tarea->nombreTarea;// = //mensaje_decriptado[];
 
-	int pid = atoi(mensaje_decriptado[1]); // 10
+		tarea->idTarea;// = 1;
 
+		tipo_tarea* tarea1= malloc(tarea1);
+			tarea->nombreTarea = "Descartar oxigeno oxigeno";
+			tarea->idTarea = 2;
 
-	printf("/n  EL valor del pid es %d  \n ",atoi( mensaje_decriptado[1]));
+	//	char* tarea = "HACERCACOTA";
 
+		t_tripulante* tripulante = malloc(sizeof(t_tripulante));
 
-	log_info(miRam_logger,"Inicialize contador de tareas y pid");
+		tripulante->estado ='R';
+		tripulante->pos_x = 0;
+		tripulante->pos_y = 0;
+		tripulante->tid= 10;
 
-        for(i=0 ; i<1; i++ ){
+		pcb* pcb = crear_PCB(10,2020);
 
-
-        log_info(miRam_logger,"Estoy por añadir la tarea %i",i+1);
-
-		list_add(tareas, mensaje_decriptado[i+4]);
-
-
-		}
-
-
-        log_info(miRam_logger,"Agregue la/s tareas a la lista de tareas");
-
-	   guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+		list_add(tareas,tarea);
 
 
-	   pcb* pcb = crear_PCB(pid,&tareas);
+		tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
+
+	    guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
+
+	    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
+
+	    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
+
+	    //list_add_in_index(listaDeTablas,tablaDeProceso, index);
 
 	  // guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
 /*
@@ -802,7 +802,14 @@ void iniciarPatota(Tripulante* trip) //(uint32_t pid,t_list* tareas, t_list* lis
 	//SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
 	   log_destroy(miRam_logger);
 	   log_destroy(trip->log);
+
+
+
 }
+
+
+
+
 
 
 //                                  EXPULSAR TRIPULANTE SEGUN ID
@@ -841,24 +848,26 @@ void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid)
 
 		if(segmentoGuardado->tipo_dato==TCB){
 
-		tcb* tcbAlmacenado;
-		memcpy(tcbAlmacenado,segmentoGuardado->base,tamanioTCB);
+			tcb* tcbAlmacenado;
+			memcpy(tcbAlmacenado,segmentoGuardado->base,tamanioTCB);
 
 		return tcbAlmacenado->tid == tid;
 
-		}
 
+		}
 	}
+
+// Actualiza la tabla de proceso de ese tripulante.
 
 	t_list* tablaBuscada = list_get(listaDeTablas, pid);
 	list_remove_by_condition(tablaBuscada, (void*) cumple_id_tripulante);
 
+// Actualiza la tablaDeSegmentosLibres.
 
 	segmentoAEliminar = list_find(tablaDeSegmentosLibres,(void*) cumple_id_tripulante);
-
 	segmentoAEliminar->ocupado = false;
 
-
+	free(segmentoAEliminar->base);
 }
 
 
