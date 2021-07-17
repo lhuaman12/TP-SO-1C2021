@@ -14,8 +14,6 @@ void iniciar_logger()
 
 //	iniciar_mapa("Nivel Base",4,4);
 
-	log_info(miRam_logger,"Log inicializado");
-
 
 }
 
@@ -44,11 +42,11 @@ void iniciar_config()
 void reservar_memoria()
 {
  ram=malloc(TAMANIO_MEMORIA_RAM);
-     if(ram==NULL){
+/*     if(ram==NULL){
     	 log_info(miRam_logger,"No hay espacio para reservar en la memoria principal");
      }else{
     	 log_info(miRam_logger,"Reserve el espacio para la memoria principal");
-     }
+     }*/
 }
 
 
@@ -60,7 +58,6 @@ pcb* crear_PCB(uint32_t pid, uint32_t tareas)
 	pcb* nuevoPCB= malloc(tamanioPCB);
 	nuevoPCB->pid = pid;
 	nuevoPCB->tareas = tareas;
-	log_info(miRam_logger,"Pude crear el PCB");
 	return nuevoPCB;
 }
 
@@ -220,10 +217,9 @@ void crear_estructuras()
 
 		listaDeTablas = list_create();
 
-		log_info(miRam_logger,"Cree lista tabla de procesos");
 		primerSegmento = crear_primer_segmento();
 		list_add(tablaDeSegmentosLibres,primerSegmento);
-		log_info(miRam_logger,"Cree y guarde el  primer segmento");
+
 		//free(primerSegmento);  BORRA LO QUE ESTA ADENTRO DEL LISTADD?
 		//log_info(miRam_logger,"Pude liberar");
 
@@ -297,7 +293,6 @@ void mostrarElSemento(){
 
 	memcpy(pcb,segmento->base,sizeof(8));
 
-	printf("Un campo del valor guardado en segmento es %d  \n", pcb->pid);
 }
 
 
@@ -313,51 +308,31 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 {
 	int indiceDeGuardado;
 
-	log_info(miRam_logger,"check");
-
 	if(existe_segmento_libre(tamanioCosa))
 	{
-		log_info(miRam_logger,"Encontre un segmento libre /n");
 
 		t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
-
-
-
-		log_info(miRam_logger,"Devolvi segmento recortado para ocupar /n");
 
 		segmentoDisponible->elementoGuardado = malloc(tamanioCosa);
 
 		memcpy(segmentoDisponible->elementoGuardado,cosa,tamanioCosa);
 
-		log_info(miRam_logger,"Copié ");
-
 		segmentoDisponible->ocupado = true;
-
-		log_info(miRam_logger,"Ya guarde segmento en tabla de proceso %i",segmentoDisponible->ocupado);
 
 		segmentoDisponible->tipo_dato = tipoDeCosa;
 
 		segmentoDisponible->pid= pid;
 
-		log_info(miRam_logger,"Asigne tipo de dato a segmento");
-
 		list_add(tablaDeProceso, segmentoDisponible);
 
-        log_info(miRam_logger,"Ya guarde segmento en tabla de proceso");
 
 	    }else{
 
-		//printf("No hay un segmento de ese tamaño");
-
-        log_info(miRam_logger,"EStoy por compactar");
-
 		compactar();
 
-		log_info(miRam_logger,"Ya compacte ");
 
 	    }
 
-	 log_info(miRam_logger,"Guarde todo pa");
 }
 
 
@@ -394,39 +369,21 @@ t_tabla_segmentos* recortar_segmento_y_devolverlo(uint32_t tamanio)
 
 	    uint32_t tamanioDeSegmentoExistente = segmentoVacioExistente->limite - segmentoVacioExistente->base;
 
-
-	    // PRUEBA DE DIRECCION LOGICA
-
-	    printf(" Recortar: El tamanio del segmento a recortar es de %d   \n", tamanioDeSegmentoExistente);
-
 	    if(tamanio == tamanioDeSegmentoExistente){
 
-		log_info(miRam_logger,"Recortar: El tamanio de segmento a recortar es igual al de la cosa");
-
-		return segmentoVacioExistente;
+	    	return segmentoVacioExistente;
 
 	    }else if(tamanio < tamanioDeSegmentoExistente){
 
-	    indice = encontrar_indice(segmentoVacioExistente);
+	    	indice = encontrar_indice(segmentoVacioExistente);
 
-		agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio, indice);
+	    	agregarSegmentoRestanteATabla(segmentoVacioExistente->limite ,segmentoVacioExistente->base + tamanio, indice);
 
-		log_info(miRam_logger,"Recortar: Agregue segmento restante a tabla con sus nuevas direcciones");
-
-        segmentoVacioExistente->limite = segmentoVacioExistente->base + tamanio;
-
-        log_info(miRam_logger,"Recortar: Asigné el nuevo límite del segmento existente");
+	    	segmentoVacioExistente->limite = segmentoVacioExistente->base + tamanio;
 
 
        //PRUEBAS DE TAMANIO FISICO.
     	uint32_t tamanioPrimerSegmento = segmentoVacioExistente->limite - segmentoVacioExistente->base;
-
-    	printf("El tamanio del primer segmento es  %d        \n",tamanioPrimerSegmento);
-
-
-      //  printf("El nuevo limite del primer segmento  %d    \n",segmentoVacioExistente->limite); ESTO DEVUELVE UN APOSICION EN MEMORIA FISICA
-
-        log_info(miRam_logger,"Recortar: Reasigné limite del primer segmento");
 
         return segmentoVacioExistente;
 
@@ -455,7 +412,6 @@ void agregarSegmentoRestanteATabla(void* limite,void* base, int indiceLimite){
 
 	uint32_t diferenciaSegmentoRestante = segmentoNuevoRestante->limite - segmentoNuevoRestante->base;
 
-	printf("El tamanio del segmento restante es%d   \n",diferenciaSegmentoRestante);
 
 	segmentoNuevoRestante->ocupado = false;
 
@@ -508,7 +464,6 @@ t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 
 	if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO ,"FIRSTFIT")==0)
 		{
-			log_info(miRam_logger,"llegue a buscar");
 			return buscar_segmento_libre_primer_ajuste(tamanioCosa);
 		}
 		else if(strcmp(CRITERIO_ELECCION_DE_SEGMENTO,"BESTFIT")==0)
@@ -523,8 +478,6 @@ t_tabla_segmentos* buscar_segmento_segun_criterio(uint32_t tamanioCosa){
 
 t_tabla_segmentos* buscar_segmento_libre_primer_ajuste(uint32_t tamanio)
 {
-	log_info(miRam_logger,"llegue a buscar primer ajuste");
-
 
 bool segmento_vacio_de_tamanio( t_tabla_segmentos* segmento)
 {
