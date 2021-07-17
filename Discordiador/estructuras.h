@@ -56,15 +56,17 @@ typedef struct{
 	char* tarea_actual; // empieza en null
 	t_estado estado; //empieza en NEW en discordiador al pasar a ram pasa a ready
 	t_posicion* posicion;
+	char** tarea_normalizada;
 	int32_t socket_ram;
 	int32_t socket_mongo_hq;
 	sem_t semaforo_tripulante;
 	sem_t esperar_ejecucion_tripulante;
-	int32_t es_expulsado; //TODO: envolver en otra estructura los estados
+	int32_t es_expulsado; //TODO: envolver en otra estructura puntero y luego liberar
 	int32_t rafaga_io_restantes;
 	int32_t no_tiene_tareas;
 	int32_t pide_bloqueo;
 	int32_t es_elegido_para_sabotaje;
+	int32_t quantum;
 	pthread_mutex_t mutex;
 
 }t_tripulante;

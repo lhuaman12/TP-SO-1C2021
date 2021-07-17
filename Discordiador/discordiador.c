@@ -1,36 +1,23 @@
 //#include "discordiador.h"
 #include "consola.h"
 
+int conexion_ram_hq;
+int conexion_mongo_store;
 
 // la estructura de los tripulantes tiene que ser una cola porque es fifo por defecto
 
 
 int main(void) {
 	pthread_t consola;
-	iniciar_logger("disc.log");
+	iniciar_logger("logs/disc.log");
 	setear_configs();
-	//inicializar_estructuras();
 	configurar_planificacion();
 	//TODO: levantar conexion con mi mongostore
-
-	int conexion_mongo_store = crearSocket();
-	conectar_envio(conexion_mongo_store,"127.0.0.1",4444);
-	enviar_prueba(conexion_mongo_store);
-
-	//pthread_create(&hilo_escucha_ramhq, NULL, (void*) hilo_escucha_ramhq, NULL);
+	//iniciar_conexiones();
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
 
 	pthread_join(consola,NULL);
 
-	/*
-	 * //pthread_detach(escucha_ramhq);
-	 pthread_create(&hilo_escucha,NULL,crear_escucha,PUERTO_ESCUCHA);
-	 int codigoDeConexion = crearSocket();
-	 conectar_envio(codigoDeConexion,ip,PUERTO_PARA_ENVIAR,discordiador_logger);
-	 chat(codigoDeConexion);
-	 pthread_join(hilo_escucha,NULL);
-	 terminar_programa(codigoDeConexion,discordiador_config,discordiador_logger);
-	 */
 	return 0;
 }
 
@@ -48,32 +35,32 @@ void setear_configs() {
 	configuracion_user = malloc(sizeof(t_config_user));
 
 	//inicializar la config
-	discordiador_config = config_create("../discordiador.config");
+	discordiador_config = config_create("configs/discordiador.config");
 
 	//obtener las configs
-	configuracion_user->ip_ram = config_get_string_value(discordiador_config,"IP_MI_RAM_HQ");
-	configuracion_user->puerto_ram = config_get_string_value(discordiador_config,"PUERTO_MI_RAM_HQ");
-	configuracion_user->algoritmo=config_get_string_value(discordiador_config,"ALGORITMO");
+	configuracion_user->ip_ram = string_duplicate(config_get_string_value(discordiador_config,"IP_MI_RAM_HQ"));
+	configuracion_user->puerto_ram =string_duplicate( config_get_string_value(discordiador_config,"PUERTO_MI_RAM_HQ"));
+	configuracion_user->algoritmo= string_duplicate(config_get_string_value(discordiador_config,"ALGORITMO"));
 	configuracion_user->retardo_ciclo_cpu = atoi(config_get_string_value(discordiador_config,"RETARDO_CICLO_CPU"));
 	configuracion_user->grado_multitarea=atoi(config_get_string_value(discordiador_config,"GRADO_MULTITAREA"));
-
+	configuracion_user->quantum = atoi(config_get_string_value(discordiador_config,"QUANTUM"));
 	/////
 	inicializar_estructuras();
-	// si yo destruyo las configs tambien se va el espacio reservado
-	//config_destroy(discordiador_config);
+
+	config_destroy(discordiador_config);
 }
 
 void configurar_planificacion(){
-	if(strcmp(configuracion_user->algoritmo,"FIFO")==0){
+	//if(strcmp(configuracion_user->algoritmo,"FIFO")==0){
 		estructura_planificacion=malloc(sizeof(t_estructura_fifo));
 		estructura_planificacion->cola_tripulantes_block=queue_create();
 		estructura_planificacion->cola_tripulantes_new=queue_create();
 		estructura_planificacion->cola_tripulantes_ready=queue_create();
 		estructura_planificacion->tripulantes_exec=list_create();
 		estructura_planificacion->cola_tripulantes_block_emergencia = queue_create();
-	}
-	else
-		log_warning(discordiador_logger,"Error al leer el algoritmo de planificacion");
+	//}
+	//else
+//		log_warning(discordiador_logger,"Error al leer el algoritmo de planificacion");
 
 }
 
@@ -101,7 +88,6 @@ void inicializar_estructuras(){
 	sabotaje=malloc(sizeof(t_sabotaje));
 	sabotaje->hay_sabotaje=0;
 	sabotaje->posicion=malloc(sizeof(t_posicion));
-
 
 }
 

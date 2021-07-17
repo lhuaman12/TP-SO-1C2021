@@ -153,10 +153,6 @@ typedef struct{
 }tabla_paginas_proceso;
 
 
-
-
-
-
 t_patota_envio* recibir_patota(int socket);
 
 // DECLARACION DE FUNCIONES UTILIZADAS

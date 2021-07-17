@@ -13,6 +13,7 @@
 #include "discordiador.h"
 #include <commons/collections/queue.h>
 #include <unistd.h>
+#include <time.h>
 
 // para pausar el planificador
 pthread_mutex_t mutex_pausa;
@@ -25,11 +26,6 @@ typedef struct{
 	int hay_sabotaje;
 	t_posicion* posicion;
 }t_sabotaje;
-
-
-
-
-
 
 t_sabotaje* sabotaje;
 
@@ -55,7 +51,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion);
 void resolver_tarea_io(t_tripulante* tripulante,int rafaga_de_io);
 void resolver_tarea_cpu(t_tripulante* tripulante,int rafaga_de_cpu);
 void iniciar_planificacion();
-bool tripulante_sin_tareas(t_tripulante* tripulante);
+bool tripulante_finaliza(t_tripulante* tripulante);
 bool tripulante_pide_bloqueo(t_tripulante* tripulante);
 void log_tripulantes_pidiendo_bloqueo(t_tripulante* tripulante);
 void ejecutar_tripulante(t_tripulante* tripulante);
@@ -69,4 +65,9 @@ t_queue* list_to_queue(t_list* list);
 t_list* queue_to_list(t_queue* queue);
 void resolver_sabotaje(t_tripulante* tripulante,t_posicion* posicion);
 void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje);
+void destruir_recursos_tripulante(t_tripulante* tripulante);
+void salir_expulsado(t_tripulante* tripulante);
+void planificacion_round_robin();
+bool tripulante_sin_quantum(t_tripulante* tripulante);
+void ejecutar_tripulante_restando_quantum(t_tripulante* tripulante);
 #endif /* UTILS_CONSOLA_H_ */

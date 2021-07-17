@@ -621,13 +621,16 @@ void mostrarTablaDeSegmentos(){
 
 void dumpSegmentacion(){
 
-	log_info(miRam_logger,"Dump: ");
-
-	temporal_get_string_time("% d /% m /% y% H:% M:% S");
 
 	int tamanioLista = list_size(tablaDeSegmentosLibres);
 	int i;
 	for(i=0;i<tamanioLista;i++){
+
+		log_info(miRam_logger,"Dump: ");
+
+		temporal_get_string_time("% d /% m /% y% H:% M:% S");
+
+
 		t_tabla_segmentos* segmentoAMostrar = malloc(sizeof(t_tabla_segmentos));
 
 		segmentoAMostrar = list_get(tablaDeSegmentosLibres,i);
@@ -705,7 +708,7 @@ void* atender_tripulante(Tripulante* trip)
 						break;
 						case INICIAR_PATOTAS:
 
-                            iniciarPatota(trip);
+                            iniciarPatota(recibir_patota(trip->conexion));
 
 						break;
 						case EXPULSAR_TRIPULANTES:
@@ -773,19 +776,17 @@ void asignarIdATarea(char* nombreTarea, tipo_tarea* tarea){
 
 //                                     INICIAR PATOTA
 
-
 void iniciarPatota(t_patota_envio* patota)
 {
 
 	int i,j;
 	int k=1;
 
-	char** tareas_decriptadas = malloc(sizeof(char));
-		//strlen(mensaje))
+	char** tareas_decriptadas = malloc(300);
 
 	tareas_decriptadas = string_split(patota->tareas,",");
 
-	char** tripulantes_decriptados = malloc(sizeof(char));
+	char** tripulantes_decriptados = malloc(300);
 
 	tripulantes_decriptados = string_split(patota->trips,",");
 
@@ -820,11 +821,10 @@ void iniciarPatota(t_patota_envio* patota)
 		t_tripulante* tripulante = malloc(sizeof(t_tripulante));
 
 
-		tripulante->tid = tripulantes_decriptados[k];
-		tripulante->pos_x = tripulantes_decriptados[k+1];
-		tripulante->pos_y = tripulantes_decriptados[k+2];
+		tripulante->tid = atoi(tripulantes_decriptados[k]);
+		tripulante->pos_x = atoi(tripulantes_decriptados[k+1]);
+		tripulante->pos_y = atoi(tripulantes_decriptados[k+2]);
 		tripulante->estado = tripulantes_decriptados[k+3];
-
 
 
 		tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
@@ -847,6 +847,8 @@ void iniciarPatota(t_patota_envio* patota)
 
 	//    log_destroy(miRam_logger);
 
+	    free(tareas_decriptadas);
+	    free(tripulantes_decriptados);
 }
 
 
@@ -993,12 +995,14 @@ int main(){
 
 	patota->id_patota = "0";
 	patota->tareas="2,HACER_CACA,MATEO_GOD";
-	patota->trips="2,MATEO,1,3,SEGURO,BRUNO,3,4,INSEGURO";
+	patota->trips="2,1,1,3,SEGURO,2,3,4,INSEGURO";
+
 
 	iniciarPatota(patota);
 
 	//mostrarTablaDeSegmentos();
 	dumpSegmentacion();
+
 
     return 0;
 

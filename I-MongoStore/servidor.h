@@ -102,4 +102,8 @@ void init_bloques_usado();
 void* atender_tripulante(Tripulante* trip);
 
 
+char* buscar_tareas(char* path);
+char* contarTareas(char* palabra);
+
+
 #endif /* SERVIDOR_H_ */
