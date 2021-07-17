@@ -89,7 +89,7 @@ typedef struct{
 	uint32_t tid;
 	uint32_t pos_y;
 	uint32_t pos_x;
-	char estado;
+	char* estado;
 }t_tripulante;
 
 
@@ -162,6 +162,7 @@ void iniciar_logger();
 void iniciar_config();
 void reservar_memoria();
 void prender_server();
+
 
 pcb* crear_PCB(uint32_t pid, uint32_t tareas);
 tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,uint32_t ubicacionPCB);

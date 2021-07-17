@@ -511,3 +511,141 @@
 [INFO] 02:55:30:955 DISCORDIADOR/(10053:10053): ERROR AL CONECTAR
 [INFO] 02:56:41:635 DISCORDIADOR/(10069:10069): SE CONECTO UN CLIENTE
 [INFO] 02:56:52:284 DISCORDIADOR/(10070:10070): SE CONECTO UN CLIENTE
+[INFO] 04:07:01:881 Discordiador logger/(7131:7131): Inicio de logs de discordiador..
+[INFO] 04:07:01:881 Discordiador logger/(7131:7131): Seteando las configuraciones..
+[INFO] 04:08:02:439 Discordiador logger/(7131:7132): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:08:02:439 Discordiador logger/(7131:7132): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:08:02:439 Discordiador logger/(7131:7132): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:08:02:439 Discordiador logger/(7131:7132): Creado tripulante 4 con posicion en x:0 y:0
+[INFO] 04:08:02:440 Discordiador logger/(7131:7132): Creado tripulante 5 con posicion en x:0 y:0
+[INFO] 04:12:56:184 Discordiador logger/(7332:7332): Inicio de logs de discordiador..
+[INFO] 04:12:56:184 Discordiador logger/(7332:7332): Seteando las configuraciones..
+[INFO] 04:13:13:912 Discordiador logger/(7332:7334): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:13:13:912 Discordiador logger/(7332:7334): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:13:13:912 Discordiador logger/(7332:7334): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:18:19:087 Discordiador logger/(7548:7548): Inicio de logs de discordiador..
+[INFO] 04:18:19:087 Discordiador logger/(7548:7548): Seteando las configuraciones..
+[INFO] 04:18:28:225 Discordiador logger/(7548:7550): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:18:28:225 Discordiador logger/(7548:7550): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:18:28:225 Discordiador logger/(7548:7550): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:21:23:858 Discordiador logger/(7683:7683): Inicio de logs de discordiador..
+[INFO] 04:21:23:858 Discordiador logger/(7683:7683): Seteando las configuraciones..
+[INFO] 04:25:30:858 Discordiador logger/(7826:7826): Inicio de logs de discordiador..
+[INFO] 04:25:30:858 Discordiador logger/(7826:7826): Seteando las configuraciones..
+[INFO] 04:25:45:906 Discordiador logger/(7826:7828): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:25:45:906 Discordiador logger/(7826:7828): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:25:45:906 Discordiador logger/(7826:7828): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:43:30:831 Discordiador logger/(8467:8467): Inicio de logs de discordiador..
+[INFO] 04:43:30:831 Discordiador logger/(8467:8467): Seteando las configuraciones..
+[INFO] 04:43:42:723 Discordiador logger/(8472:8472): Inicio de logs de discordiador..
+[INFO] 04:43:42:723 Discordiador logger/(8472:8472): Seteando las configuraciones..
+[INFO] 04:43:54:549 Discordiador logger/(8472:8474): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:43:54:549 Discordiador logger/(8472:8474): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:43:54:549 Discordiador logger/(8472:8474): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:43:57:551 Discordiador logger/(8472:8474): Creada patota 1
+[INFO] 04:45:54:897 Discordiador logger/(8530:8530): Inicio de logs de discordiador..
+[INFO] 04:45:54:897 Discordiador logger/(8530:8530): Seteando las configuraciones..
+[INFO] 04:46:15:220 Discordiador logger/(8534:8534): Inicio de logs de discordiador..
+[INFO] 04:46:15:221 Discordiador logger/(8534:8534): Seteando las configuraciones..
+[INFO] 04:46:27:281 Discordiador logger/(8534:8536): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:46:27:281 Discordiador logger/(8534:8536): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:46:27:281 Discordiador logger/(8534:8536): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:46:30:283 Discordiador logger/(8534:8536): Creada patota 1
+[INFO] 04:50:00:456 Discordiador logger/(8720:8720): Inicio de logs de discordiador..
+[INFO] 04:50:00:456 Discordiador logger/(8720:8720): Seteando las configuraciones..
+[INFO] 04:50:08:281 Discordiador logger/(8720:8722): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:50:08:281 Discordiador logger/(8720:8722): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:50:08:281 Discordiador logger/(8720:8722): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:50:08:281 Discordiador logger/(8720:8722): Creado tripulante 4 con posicion en x:0 y:0
+[INFO] 04:50:11:283 Discordiador logger/(8720:8722): Creada patota 1
+[INFO] 04:58:57:116 Discordiador logger/(9123:9123): Inicio de logs de discordiador..
+[INFO] 04:58:57:117 Discordiador logger/(9123:9123): Seteando las configuraciones..
+[INFO] 04:59:04:732 Discordiador logger/(9123:9125): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 04:59:04:733 Discordiador logger/(9123:9125): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 04:59:04:733 Discordiador logger/(9123:9125): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 04:59:07:735 Discordiador logger/(9123:9125): Creada patota 1
+[INFO] 05:00:38:907 Discordiador logger/(9181:9181): Inicio de logs de discordiador..
+[INFO] 05:00:38:907 Discordiador logger/(9181:9181): Seteando las configuraciones..
+[INFO] 05:00:48:773 Discordiador logger/(9181:9183): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 05:00:48:773 Discordiador logger/(9181:9183): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 05:00:51:774 Discordiador logger/(9181:9183): Creada patota 1
+[INFO] 05:01:25:628 Discordiador logger/(9232:9232): Inicio de logs de discordiador..
+[INFO] 05:01:25:628 Discordiador logger/(9232:9232): Seteando las configuraciones..
+[INFO] 05:01:33:441 Discordiador logger/(9232:9234): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 05:01:33:441 Discordiador logger/(9232:9234): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 05:01:33:441 Discordiador logger/(9232:9234): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 05:01:36:442 Discordiador logger/(9232:9234): Creada patota 1
+[INFO] 05:24:41:812 Discordiador logger/(10443:10443): Inicio de logs de discordiador..
+[INFO] 05:24:41:820 Discordiador logger/(10443:10443): Seteando las configuraciones..
+[INFO] 05:26:01:684 Discordiador logger/(10475:10475): Inicio de logs de discordiador..
+[INFO] 05:26:01:684 Discordiador logger/(10475:10475): Seteando las configuraciones..
+[ERROR] 05:26:10:015 Discordiador logger/(10475:10476): El cliente se desconecto. Terminando servidor
+[INFO] 05:32:06:238 Discordiador logger/(10867:10867): Inicio de logs de discordiador..
+[INFO] 05:32:06:239 Discordiador logger/(10867:10867): Seteando las configuraciones..
+[INFO] 05:32:15:732 Discordiador logger/(10867:10869): BITACORA: Comienza ejecucion de tarea GOla
+[ERROR] 05:32:32:682 Discordiador logger/(10867:10869): El cliente se desconecto. Terminando servidor
+[INFO] 05:33:53:045 Discordiador logger/(11068:11068): Inicio de logs de discordiador..
+[INFO] 05:33:53:045 Discordiador logger/(11068:11068): Seteando las configuraciones..
+[INFO] 05:34:00:022 Discordiador logger/(11068:11070): BITACORA: Comienza ejecucion de tarea GOla
+[INFO] 05:58:06:434 Discordiador logger/(11816:11816): Inicio de logs de discordiador..
+[INFO] 05:58:06:444 Discordiador logger/(11816:11816): Seteando las configuraciones..
+[INFO] 05:58:33:835 Discordiador logger/(11816:11818): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 05:58:33:835 Discordiador logger/(11816:11818): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 05:58:33:835 Discordiador logger/(11816:11818): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 05:58:36:840 Discordiador logger/(11816:11818): Creada patota 1
+[INFO] 06:00:28:529 Discordiador logger/(11905:11905): Inicio de logs de discordiador..
+[INFO] 06:00:28:529 Discordiador logger/(11905:11905): Seteando las configuraciones..
+[INFO] 06:00:37:976 Discordiador logger/(11905:11909): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:00:37:976 Discordiador logger/(11905:11909): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:00:37:976 Discordiador logger/(11905:11909): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:00:37:976 Discordiador logger/(11905:11909): Creado tripulante 4 con posicion en x:0 y:0
+[INFO] 06:00:40:978 Discordiador logger/(11905:11909): Creada patota 1
+[INFO] 06:05:30:731 Discordiador logger/(12059:12059): Inicio de logs de discordiador..
+[INFO] 06:05:30:732 Discordiador logger/(12059:12059): Seteando las configuraciones..
+[INFO] 06:05:51:358 Discordiador logger/(12059:12063): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:05:51:358 Discordiador logger/(12059:12063): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:05:51:358 Discordiador logger/(12059:12063): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:05:54:359 Discordiador logger/(12059:12063): Creada patota 1
+[INFO] 06:06:11:588 Discordiador logger/(12059:12072): Iniciado planificacion Round robin..
+[INFO] 06:06:11:588 Discordiador logger/(12059:12072): Ciclo de cpu:1
+[INFO] 06:06:11:588 Discordiador logger/(12059:12072): Tripulante 1 pasando de NEW a READY
+[INFO] 06:06:11:588 Discordiador logger/(12059:12072): Tripulante 2 pasando de NEW a READY
+[INFO] 06:06:11:589 Discordiador logger/(12059:12072): Tripulante 3 pasando de NEW a READY
+[INFO] 06:06:11:589 Discordiador logger/(12059:12072): Tripulante 1 pasando de READY a EXEC con 1 de Quantum
+[INFO] 06:06:11:589 Discordiador logger/(12059:12072): Tripulante 2 pasando de READY a EXEC con 1 de Quantum
+[INFO] 06:11:04:770 Discordiador logger/(12151:12151): Inicio de logs de discordiador..
+[INFO] 06:11:04:788 Discordiador logger/(12151:12151): Seteando las configuraciones..
+[INFO] 06:12:03:224 Discordiador logger/(12151:12155): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:12:03:225 Discordiador logger/(12151:12155): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:12:03:225 Discordiador logger/(12151:12155): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:16:15:474 Discordiador logger/(12278:12278): Inicio de logs de discordiador..
+[INFO] 06:16:15:474 Discordiador logger/(12278:12278): Seteando las configuraciones..
+[INFO] 06:16:38:741 Discordiador logger/(12278:12282): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:16:38:743 Discordiador logger/(12278:12283): TAREA: 
+[INFO] 06:18:26:634 Discordiador logger/(12456:12456): Inicio de logs de discordiador..
+[INFO] 06:18:26:634 Discordiador logger/(12456:12456): Seteando las configuraciones..
+[INFO] 06:18:34:385 Discordiador logger/(12456:12460): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:18:34:385 Discordiador logger/(12456:12460): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:18:34:385 Discordiador logger/(12456:12460): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:18:37:386 Discordiador logger/(12456:12460): Creada patota 1
+[INFO] 06:18:37:403 Discordiador logger/(12456:12462): TAREA: 
+[INFO] 06:27:46:576 Discordiador logger/(12753:12753): Inicio de logs de discordiador..
+[INFO] 06:27:46:576 Discordiador logger/(12753:12753): Seteando las configuraciones..
+[INFO] 06:27:57:332 Discordiador logger/(12753:12757): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:27:57:332 Discordiador logger/(12753:12757): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:27:57:332 Discordiador logger/(12753:12757): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:27:59:335 Discordiador logger/(12753:12762): TAREA: 
+[INFO] 06:30:29:809 Discordiador logger/(12853:12853): Inicio de logs de discordiador..
+[INFO] 06:30:29:809 Discordiador logger/(12853:12853): Seteando las configuraciones..
+[INFO] 06:30:52:433 Discordiador logger/(12862:12862): Inicio de logs de discordiador..
+[INFO] 06:30:52:433 Discordiador logger/(12862:12862): Seteando las configuraciones..
+[INFO] 06:30:59:404 Discordiador logger/(12862:12866): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:30:59:404 Discordiador logger/(12862:12866): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:30:59:405 Discordiador logger/(12862:12866): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:31:01:408 Discordiador logger/(12862:12872): TAREA: 
+[INFO] 06:32:38:536 Discordiador logger/(12917:12917): Inicio de logs de discordiador..
+[INFO] 06:32:38:536 Discordiador logger/(12917:12917): Seteando las configuraciones..
+[INFO] 06:32:46:285 Discordiador logger/(12917:12921): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 06:32:46:286 Discordiador logger/(12917:12921): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 06:32:46:286 Discordiador logger/(12917:12921): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 06:32:48:288 Discordiador logger/(12917:12927): TAREA: 

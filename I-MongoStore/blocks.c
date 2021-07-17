@@ -40,6 +40,7 @@ void cargarBLoqueEnMemoria(char* contenido,int id_bloque)
 
 void copiarAMemoria()
 {
+
 	int posicion = 0;
 	//char* bloqueVacio = malloc(BLOCK_SIZE);
 

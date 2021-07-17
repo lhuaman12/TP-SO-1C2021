@@ -48,7 +48,7 @@ void ejecutar_comando(char** lectura) {
 		expulsar_tripulante(lectura[1]);
 	}
 	else if(strcmp(lectura[0],"OBTENER_BITACORA")==0){
-		//obtener_bitacora(lectura[1]);TODO mensaje de TID al mongo y devuelve string de info
+		enviar_mensaje_por_codigo(lectura[1],OBTENER_BITACORA,SOCKET_IMONGO);//TODO mensaje de TID al mongo y devuelve string de info
 	}
 
 	else {
@@ -364,17 +364,16 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 
 void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea){
 	// deberia pedirle a ram por socket tripulante->socket_ram;
-	if(tripulante->tarea_actual!=NULL){
-		(*referencia_tarea)++;
-		tripulante->tarea_actual=realloc(tripulante->tarea_actual,strlen(tareas_aux[*referencia_tarea])+1);
-		strcpy(tripulante->tarea_actual,tareas_aux[*referencia_tarea]);
-	}
-	else {
-		*referencia_tarea=0;
-		tripulante->tarea_actual=malloc(strlen(tareas_aux[*referencia_tarea])+1);
-		strcpy(tripulante->tarea_actual,tareas_aux[*referencia_tarea]);
 
-	}
+	enviar_mensaje_por_codigo(string_itoa(tripulante->TID),ENVIAR_PROXIMA_TAREA,tripulante->socket_ram);
+
+	escuchaEn(tripulante->socket_ram,configuracion_user->puerto_ram);
+
+	aceptarConexion(tripulante->socket_ram);
+
+	tripulante->tarea_actual = recibir_y_guardar_mensaje(tripulante->socket_ram);
+
+	log_info(discordiador_logger,"TAREA: %s",tripulante->tarea_actual);
 }
 
 
@@ -452,32 +451,25 @@ int es_una_tarea_io(char* tarea){
 
 
 void iniciar_patota(char ** argumentos) {
-	char **tareas_a_enviar;
+	char *tareas_a_enviar;
 	tareas_a_enviar=buscar_tareas(argumentos[2]); // path de tareas a strings de tareas
-	tareas_aux = tareas_a_enviar; //TODO: Borrar despeus es por que no hay conexion co nram
+
 	if(tareas_a_enviar==NULL)
 		return;
 
 	if(tareas_a_enviar!=NULL){ // si existe el path
 		if(argumentos[3]!=NULL){ // si paso alguna posicion
-			nueva_patota(argumentos[1],&argumentos[3]);
+			nueva_patota(argumentos[1],&argumentos[3],tareas_a_enviar);
 		}
 		else{   // pongo todos las posiciones en 0
-			nueva_patota(argumentos[1],NULL);
+			nueva_patota(argumentos[1],NULL,tareas_a_enviar);
 		}
 	}
 
-
-	/*
-
-		TODO: enviar_iniciar_patota(informacion,conexion_ram_hq){ // socket de discordiador a ram
-
-	}
-	*/
 
 }
 
-void nueva_patota(char *cantidad_tripulantes,char** posiciones) {
+void nueva_patota(char *cantidad_tripulantes,char** posiciones,char* tareas) {
 	int i;
 	bool hay_posicion=true;
 
@@ -501,10 +493,38 @@ void nueva_patota(char *cantidad_tripulantes,char** posiciones) {
 		queue_push(estructura_planificacion->cola_tripulantes_new,tripulantes[i]);
 	}
 	patota->tripulantes=tripulantes;
+
+	char* trips = unir_tripulantes(patota);
+	enviar_patota(crear_patota(string_itoa(patota->PID),tareas,trips),SOCKET_RAM);
+
 	list_add(lista_patotas, patota);
 	log_info(discordiador_logger,"Creada patota %d",patota->PID);
+	free(trips);
 
 }
+
+char* unir_tripulantes(t_patota* patota)
+{
+	char* buffer = string_itoa(patota->cantidad_tripulantes);
+	char* aux = malloc(100);
+	string_append(&buffer,",");
+	for(int i=0;i<patota->cantidad_tripulantes;i++){
+		strcpy(aux,string_itoa(patota->tripulantes[i]->TID));
+		string_append(&buffer,aux);
+		string_append(&buffer,",");
+		//free(aux);
+		strcpy(aux,string_itoa(patota->tripulantes[i]->posicion->x));
+		string_append(&buffer,aux);
+		string_append(&buffer,",");
+		//free(aux);
+		strcpy(aux,string_itoa(patota->tripulantes[i]->posicion->y));
+		string_append(&buffer,aux);
+		string_append(&buffer,",");
+	}
+	return buffer;
+	free(aux);
+}
+
 
 // inicializacion de un tripulante antes de informar iniciar patota
 t_tripulante* crear_tripulante(int32_t pid, char* posicion) { //posicion en formato x|y
@@ -521,6 +541,10 @@ t_tripulante* crear_tripulante(int32_t pid, char* posicion) { //posicion en form
 	tripulante->es_expulsado=0;
 	tripulante->es_elegido_para_sabotaje=0;
 	tripulante->tarea_normalizada=NULL;
+
+	tripulante->socket_ram = crearSocket();
+	conectar_envio(tripulante->socket_ram,configuracion_user->ip_ram,configuracion_user->puerto_ram);
+
 	// creo su hilo y lo inicio bloqueado por estar en NEW
 	sem_init(&(tripulante->semaforo_tripulante),0,0);
 	sem_init(&(tripulante->esperar_ejecucion_tripulante),0,0);
@@ -555,29 +579,63 @@ t_posicion* obtener_posicion(char* posicion) { // x|y
 	return posicion_respuesta;
 }
 
-char** buscar_tareas(char* path) {
-	FILE* archivo;
-	int cant_tareas=0;
-	char* buffer=malloc(30);
-	char** tareas_respuesta=NULL;
+char* buscar_tareas(char* path)
+{
+		FILE* archivo;
+		char* buffer=malloc(30);
+		char* tareas_respuesta = malloc(400);
+		strcpy(tareas_respuesta,"");
 
-	archivo=fopen(path,"rt");
-	if(archivo==NULL){
-		log_warning(discordiador_logger,"No se encontro el archivo de tareas en el path");
-		return NULL;
-	}
-	else{
-		while(fgets(buffer, 30, archivo)!=NULL){
-			cant_tareas++;
-			buffer[strcspn(buffer, "\n")] = 0;
-			tareas_respuesta=realloc(tareas_respuesta,(sizeof(char*)*(cant_tareas+1)));
-			tareas_respuesta[cant_tareas-1]=string_duplicate(buffer);
+		//char** tareas_totales;
+
+		int size=0;
+
+		archivo= fopen(path,"rt");
+
+		if(archivo==NULL)
+			printf("No se encontro path");
+
+		else{
+
+			while(fgets(buffer, 30, archivo)!=NULL){
+				buffer[strcspn(buffer, "\n")] = 0;
+				size+=strlen(buffer);
+				tareas_respuesta = realloc(tareas_respuesta,size);
+
+				//log_info(log_IMONGO,"Es: %s",buffer);
+
+				//tareas_totales = string_split(buffer,";");
+
+				string_append_with_format(&tareas_respuesta,"%s,",buffer);
+			}
+
 		}
-		tareas_respuesta[cant_tareas]=NULL;
+
+		char* palabra_final = malloc(400);
+		strcpy(palabra_final,contarTareas(tareas_respuesta));
+		strcat(palabra_final,",");
+		strcat(palabra_final,tareas_respuesta);
+
+		//log_info(log_IMONGO,"ES: %s",palabra_final);
+		free(buffer);
+		fclose(archivo);
+		return palabra_final;
+		free(tareas_respuesta);
+		free(palabra_final);
+}
+
+char* contarTareas(char* palabra)
+{
+	int cantidad = 0;
+	for(int i = 0; i<strlen(palabra);i++)
+	{
+		if(palabra[i]==',')
+		{
+			cantidad++;
+		}
 	}
-	free(buffer);
-	fclose(archivo);
-	return tareas_respuesta;
+	return string_itoa(cantidad);
+
 }
 
 void expulsar_tripulante(char* tid_tripulante){

@@ -1,25 +1,108 @@
-//#include "discordiador.h"
+#include "discordiador.h"
 #include "consola.h"
-
-int conexion_ram_hq;
-int conexion_mongo_store;
 
 // la estructura de los tripulantes tiene que ser una cola porque es fifo por defecto
 
 
 int main(void) {
 	pthread_t consola;
-	iniciar_logger("logs/disc.log");
+	pthread_t hiloIMONGO;
+	pthread_t hiloRAM;
+
+	iniciar_logger("disc.log");
 	setear_configs();
 	configurar_planificacion();
-	//TODO: levantar conexion con mi mongostore
-	//iniciar_conexiones();
+
+	iniciar_conexiones();
+
+	pthread_create(&hiloIMONGO,NULL,escucharIMONGO,NULL);
+
+	pthread_create(&hiloRAM,NULL,escucharIMONGO,NULL);
+
+	pthread_detach(hiloRAM);
+
+	pthread_detach(hiloIMONGO);
+
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
 
 	pthread_join(consola,NULL);
 
 	return 0;
 }
+
+void* escucharIMONGO()
+{
+	escuchaEn(SOCKET_IMONGO,configuracion_user->puerto_file_system);
+	while(1)
+		{
+		aceptarConexion(SOCKET_IMONGO);
+		atender_IMONGO(SOCKET_IMONGO);
+		}
+}
+
+void* escucharRAM()
+{
+	escuchaEn(SOCKET_RAM,configuracion_user->puerto_ram);
+	while(1)
+		{
+		aceptarConexion(SOCKET_RAM);
+		}
+}
+
+void atender_IMONGO(int conexion)
+{
+	while(1)
+		{
+		int cod_op = recibir_operacion(conexion);
+						switch(cod_op)
+						{
+
+					    case MENSAJE:
+							recibir_mensaje_encriptado(conexion,discordiador_logger);
+							break;
+					    case BITACORA:
+					    	recibir_bitacora(conexion,discordiador_logger);
+					    	break;
+						case -1:
+							log_error(discordiador_logger, "El cliente se desconecto. Terminando servidor");
+							break;
+						default:
+							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							break;
+						}
+		}
+}
+
+void atender_RAM(int conexion)
+{
+		int cod_op = recibir_operacion(conexion);
+		switch(cod_op)
+			{
+
+			   case MENSAJE:
+				recibir_mensaje_encriptado(conexion,discordiador_logger);
+				break;
+
+			   case -1:
+				log_error(discordiador_logger, "El cliente se desconecto. Terminando servidor");
+				break;
+			default:
+				//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+				break;
+						}
+}
+
+
+
+void iniciar_conexiones()
+{
+	SOCKET_RAM = crearSocket();
+	conectar_envio(SOCKET_RAM,configuracion_user->ip_ram,configuracion_user->puerto_ram);
+
+	SOCKET_IMONGO =crearSocket();
+	conectar_envio(SOCKET_IMONGO,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
+}
+
 
 void iniciar_logger(char* path) {
 	discordiador_logger = log_create(path, "Discordiador logger", 1, LOG_LEVEL_INFO);
@@ -35,11 +118,15 @@ void setear_configs() {
 	configuracion_user = malloc(sizeof(t_config_user));
 
 	//inicializar la config
-	discordiador_config = config_create("configs/discordiador.config");
+	discordiador_config = config_create("../discordiador.config");
 
 	//obtener las configs
 	configuracion_user->ip_ram = string_duplicate(config_get_string_value(discordiador_config,"IP_MI_RAM_HQ"));
-	configuracion_user->puerto_ram =string_duplicate( config_get_string_value(discordiador_config,"PUERTO_MI_RAM_HQ"));
+	configuracion_user->puerto_ram = config_get_int_value(discordiador_config,"PUERTO_MI_RAM_HQ");
+
+	configuracion_user->ip_file_system = string_duplicate(config_get_string_value(discordiador_config,"IP_I_MONGO_STORE"));
+	configuracion_user->puerto_file_system= config_get_int_value(discordiador_config,"PUERTO_I_MONGO_STORE");
+
 	configuracion_user->algoritmo= string_duplicate(config_get_string_value(discordiador_config,"ALGORITMO"));
 	configuracion_user->retardo_ciclo_cpu = atoi(config_get_string_value(discordiador_config,"RETARDO_CICLO_CPU"));
 	configuracion_user->grado_multitarea=atoi(config_get_string_value(discordiador_config,"GRADO_MULTITAREA"));

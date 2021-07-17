@@ -7,76 +7,19 @@ int main(void)
 	leer_config();
 	iniciar_filesystem();
 
-	buscar_tareas("/home/utnso/tp-2021-1c-BastardosSinGloria/I-MongoStore/patota.txt");
 
+	//registrarInicioTarea(2,"GOla");
 
-/*
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
 	prender_server();
 
 	pthread_join(hiloSincro,NULL);
 
-*/
-}
-
-char* buscar_tareas(char* path) {
-		FILE* archivo;
-		char* buffer=malloc(30);
-		char* tareas_respuesta = malloc(400);
-		strcpy(tareas_respuesta,"");
-
-		char** tareas_totales;
-
-		int size=0;
-
-		archivo= fopen(path,"rt");
-
-		if(archivo==NULL)
-			printf("No se encontro path");
-
-		else{
-
-			while(fgets(buffer, 30, archivo)!=NULL){
-				buffer[strcspn(buffer, "\n")] = 0;
-				size+=strlen(buffer);
-				tareas_respuesta = realloc(tareas_respuesta,size);
-
-				//log_info(log_IMONGO,"Es: %s",buffer);
-
-				tareas_totales = string_split(buffer,";");
-
-				string_append_with_format(&tareas_respuesta,"%s,",tareas_totales[0]);
-			}
-
-		}
-
-		char* palabra_final = malloc(400);
-		strcpy(palabra_final,contarTareas(tareas_respuesta));
-		strcat(palabra_final,",");
-		strcat(palabra_final,tareas_respuesta);
-
-		//log_info(log_IMONGO,"ES: %s",palabra_final);
-		free(buffer);
-		fclose(archivo);
-		return palabra_final;
-		free(tareas_respuesta);
-		free(palabra_final);
-}
-
-char* contarTareas(char* palabra)
-{
-	int cantidad = 0;
-	for(int i = 0; i<strlen(palabra);i++)
-	{
-		if(palabra[i]==',')
-		{
-			cantidad++;
-		}
-	}
-	return string_itoa(cantidad);
 
 }
+
+
 
 
 void prender_server()
@@ -253,7 +196,7 @@ void iniciar_log()
 
 void leer_config()
 {
-	config_IMONGO = config_create("./imongo.config");
+	config_IMONGO = config_create("../imongo.config");
 	PUNTO_MONTAJE = config_get_string_value(config_IMONGO,"PUNTO_MONTAJE");
 
 	TIEMPO_SINCRO = config_get_int_value(config_IMONGO,"TIEMPO_SINCRONIZACION");

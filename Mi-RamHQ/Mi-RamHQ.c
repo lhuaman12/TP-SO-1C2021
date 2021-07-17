@@ -22,7 +22,7 @@ void iniciar_logger()
 void iniciar_config()
 {
 
-	miRam_config = config_create("./miRam.config");
+	miRam_config = config_create("../miRam.config");
 
 
 	PUERTO_ESCUCHA_MIRAM =config_get_int_value(miRam_config,"PUERTO_ESCUCHA_MIRAM");
@@ -81,7 +81,7 @@ tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,uint32_t ubicac
 t_patota_envio* recibir_patota(int socket)
 {
 
-	//log_debug(miRam_logger,"<>START: Recibir patota");
+	log_info(miRam_logger,"<>START: Recibir patota");
 	t_patota_envio* patota = malloc(sizeof(t_patota_envio));
 	patota->id_patota = recibir_id(socket);
 	int i = 1;
@@ -100,13 +100,15 @@ t_patota_envio* recibir_patota(int socket)
 			i=0;
 			break;
 		default:
-			log_error(miRam_logger,"ERROR AL RECIBIR PATOTA");
+			///log_error(miRam_logger,"ERROR AL RECIBIR PATOTA");
 			break;
 		}
 
 	}
+
+	log_info(miRam_logger,"<>END: Recibir patota");
 	return patota;
-	//log_debug(miRam_logger,"<>END: Recibir patota");
+
 
 }
 
@@ -685,7 +687,6 @@ void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSi
 
 //      ATIENDE Y RESPONDE LOS MENSAJES CON UN HILO X TRIPULANTE. Y LOS MENSAJES SE IDENTIFICAN CON UN CÓDIGO.
 
-
 void* atender_tripulante(Tripulante* trip)
 {
 
@@ -740,7 +741,7 @@ void prender_server()
 
 	int puerto_escucha = PUERTO_ESCUCHA_MIRAM;
 	int socket_interno = crearSocket();
-	log_info(miRam_logger,"SERVIDOR LISTO");
+	log_info(miRam_logger,"<> SERVIDOR LISTO....");
 	asignar_escuchas(socket_interno,puerto_escucha,atender_tripulante);
 
 	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
@@ -778,7 +779,7 @@ void asignarIdATarea(char* nombreTarea, tipo_tarea* tarea){
 
 void iniciarPatota(t_patota_envio* patota)
 {
-
+	log_info(miRam_logger,"<>START: INICIAR_PATOTA");
 	int i,j;
 	int k=1;
 
@@ -824,12 +825,12 @@ void iniciarPatota(t_patota_envio* patota)
 		tripulante->tid = atoi(tripulantes_decriptados[k]);
 		tripulante->pos_x = atoi(tripulantes_decriptados[k+1]);
 		tripulante->pos_y = atoi(tripulantes_decriptados[k+2]);
-		tripulante->estado = tripulantes_decriptados[k+3];
+		tripulante->estado = "NEW";
 
 
 		tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
 
-		k+=4;
+		k+=3;
 
 		guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso,pid);
 
@@ -842,13 +843,15 @@ void iniciarPatota(t_patota_envio* patota)
 
 	    //SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
 
-	    list_add_in_index(listaDeTablas,atoi(patota->id_patota),tablaDeProceso);
+	    //list_add_in_index(listaDeTablas,atoi(patota->id_patota),tablaDeProceso);
 
 
 	//    log_destroy(miRam_logger);
 
 	    free(tareas_decriptadas);
 	    free(tripulantes_decriptados);
+
+	    log_info(miRam_logger,"<>END: INICIAR_PATOTA");
 }
 
 
@@ -971,13 +974,20 @@ void actualizar_posicion_tripulante(Tripulante* trip)
 
 void actualizarIdTareaARealizar(Tripulante* trip)
 {
-
+	log_info(miRam_logger,"<> START: ENVIANDO PROX TAREA");
 
 	char* id = recibir_id(trip->conexion);
-    char** mensaje_decriptado = string_split(id,",");
+
+	sleep(2);
+
+	enviar_mensaje_por_codigo("FUNCIONA;0;0;5",PAQUETE,trip->conexion);
+
+	log_info(miRam_logger,"<> END: ENVIANDO PROX TAREA");
+
 
     // HAY QUE BUSCAR TCB DEL ID TRIPULANTE Y ACTUALIZAR ID DE LA PROX TAREA A EJECUTAR.
 }
+
 
 
 //                                        MAIN
@@ -991,17 +1001,7 @@ int main(){
 	reservar_memoria();
 	crear_estructuras();
 
-	t_patota_envio* patota = malloc(sizeof(t_patota_envio));
-
-	patota->id_patota = "0";
-	patota->tareas="2,HACER_CACA,MATEO_GOD";
-	patota->trips="2,1,1,3,SEGURO,2,3,4,INSEGURO";
-
-
-	iniciarPatota(patota);
-
-	//mostrarTablaDeSegmentos();
-	dumpSegmentacion();
+	prender_server();
 
 
     return 0;

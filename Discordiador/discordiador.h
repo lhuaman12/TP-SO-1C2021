@@ -13,13 +13,22 @@
 #include <commons/collections/list.h>
 
 
+#include"paquetes.h"
+
+
 
 // dejo las configs en memoria por ahora
+
+//CONEXIONES
+int SOCKET_RAM;
+int SOCKET_IMONGO;
+
+//OTROS
 typedef struct {
 	char *ip_ram;
-	char *puerto_ram;
+	int puerto_ram;
 	char *ip_file_system;
-	char *puerto_file_system;
+	int puerto_file_system;
 	int grado_multitarea;
 	char *algoritmo;
 	int quantum;
@@ -40,6 +49,14 @@ int tid_contador;
 
 
 /// Para sincronizacion de los tripulantes y los ciclos de cpu
+
+void* escucharRAM();
+void* escucharIMONGO();
+
+void atender_RAM(int conexion);
+void atender_IMONGO(int conexion);
+
+
 
 
 void iniciar_logger(char* path);
