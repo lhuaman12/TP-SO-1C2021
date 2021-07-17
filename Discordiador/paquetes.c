@@ -15,7 +15,11 @@ void enviar_prueba(int socket)
 
 t_patota_envio* encriptar_patota(char* id,char* cant_tareas,char* cant_trip,char* ruta_tareas,char* list_trip)
 {
+	t_patota_envio* nuevaPatota= malloc(sizeof(t_patota_envio));
 
+	nuevaPatota->id_patota= id;
+	nuevaPatota->tareas = strcat(ruta_tareas,strcat(",",cant_tareas));
+	nuevaPatota->trips = strcat(list_trip,strcat(",",cant_trip));
 }
 
 

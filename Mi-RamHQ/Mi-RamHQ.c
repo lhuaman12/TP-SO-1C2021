@@ -4,6 +4,8 @@
 
 
 
+
+
 // INICIO DE LOGGER
 
 void iniciar_logger()
@@ -75,6 +77,41 @@ tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,uint32_t ubicac
 
 }
 
+
+// ESTA FUNCION ES LA QUE ESTA EN RECIBIR PAQUETE
+
+
+t_patota_envio* recibir_patota(int socket)
+{
+
+	//log_debug(miRam_logger,"<>START: Recibir patota");
+	t_patota_envio* patota = malloc(sizeof(t_patota_envio));
+	patota->id_patota = recibir_id(socket);
+	int i = 1;
+	while(i==1)
+	{
+		int cod_op = recibir_operacion(socket);
+		switch(cod_op)
+		{
+		case RECIBIR_TAREAS:
+			patota->tareas = recibir_y_guardar_mensaje(socket);
+			break;
+		case RECIBIR_TRIPS:
+			patota->trips = recibir_y_guardar_mensaje(socket);
+			break;
+		case FIN_PATOTA:
+			i=0;
+			break;
+		default:
+			log_error(miRam_logger,"ERROR AL RECIBIR PATOTA");
+			break;
+		}
+
+	}
+	return patota;
+	//log_debug(miRam_logger,"<>END: Recibir patota");
+
+}
 
 
 /*
@@ -272,7 +309,7 @@ void mostrarElSemento(){
 // GUARDA LA COSA EN LA TABLA DE SEGMENTOS Y EN MEMORIA SI EXISTE EL SEGMENTO VACIO
 
 
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa,t_list* tablaDeProceso)
+void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa,t_list* tablaDeProceso,int pid)
 {
 	int indiceDeGuardado;
 
@@ -288,9 +325,9 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		log_info(miRam_logger,"Devolvi segmento recortado para ocupar /n");
 
-		segmentoDisponible->base = malloc(tamanioCosa);
+		segmentoDisponible->elementoGuardado = malloc(tamanioCosa);
 
-		memcpy(segmentoDisponible->base,cosa,tamanioCosa);
+		memcpy(segmentoDisponible->elementoGuardado,cosa,tamanioCosa);
 
 		log_info(miRam_logger,"Copié ");
 
@@ -299,6 +336,8 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 		log_info(miRam_logger,"Ya guarde segmento en tabla de proceso %i",segmentoDisponible->ocupado);
 
 		segmentoDisponible->tipo_dato = tipoDeCosa;
+
+		segmentoDisponible->pid= pid;
 
 		log_info(miRam_logger,"Asigne tipo de dato a segmento");
 
@@ -608,12 +647,12 @@ void mostrarTablaDeSegmentos(){
 	int tamanioLista = list_size(tablaDeSegmentosLibres);
 	int i;
 	for(i=0;i<tamanioLista;i++){
-		t_tabla_segmentos* tablita = list_get(tablaDeSegmentosLibres,i);
+		t_tabla_segmentos* segmentoOcupado = list_get(tablaDeSegmentosLibres,i);
 
-		int tipoDeCosa= tablita->tipo_dato;
+		int tipoDeCosa= segmentoOcupado->tipo_dato;
 		switch(tipoDeCosa){
 		case TAREAS:
-			printf("\n Lo que hay en este espacio de memoria es una TAREA");
+			printf("\n Lo que hay en este espacio de memoria es una LISTA DE TAREAS");
 			break;
 		case TCB:
 			printf("\n Lo que hay en este espacio de memoria es un TCB");
@@ -625,8 +664,41 @@ void mostrarTablaDeSegmentos(){
 	}
 }
 
+// DUMP DE MEMORIA
 
+void dumpSegmentacion(){
 
+	log_info(miRam_logger,"Dump: ");
+
+	temporal_get_string_time("% d /% m /% y% H:% M:% S");
+
+	int tamanioLista = list_size(tablaDeSegmentosLibres);
+	int i;
+	for(i=0;i<tamanioLista;i++){
+		t_tabla_segmentos* segmentoAMostrar = malloc(sizeof(t_tabla_segmentos));
+
+		segmentoAMostrar = list_get(tablaDeSegmentosLibres,i);
+
+		if(segmentoAMostrar->ocupado){
+
+		//int tipoDeCosa= segmentoAMostrar->tipo_dato;
+
+	//	printf("Proceso: %d \n",segmentoAMostrar->pid);
+
+		log_info(miRam_logger,"  Proceso: %d  ", segmentoAMostrar->pid);
+
+		log_info(miRam_logger,"  Segmento: %d  ", i);
+
+		log_info(miRam_logger,"  Inicio: %p ", segmentoAMostrar->base);
+
+		uint32_t tamanioSegmento = segmentoAMostrar->limite - segmentoAMostrar->base;
+
+		log_info(miRam_logger,"  Tamaño: %d  ", tamanioSegmento);
+
+		log_info(miRam_logger,"\n ------------------------------------- \n");
+		}
+	}
+}
 
 
 void actualizar_posiciones_en_tabla_proceso(t_tabla_segmentos* segundoSegmentoSinActualizar,t_tabla_segmentos*  segundoSegmento)
@@ -723,87 +795,104 @@ void prender_server()
 
 //                         RECEPCION DE MENSAJES DE MODULO DISCORDIADOR
 
+void asignarIdATarea(char* nombreTarea, tipo_tarea* tarea){
+
+
+	if(strcmp(nombreTarea,"GENERAR_OXIGENO")==0)
+	{
+		tarea->idTarea = 1;
+	}else if(strcmp(nombreTarea,"CONSUMIR_OXIGENO")==0)
+	{
+		tarea->idTarea = 2;
+	}else if(strcmp(nombreTarea,"GENERAR_COMIDA")==0)
+	{
+		tarea->idTarea = 3;
+	}else if(strcmp(nombreTarea,"CONSUMIR_COMIDA")==0)
+	{
+		tarea->idTarea = 4;
+	}else if(strcmp(nombreTarea,"GENERAR_BASURA")==0)
+	{
+		tarea->idTarea = 5;
+	}else if(strcmp(nombreTarea,"CONSUMIR_BASURA")==0)
+	{
+		tarea->idTarea = 6;
+	}}
 
 //                                     INICIAR PATOTA
 
 
-void iniciarPatota(Tripulante* trip)//t_patota_envio* patota //(uint32_t pid,t_list* tareas, t_list* listaDeTripulante){
+void iniciarPatota(t_patota_envio* patota)
 {
 
-	char* mensaje = malloc(200);
+	int i,j;
+	int k=1;
 
-	mensaje = recibir_y_guardar_mensaje(trip->conexion);
+	char** tareas_decriptadas = malloc(sizeof(char));
+		//strlen(mensaje))
 
-	printf("El mensaje es %s",mensaje);
+	tareas_decriptadas = string_split(patota->tareas,",");
 
-	char** mensaje_decriptado = malloc(sizeof(char));
-	//strlen(mensaje))
+	char** tripulantes_decriptados = malloc(sizeof(char));
 
-	mensaje_decriptado = string_split(mensaje,",");
+	tripulantes_decriptados = string_split(patota->trips,",");
 
-	mensaje_decriptado[1]= malloc(sizeof(int));
+	int pid = atoi(patota->id_patota);
 
-	int pid = atoi(mensaje_decriptado[1]);
+	int cantidadDeTareas = atoi(tareas_decriptadas[0]);
 
-	int cantidadDeTareas = atoi(mensaje_decriptado[1]);
+	int cantidadDeTripulantes = atoi(tripulantes_decriptados[0]);
+
+
 
 
 	    t_list* tareas= list_create();
 
 		t_list* tablaDeProceso = list_create();
 
-		tipo_tarea* tarea= malloc(tarea);
+		for(i=0;i<cantidadDeTareas;i++){
 
-		tarea->nombreTarea;// = //mensaje_decriptado[];
+		tipo_tarea* tarea= malloc(sizeof(tipo_tarea));
 
-		tarea->idTarea;// = 1;
+		tarea->nombreTarea = tareas_decriptadas[i+1];
 
-		tipo_tarea* tarea1= malloc(tarea1);
-			tarea->nombreTarea = "Descartar oxigeno oxigeno";
-			tarea->idTarea = 2;
-
-	//	char* tarea = "HACERCACOTA";
-
-		t_tripulante* tripulante = malloc(sizeof(t_tripulante));
-
-		tripulante->estado ='R';
-		tripulante->pos_x = 0;
-		tripulante->pos_y = 0;
-		tripulante->tid= 10;
-
-		pcb* pcb = crear_PCB(10,2020);
+		asignarIdATarea(tareas_decriptadas[i+1],tarea);
 
 		list_add(tareas,tarea);
+		}
+
+		pcb* pcb = crear_PCB(pid,tareas);
+
+
+		for(j=0;j<cantidadDeTripulantes;j++){
+		t_tripulante* tripulante = malloc(sizeof(t_tripulante));
+
+
+		tripulante->tid = tripulantes_decriptados[k];
+		tripulante->pos_x = tripulantes_decriptados[k+1];
+		tripulante->pos_y = tripulantes_decriptados[k+2];
+		tripulante->estado = tripulantes_decriptados[k+3];
+
 
 
 		tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
 
-	    guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
+		k+=4;
 
-	    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
+		guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso,pid);
 
-	    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-
-	    //list_add_in_index(listaDeTablas,tablaDeProceso, index);
-
-	  // guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
-/*
-		t_tripulante* nuevoTripulante;
-		nuevoTripulante->pos_x = atoi(mensaje_decriptado[4+atoi(mensaje_decriptado[3])]);
-		nuevoTripulante->pos_y = atoi(mensaje_decriptado[5+atoi(mensaje_decriptado[3])]);
-		nuevoTripulante->estado = mensaje_decriptado[6+atoi(mensaje_decriptado[3])];
-		nuevoTripulante->tid = atoi(mensaje_decriptado[3+atoi(mensaje_decriptado[3])]);
+		}
 
 
-		crear_TCB(nuevoTripulante,&mensaje_decriptado[4],pcb);
-*/
-//      list_add_in_index(listaDeTablas,tablaDeProceso,pid);
+	    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso,pid);
 
-	//SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
-	   log_destroy(miRam_logger);
-	   log_destroy(trip->log);
+	    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso,pid);
+
+	    //SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
+
+	    list_add_in_index(listaDeTablas,atoi(patota->id_patota),tablaDeProceso);
 
 
+	//    log_destroy(miRam_logger);
 
 }
 
@@ -849,7 +938,7 @@ void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid)
 		if(segmentoGuardado->tipo_dato==TCB){
 
 			tcb* tcbAlmacenado;
-			memcpy(tcbAlmacenado,segmentoGuardado->base,tamanioTCB);
+			memcpy(tcbAlmacenado,segmentoGuardado->elementoGuardado,tamanioTCB);
 
 		return tcbAlmacenado->tid == tid;
 
@@ -947,6 +1036,21 @@ int main(){
 	reservar_memoria();
 	crear_estructuras();
 
+	t_patota_envio* patota = malloc(sizeof(t_patota_envio));
+
+	patota->id_patota = "0";
+	patota->tareas="2,HACER_CACA,MATEO_GOD";
+	patota->trips="2,MATEO,1,3,SEGURO,BRUNO,3,4,INSEGURO";
+
+	iniciarPatota(patota);
+
+	//mostrarTablaDeSegmentos();
+	dumpSegmentacion();
+
+    return 0;
+
+}
+/*
 	t_list* tareas= list_create();
 
 	//char* tareas[50];
@@ -976,12 +1080,12 @@ int main(){
 
 
 
-/*
+
 	tipo_tarea()
 
 
 	printf("La tarea es %s   \n",list_get(tareas,0));
-*/
+
 
 	tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
 
@@ -1005,111 +1109,12 @@ int main(){
 		guardar_cosa_en_segmento_adecuado(tareas,4,TAREAS,tablaDeProceso);
 
 	}
-	/*	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);*/
- /*	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
- 	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);*/
 
+
+
+    list_destroy_and_destroy_elements(tareas,(void*)free);
+    list_destroy_and_destroy_elements(tablaDeProceso,(void*)free);
+*/
 
 
 
@@ -1123,7 +1128,7 @@ int main(){
 
        }*/
 
-    mostrarTablaDeSegmentos();
+
     //prender_server();
 
 /*
@@ -1132,12 +1137,12 @@ int main(){
 		printf("Numero de prueba %d",listaDePrueba[i]);
 	}
 
+
+
+
 */
 
-    return 0;
-    list_destroy_and_destroy_elements(tareas,(void*)free);
-    list_destroy_and_destroy_elements(tablaDeProceso,(void*)free);
-}
+
 
 
 /*

@@ -6,13 +6,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+#include "estructurasCliente-Servidor.h"
+
+
 #include<pthread.h>
 #include<commons/log.h>
 #include<commons/string.h>
 #include<commons/config.h>
+#include<commons/temporal.h>
 #include<readline/readline.h>
 #include<string.h>
-#include "estructurasCliente-Servidor.h"
+
 #include<conexiones.h>
 #include <conections.h>
 
@@ -22,6 +26,7 @@
 #include <curses.h>
 #include <stdbool.h>
 #include <inttypes.h>
+
 
 // VALORES GLOBALES DE CONFIG
 
@@ -46,6 +51,18 @@ t_list* listaDeTablas;
 
 
 t_list* l_tablas;
+
+
+
+typedef struct
+{
+	char* id_patota;
+	//cant_tareas,tarea1,tarea2,..,tareaN;
+	char* tareas;
+	//cant_trip,trip1,posx,posy,estado,trip2,posx,posy,estado,tripN,posx,posy,estado
+	char* trips;
+
+}t_patota_envio;
 
 //ESTRUCTURAS TIPOS DE SEGMENTOS
 
@@ -88,7 +105,7 @@ TAREAS
 typedef struct {
 
 	bool ocupado;
-
+    uint32_t* elementoGuardado;
 	uint32_t* base;
 	uint32_t* limite;
 	tipo_dato_guardado tipo_dato;
@@ -140,6 +157,8 @@ typedef struct{
 
 
 
+t_patota_envio* recibir_patota(int socket);
+
 // DECLARACION DE FUNCIONES UTILIZADAS
 
 
@@ -154,14 +173,17 @@ tcb* crear_TCB(t_tripulante* tripulante,uint32_t proxInstruccion,uint32_t ubicac
 
 void* atender_tripulante(Tripulante* trip);
 
-void iniciarPatota(Tripulante* trip);
+void asignarIdATarea(char* nombreTarea, tipo_tarea* tarea);
+
+void iniciarPatota(t_patota_envio* patota);
+
 void expulsar_tripulante(Tripulante* trip);
 void expulsar_tripulante_de_patota(uint32_t tid, uint32_t pid);
 void actualizar_posicion_tripulante(Tripulante* trip);
 void actualizarIdTareaARealizar(Tripulante* trip);
 
 
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa,t_list* tablaDeProceso);
+void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa,t_list* tablaDeProceso, int pid);
 int existeSegmento();
 
 void crear_estructuras();
@@ -187,7 +209,7 @@ t_tabla_segmentos* retornaTCB(t_tabla_segmentos* cosa);
 
 
 void mostrarTablaDeSegmentos();
-
+void dumpSegmentacion();
 
 //void recibir_mensaje_encriptado(int cliente_fd,t_log* logg);
 //void asignar_escuchas(int conexion_server,int puerto);
