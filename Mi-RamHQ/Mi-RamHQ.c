@@ -978,11 +978,19 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 
 	char* id = recibir_id(trip->conexion);
 
-	sleep(2);
 
-	enviar_mensaje_por_codigo("FUNCIONA;0;0;5",PAQUETE,trip->conexion);
+	int socket_envio = crearSocket();
 
-	log_info(miRam_logger,"<> END: ENVIANDO PROX TAREA");
+	conectar_envio(socket_envio,IP,PUERTO_ESCUCHA_MIRAM+1);
+
+
+	//CREAR UNA VARIABLE CHAR* CON LA PROXIMA TAREA Y ENVIENLA
+
+
+	enviar_mensaje_por_codigo("FUNCIONA;0;0;5",MENSAJE,socket_envio);
+
+
+	log_info(miRam_logger,"<> END: ENVIANDO PROXIMA TAREA");
 
 
     // HAY QUE BUSCAR TCB DEL ID TRIPULANTE Y ACTUALIZAR ID DE LA PROX TAREA A EJECUTAR.

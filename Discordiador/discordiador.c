@@ -17,10 +17,6 @@ int main(void) {
 
 	pthread_create(&hiloIMONGO,NULL,escucharIMONGO,NULL);
 
-	pthread_create(&hiloRAM,NULL,escucharIMONGO,NULL);
-
-	pthread_detach(hiloRAM);
-
 	pthread_detach(hiloIMONGO);
 
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
@@ -30,22 +26,42 @@ int main(void) {
 	return 0;
 }
 
+
+char* pedir_algo(int socket)
+{
+	enviar_mensaje_por_codigo("1",ENVIAR_PROXIMA_TAREA,SOCKET_RAM);
+
+	int conexionEscucha = escuchar_puerto(socket,(configuracion_user->puerto_ram)+1,discordiador_logger);
+
+	if(conexionEscucha == -1)
+	{
+		log_error(discordiador_logger,"ERROR EN LA CONEXION");
+	}
+
+	while(1)
+	{
+		int cod_op = recibir_operacion(conexionEscucha);
+		switch(cod_op)
+		{
+
+			case MENSAJE:
+			return recibir_y_guardar_mensaje(conexionEscucha);
+			break;
+		}
+	}
+}
+
+
+
+
+
 void* escucharIMONGO()
 {
 	escuchaEn(SOCKET_IMONGO,configuracion_user->puerto_file_system);
 	while(1)
 		{
-		aceptarConexion(SOCKET_IMONGO);
-		atender_IMONGO(SOCKET_IMONGO);
-		}
-}
-
-void* escucharRAM()
-{
-	escuchaEn(SOCKET_RAM,configuracion_user->puerto_ram);
-	while(1)
-		{
-		aceptarConexion(SOCKET_RAM);
+		int conec = aceptarConexion(SOCKET_IMONGO);
+		atender_IMONGO(conec);
 		}
 }
 
@@ -72,26 +88,6 @@ void atender_IMONGO(int conexion)
 						}
 		}
 }
-
-void atender_RAM(int conexion)
-{
-		int cod_op = recibir_operacion(conexion);
-		switch(cod_op)
-			{
-
-			   case MENSAJE:
-				recibir_mensaje_encriptado(conexion,discordiador_logger);
-				break;
-
-			   case -1:
-				log_error(discordiador_logger, "El cliente se desconecto. Terminando servidor");
-				break;
-			default:
-				//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
-				break;
-						}
-}
-
 
 
 void iniciar_conexiones()

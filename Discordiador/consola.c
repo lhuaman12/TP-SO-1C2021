@@ -365,13 +365,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea){
 	// deberia pedirle a ram por socket tripulante->socket_ram;
 
-	enviar_mensaje_por_codigo(string_itoa(tripulante->TID),ENVIAR_PROXIMA_TAREA,tripulante->socket_ram);
-
-	escuchaEn(tripulante->socket_ram,configuracion_user->puerto_ram);
-
-	aceptarConexion(tripulante->socket_ram);
-
-	tripulante->tarea_actual = recibir_y_guardar_mensaje(tripulante->socket_ram);
+	tripulante->tarea_actual = pedir_algo(tripulante->socket_ram);
 
 	log_info(discordiador_logger,"TAREA: %s",tripulante->tarea_actual);
 }
@@ -543,7 +537,6 @@ t_tripulante* crear_tripulante(int32_t pid, char* posicion) { //posicion en form
 	tripulante->tarea_normalizada=NULL;
 
 	tripulante->socket_ram = crearSocket();
-	conectar_envio(tripulante->socket_ram,configuracion_user->ip_ram,configuracion_user->puerto_ram);
 
 	// creo su hilo y lo inicio bloqueado por estar en NEW
 	sem_init(&(tripulante->semaforo_tripulante),0,0);
