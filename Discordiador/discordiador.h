@@ -52,7 +52,7 @@ int tid_contador;
 
 void* escucharRAM();
 void* escucharIMONGO();
-char* pedir_algo(int socket);
+char* pedir_algo(int socket,char* pid);
 void atender_RAM(int conexion);
 void atender_IMONGO(int conexion);
 

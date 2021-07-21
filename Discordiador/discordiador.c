@@ -27,9 +27,15 @@ int main(void) {
 }
 
 
-char* pedir_algo(int socket)
+char* pedir_algo(int socket,char* pid)
 {
-	enviar_mensaje_por_codigo("1",ENVIAR_PROXIMA_TAREA,SOCKET_RAM);
+	int socket_envio = crearSocket();
+
+	//
+
+	conectar_envio(socket_envio,configuracion_user->ip_ram,configuracion_user->puerto_ram);
+
+	enviar_mensaje_por_codigo(pid,ENVIAR_PROXIMA_TAREA,socket_envio);
 
 	int conexionEscucha = escuchar_puerto(socket,(configuracion_user->puerto_ram)+1,discordiador_logger);
 

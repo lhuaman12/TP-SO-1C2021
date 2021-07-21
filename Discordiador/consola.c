@@ -367,7 +367,10 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea){
 	// deberia pedirle a ram por socket tripulante->socket_ram;
 
-	tripulante->tarea_actual = pedir_algo(tripulante->socket_ram);
+	log_info(discordiador_logger,"PIDE ALGO");
+
+
+	tripulante->tarea_actual = pedir_algo(tripulante->socket_ram,string_itoa(tripulante->PID));
 
 	log_info(discordiador_logger,"TAREA: %s",tripulante->tarea_actual);
 }
@@ -474,6 +477,10 @@ void nueva_patota(char *cantidad_tripulantes,char** posiciones,char* tareas) {
 	patota->PID = list_size(lista_patotas) + 1;
 	t_tripulante** tripulantes = malloc(patota->cantidad_tripulantes * sizeof(t_tripulante*));
 
+	char* trips = unir_tripulantes(cantidad_tripulantes,posiciones);
+	enviar_patota(crear_patota(string_itoa(patota->PID),tareas,trips),SOCKET_RAM);
+
+
 	for (i = 0; i < patota->cantidad_tripulantes; i++) {
 		if(posiciones==NULL){
 			tripulantes[i] = crear_tripulante(patota->PID, NULL);
@@ -490,35 +497,68 @@ void nueva_patota(char *cantidad_tripulantes,char** posiciones,char* tareas) {
 	}
 	patota->tripulantes=tripulantes;
 
-	char* trips = unir_tripulantes(patota);
-	enviar_patota(crear_patota(string_itoa(patota->PID),tareas,trips),SOCKET_RAM);
-
 	list_add(lista_patotas, patota);
 	log_info(discordiador_logger,"Creada patota %d",patota->PID);
 	free(trips);
 
 }
 
-char* unir_tripulantes(t_patota* patota)
+char* unir_tripulantes(char* cant_tripulantes,char** posiciones)
 {
-	char* buffer = string_itoa(patota->cantidad_tripulantes);
+	int i;
+	int hay_posicion=1;
+	int tripulantes_cant = atoi(cant_tripulantes);
+	int tid_tripulante_actual= tid_contador+1;
+	char* buffer = string_itoa(tripulantes_cant);
 	char* aux = malloc(100);
 	string_append(&buffer,",");
-	for(int i=0;i<patota->cantidad_tripulantes;i++){
-		strcpy(aux,string_itoa(patota->tripulantes[i]->TID));
-		string_append(&buffer,aux);
-		string_append(&buffer,",");
-		//free(aux);
-		strcpy(aux,string_itoa(patota->tripulantes[i]->posicion->x));
-		string_append(&buffer,aux);
-		string_append(&buffer,",");
-		//free(aux);
-		strcpy(aux,string_itoa(patota->tripulantes[i]->posicion->y));
-		string_append(&buffer,aux);
-		string_append(&buffer,",");
+	t_posicion* posicion_aux;
+
+	for (i=0;i<tripulantes_cant;i++){
+		if(posiciones==NULL){
+			strcpy(aux,string_itoa(tid_tripulante_actual));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			string_append(&buffer,"0");
+			string_append(&buffer,",");
+			string_append(&buffer,"0");
+			string_append(&buffer,",");
+			tid_tripulante_actual++;
+			continue;
+		}
+
+
+		else if (hay_posicion && posiciones[i]!= NULL){
+			posicion_aux = obtener_posicion(posiciones[i]);
+			strcpy(aux,string_itoa(tid_tripulante_actual));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			strcpy(aux,string_itoa(posicion_aux->x));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			strcpy(aux,string_itoa(posicion_aux->y));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			tid_tripulante_actual++;
+
+		}
+		else{
+			posicion_aux = obtener_posicion(posiciones[i]);
+			strcpy(aux,string_itoa(tid_tripulante_actual));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			strcpy(aux,string_itoa(posicion_aux->x));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			strcpy(aux,string_itoa(posicion_aux->y));
+			string_append(&buffer,aux);
+			string_append(&buffer,",");
+			hay_posicion=0;
+			tid_tripulante_actual++;
+		}
 	}
 	return buffer;
-	free(aux);
+
 }
 
 

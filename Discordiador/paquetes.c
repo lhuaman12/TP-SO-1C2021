@@ -28,11 +28,11 @@ t_patota_envio* crear_patota(char* id,char* tareas,char* trips)
 void enviar_patota(t_patota_envio* patota,int socket_ram)
 {
 	enviar_mensaje_por_codigo(patota->id_patota,INICIAR_PATOTAS,socket_ram);
-	sleep(1);
+	//sleep(1);
 	enviar_mensaje_por_codigo(patota->tareas,RECIBIR_TAREAS,socket_ram);
-	sleep(1);
+	//sleep(1);
 	enviar_mensaje_por_codigo(patota->trips,RECIBIR_TRIPS,socket_ram);
-	sleep(1);
+	//sleep(1);
 	enviar_mensaje_por_codigo("0",FIN_PATOTA,socket_ram);
 
 }

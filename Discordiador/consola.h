@@ -37,7 +37,7 @@ void liberar_recursos(char **input);
 void ejecutar_comando(char** lectura);
 void iniciar_patota(char ** argumentos);
 void nueva_patota(char *cantidad_tripulantes,char** posiciones,char* tareas);
-char* unir_tripulantes(t_patota* patota);
+char* unir_tripulantes(char* cant_tripulantes,char** posiciones);
 t_tripulante* crear_tripulante(int32_t pid, char* posicion);
 t_posicion* obtener_posicion(char* posicion);
 char* buscar_tareas(char* path);

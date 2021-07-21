@@ -1010,14 +1010,15 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 
 	char* pid = recibir_id(trip->conexion);
 
-
 	int socket_envio = crearSocket();
+
+	sleep(1);
 
 	conectar_envio(socket_envio,IP,PUERTO_ESCUCHA_MIRAM+1);
 
+	//char* proximo_mensaje = buscarProximaTarea(pid);
 
-	char* proximo_mensaje = buscarProximaTarea(pid);
-
+	char* proximo_mensaje = "FUNCIONA;1;3;5";
 
 	enviar_mensaje_por_codigo(proximo_mensaje,MENSAJE,socket_envio);
 
