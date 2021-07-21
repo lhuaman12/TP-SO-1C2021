@@ -797,22 +797,25 @@ void iniciarPatota(t_patota_envio* patota)
 
 	int cantidadDeTripulantes = atoi(tripulantes_decriptados[0]);
 
-
+	//LO QUE RECIBIMOS CANT_T/TAREA1/TAREA2...
+	//LO QUE GUARDAMOS INDEX/TAREA1/TAREA2...
 
 
 	    t_list* tareas= list_create();
 
+	    list_add_in_index(tareas,0,0);
+
 		t_list* tablaDeProceso = list_create();
 
-		for(i=0;i<cantidadDeTareas;i++){
+		for(i=1;i<=cantidadDeTareas;i++){
 
 		tipo_tarea* tarea= malloc(sizeof(tipo_tarea));
 
-		tarea->nombreTarea = tareas_decriptadas[i+1];
+		tarea->nombreTarea = tareas_decriptadas[i];
 
-		asignarIdATarea(tareas_decriptadas[i+1],tarea);
+		//asignarIdATarea(tareas_decriptadas[i],tarea);
 
-		list_add(tareas,tarea);
+		list_add_in_index(tareas,i,tarea);
 		}
 
 		pcb* pcb = crear_PCB(pid,tareas);
@@ -826,7 +829,6 @@ void iniciarPatota(t_patota_envio* patota)
 		tripulante->pos_x = atoi(tripulantes_decriptados[k+1]);
 		tripulante->pos_y = atoi(tripulantes_decriptados[k+2]);
 		tripulante->estado = "NEW";
-
 
 		tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
 
@@ -972,11 +974,41 @@ void actualizar_posicion_tripulante(Tripulante* trip)
 //                     ACTUALIZAR PROXIMA TAREA A REALIZAR POR TRIPULANTE EN EL TCB
 
 
+char* buscarProximaTarea(char* pid)
+{
+
+	t_tabla_segmentos* segmentoAEliminar;
+		bool es_lista_tarea(t_tabla_segmentos* segmentoGuardado){
+
+			if(segmentoGuardado->tipo_dato==TAREAS){
+
+				return true;
+
+			}
+		}
+
+		t_list* tablaBuscada = list_get(listaDeTablas, pid);
+
+		t_list* tareas = list_find(tablaBuscada,es_lista_tarea);
+
+		int contador = list_get(tareas,0);
+
+		contador += 1;
+
+		// cambiar identificador de proxima tarea del tcb, bruno del futuro pete
+
+		list_add_in_index(tareas,0,contador);
+
+		return list_get(tareas,contador);
+
+}
+
+
 void actualizarIdTareaARealizar(Tripulante* trip)
 {
 	log_info(miRam_logger,"<> START: ENVIANDO PROX TAREA");
 
-	char* id = recibir_id(trip->conexion);
+	char* pid = recibir_id(trip->conexion);
 
 
 	int socket_envio = crearSocket();
@@ -984,16 +1016,14 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 	conectar_envio(socket_envio,IP,PUERTO_ESCUCHA_MIRAM+1);
 
 
-	//CREAR UNA VARIABLE CHAR* CON LA PROXIMA TAREA Y ENVIENLA
+	char* proximo_mensaje = buscarProximaTarea(pid);
 
 
-	enviar_mensaje_por_codigo("FUNCIONA;0;0;5",MENSAJE,socket_envio);
+	enviar_mensaje_por_codigo(proximo_mensaje,MENSAJE,socket_envio);
 
 
 	log_info(miRam_logger,"<> END: ENVIANDO PROXIMA TAREA");
 
-
-    // HAY QUE BUSCAR TCB DEL ID TRIPULANTE Y ACTUALIZAR ID DE LA PROX TAREA A EJECUTAR.
 }
 
 
@@ -1015,97 +1045,8 @@ int main(){
     return 0;
 
 }
-/*
-	t_list* tareas= list_create();
-
-	//char* tareas[50];
-
-	t_list* tablaDeProceso = list_create();
-
-	tipo_tarea* tarea= malloc(tarea);
-	tarea->nombreTarea = "Generar oxigeno";
-	tarea->idTarea = 1;
-
-	tipo_tarea* tarea1= malloc(tarea);
-		tarea->nombreTarea = "Descartar oxigeno oxigeno";
-		tarea->idTarea = 2;
-
-//	char* tarea = "HACERCACOTA";
-
-	t_tripulante* tripulante = malloc(sizeof(t_tripulante));
-
-	tripulante->estado ='R';
-	tripulante->pos_x = 0;
-	tripulante->pos_y = 0;
-	tripulante->tid= 10;
-
-	pcb* pcb = crear_PCB(10,2020);
-
-	list_add(tareas,tarea);
 
 
-
-
-	tipo_tarea()
-
-
-	printf("La tarea es %s   \n",list_get(tareas,0));
-
-
-	tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
-
-//	printf("La tarea es %s   \n",);
-	printf("La tarea es %s   \n",list_get(tareas,0));
-	printf("La tarea es %s   \n",list_get(tareas,0));
-
-	int j;
-
-
-    guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso);
-
-    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso);
-
- 	//guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-
-	list_add_in_index(tareas,0,tarea1);
-
-	for(j=0;j<56;j++){
-
-		guardar_cosa_en_segmento_adecuado(tareas,4,TAREAS,tablaDeProceso);
-
-	}
-
-
-
-    list_destroy_and_destroy_elements(tareas,(void*)free);
-    list_destroy_and_destroy_elements(tablaDeProceso,(void*)free);
-*/
-
-
-
-   /* for(j=0;j<10;j++){
-
-      //  pcb* pcb = crear_PCB(j+5,2020);
-
-    	//list_add(tablaDeProceso,j);
-
-       	guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso);
-
-       }*/
-
-
-    //prender_server();
-
-/*
-	for(int i=0; i<=10;i++){
-
-		printf("Numero de prueba %d",listaDePrueba[i]);
-	}
-
-
-
-
-*/
 
 
 

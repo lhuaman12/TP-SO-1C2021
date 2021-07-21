@@ -209,6 +209,8 @@ void submodulo_tripulante(t_tripulante* tripulante){
 	while(1){
 		/// Si no tenemos tareas o ya la hemos terminado la buscamos en ram y lo normalizamos para poder operar con sus argumentos
 		if(tripulante->tarea_actual==NULL || termino_tarea){
+			//int conexion = aceptarConexion(tripulante->socket_ram);
+
 			obtener_tarea_en_ram(tripulante,&referencia_a_tarea); //recibir tarea completa EJ REGAR_PLANTA;1;2;3 o GENERAR_OXIGENO 2;1;2;4. SI TERMINO RECIBE SIN_TAREAS
 
 			if(strcmp(tripulante->tarea_actual,"SIN_TAREAS")==0){
@@ -537,6 +539,7 @@ t_tripulante* crear_tripulante(int32_t pid, char* posicion) { //posicion en form
 	tripulante->tarea_normalizada=NULL;
 
 	tripulante->socket_ram = crearSocket();
+	//escuchaEn(tripulante->socket_ram,(configuracion_user->puerto_ram)+1);
 
 	// creo su hilo y lo inicio bloqueado por estar en NEW
 	sem_init(&(tripulante->semaforo_tripulante),0,0);

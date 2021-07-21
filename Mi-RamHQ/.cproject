@@ -29,7 +29,6 @@
 								<option id="gnu.c.compiler.exe.debug.option.debugging.level.540091947" name="Debug Level" superClass="gnu.c.compiler.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1128771074" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/SharedUtils/src}&quot;"/>
-									<listOptionValue builtIn="false" value="/home/utnso/shared-library-so/SharedUtils/Debug"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1641961166" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>

@@ -56,6 +56,12 @@ t_list* l_tablas;
 
 typedef struct
 {
+	int contador;
+}t_contador;
+
+
+typedef struct
+{
 	char* id_patota;
 	//cant_tareas,tarea1,tarea2,..,tareaN;
 	char* tareas;

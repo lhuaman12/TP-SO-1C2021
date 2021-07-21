@@ -776,3 +776,39 @@
 [INFO] 17:42:52:011 Discordiador logger/(7871:7871): Inicio de logs de discordiador..
 [INFO] 17:42:52:011 Discordiador logger/(7871:7871): Seteando las configuraciones..
 [INFO] 17:42:52:012 Discordiador logger/(7871:7871): Es: FUNCIONA;0;0;5
+[INFO] 02:19:48:998 Discordiador logger/(5824:5824): Inicio de logs de discordiador..
+[INFO] 02:19:49:015 Discordiador logger/(5824:5824): Seteando las configuraciones..
+[INFO] 02:21:09:533 Discordiador logger/(5824:5826): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 02:21:09:533 Discordiador logger/(5824:5826): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 02:21:09:533 Discordiador logger/(5824:5826): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 02:21:09:534 Discordiador logger/(5824:5826): Creado tripulante 4 con posicion en x:0 y:0
+[INFO] 02:21:09:534 Discordiador logger/(5824:5883): ERROR: NO ESCUCHA
+[ERROR] 02:21:09:534 Discordiador logger/(5824:5883): ERROR EN LA CONEXION
+[INFO] 02:21:09:538 Discordiador logger/(5824:5882): ERROR: NO ESCUCHA
+[ERROR] 02:21:09:539 Discordiador logger/(5824:5882): ERROR EN LA CONEXION
+[INFO] 02:21:09:542 Discordiador logger/(5824:5881): ERROR: NO ESCUCHA
+[ERROR] 02:21:09:543 Discordiador logger/(5824:5881): ERROR EN LA CONEXION
+[INFO] 02:21:12:535 Discordiador logger/(5824:5826): Creada patota 1
+[INFO] 02:24:13:764 Discordiador logger/(5959:5959): Inicio de logs de discordiador..
+[INFO] 02:24:13:765 Discordiador logger/(5959:5959): Seteando las configuraciones..
+[INFO] 02:24:25:552 Discordiador logger/(5959:5962): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 02:24:25:552 Discordiador logger/(5959:5962): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 02:24:25:552 Discordiador logger/(5959:5962): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 02:24:28:554 Discordiador logger/(5959:5962): Creada patota 1
+[INFO] 02:24:30:558 Discordiador logger/(5959:5964): ERROR: NO ESCUCHA
+[ERROR] 02:24:30:558 Discordiador logger/(5959:5964): ERROR EN LA CONEXION
+[INFO] 02:24:30:560 Discordiador logger/(5959:5963): ERROR: NO ESCUCHA
+[ERROR] 02:24:30:560 Discordiador logger/(5959:5963): ERROR EN LA CONEXION
+[INFO] 02:25:14:896 Discordiador logger/(5987:5987): Inicio de logs de discordiador..
+[INFO] 02:25:14:896 Discordiador logger/(5987:5987): Seteando las configuraciones..
+[INFO] 02:25:24:527 Discordiador logger/(5987:5990): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 02:25:24:528 Discordiador logger/(5987:5990): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 02:25:24:528 Discordiador logger/(5987:5990): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 02:25:24:528 Discordiador logger/(5987:5990): Creado tripulante 4 con posicion en x:0 y:0
+[INFO] 02:25:27:529 Discordiador logger/(5987:5990): Creada patota 1
+[INFO] 02:25:29:532 Discordiador logger/(5987:5992): ERROR: NO ESCUCHA
+[INFO] 02:25:29:532 Discordiador logger/(5987:5991): ERROR: NO ESCUCHA
+[ERROR] 02:25:29:532 Discordiador logger/(5987:5992): ERROR EN LA CONEXION
+[ERROR] 02:25:29:535 Discordiador logger/(5987:5991): ERROR EN LA CONEXION
+[INFO] 02:25:29:539 Discordiador logger/(5987:5993): ERROR: NO ESCUCHA
+[ERROR] 02:25:29:539 Discordiador logger/(5987:5993): ERROR EN LA CONEXION
