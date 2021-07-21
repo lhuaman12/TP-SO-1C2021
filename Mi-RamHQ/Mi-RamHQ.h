@@ -52,7 +52,8 @@ t_list* listaDeTablas;
 
 t_list* l_tablas;
 
-
+//CONEXIONES
+int SOCKET_ESCUCHA;
 
 typedef struct
 {

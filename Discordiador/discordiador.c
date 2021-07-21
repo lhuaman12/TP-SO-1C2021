@@ -5,12 +5,13 @@
 
 
 int main(void) {
+
 	pthread_t consola;
 	pthread_t hiloIMONGO;
 	pthread_t hiloRAM;
-
 	iniciar_logger("disc.log");
 	setear_configs();
+
 	configurar_planificacion();
 
 	iniciar_conexiones();
@@ -23,9 +24,49 @@ int main(void) {
 
 	pthread_join(consola,NULL);
 
+
+
+
+
+
+
+
+
 	return 0;
 }
 
+
+char* pedir_algo(int socket,char* pid)
+{
+	int socket_envio = crearSocket();
+
+	conectar_envio(socket_envio,configuracion_user->ip_ram,configuracion_user->puerto_ram);
+
+	enviar_mensaje_por_codigo(pid,ENVIAR_PROXIMA_TAREA,socket_envio);
+
+	/*
+	int conexionEscucha = escuchar_puerto(socket,(configuracion_user->puerto_ram)+1,discordiador_logger);
+
+	if(conexionEscucha == -1)
+	{
+		log_error(discordiador_logger,"ERROR EN LA CONEXION");
+	}
+	*/
+
+	while(1)
+	{
+		int cod_op = recibir_operacion(socket_envio);
+		switch(cod_op)
+		{
+
+			case MENSAJE:
+			return recibir_y_guardar_mensaje(socket_envio);
+			break;
+		}
+	}
+}
+
+/*
 
 char* pedir_algo(int socket,char* pid)
 {
@@ -56,6 +97,8 @@ char* pedir_algo(int socket,char* pid)
 		}
 	}
 }
+
+*/
 
 
 

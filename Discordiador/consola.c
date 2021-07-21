@@ -365,14 +365,13 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 // la referencia tarea solo es para probar en discordiador tarea por tarea
 
 void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea){
-	// deberia pedirle a ram por socket tripulante->socket_ram;
 
-	log_info(discordiador_logger,"PIDE ALGO");
+		conectar_envio(tripulante->socket_ram,configuracion_user->ip_ram,configuracion_user->puerto_ram);
 
+		enviar_mensaje_por_codigo(string_itoa(tripulante->PID),ENVIAR_PROXIMA_TAREA,tripulante->socket_ram);
 
-	tripulante->tarea_actual = pedir_algo(tripulante->socket_ram,string_itoa(tripulante->PID));
-
-	log_info(discordiador_logger,"TAREA: %s",tripulante->tarea_actual);
+		recibir_operacion(tripulante->socket_ram);
+		tripulante->tarea_actual = recibir_y_guardar_mensaje(tripulante->socket_ram);
 }
 
 
@@ -577,9 +576,10 @@ t_tripulante* crear_tripulante(int32_t pid, char* posicion) { //posicion en form
 	tripulante->es_expulsado=0;
 	tripulante->es_elegido_para_sabotaje=0;
 	tripulante->tarea_normalizada=NULL;
-
+	tripulante->socket_envio = crearSocket();
 	tripulante->socket_ram = crearSocket();
-	//escuchaEn(tripulante->socket_ram,(configuracion_user->puerto_ram)+1);
+
+
 
 	// creo su hilo y lo inicio bloqueado por estar en NEW
 	sem_init(&(tripulante->semaforo_tripulante),0,0);

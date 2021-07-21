@@ -58,7 +58,7 @@ typedef struct{
 	t_posicion* posicion;
 	char** tarea_normalizada;
 	int32_t socket_ram;
-	int32_t socket_mongo_hq;
+	int32_t socket_envio;
 	sem_t semaforo_tripulante;
 	sem_t esperar_ejecucion_tripulante;
 	int32_t es_expulsado; //TODO: envolver en otra estructura puntero y luego liberar

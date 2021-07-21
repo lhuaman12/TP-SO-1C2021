@@ -718,8 +718,10 @@ void* atender_tripulante(Tripulante* trip)
 
 						break;
 					    case MENSAJE:
-							recibir_mensaje_encriptado(trip->conexion,trip->log);
-							break;
+
+							recibir_y_guardar_mensaje(trip->conexion);
+							enviar_mensaje_por_codigo("CHAU",MENSAJE,trip->conexion);
+						break;
 						/*case -1:
 							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
 							break;
@@ -740,9 +742,9 @@ void prender_server()
 {
 
 	int puerto_escucha = PUERTO_ESCUCHA_MIRAM;
-	int socket_interno = crearSocket();
+	int SOCKET_ESCUCHA = crearSocket();
 	log_info(miRam_logger,"<> SERVIDOR LISTO....");
-	asignar_escuchas(socket_interno,puerto_escucha,atender_tripulante);
+	asignar_escuchas(SOCKET_ESCUCHA,puerto_escucha,atender_tripulante);
 
 	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
 	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
@@ -1010,17 +1012,13 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 
 	char* pid = recibir_id(trip->conexion);
 
-	int socket_envio = crearSocket();
-
 	sleep(1);
-
-	conectar_envio(socket_envio,IP,PUERTO_ESCUCHA_MIRAM+1);
 
 	//char* proximo_mensaje = buscarProximaTarea(pid);
 
 	char* proximo_mensaje = "FUNCIONA;1;3;5";
 
-	enviar_mensaje_por_codigo(proximo_mensaje,MENSAJE,socket_envio);
+	enviar_mensaje_por_codigo(proximo_mensaje,MENSAJE,trip->conexion);
 
 
 	log_info(miRam_logger,"<> END: ENVIANDO PROXIMA TAREA");
@@ -1033,14 +1031,12 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 
 
 int main(){
-
-
 	iniciar_config();
 	iniciar_logger();
 	reservar_memoria();
 	crear_estructuras();
-
 	prender_server();
+
 
 
     return 0;
