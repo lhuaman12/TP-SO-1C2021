@@ -117,6 +117,7 @@ typedef struct {
 	uint32_t* limite;
 	tipo_dato_guardado tipo_dato;
 	int pid;
+	char** elementoMateo;
 
 }t_tabla_segmentos;
 
@@ -146,7 +147,7 @@ typedef struct{
 }t_tripulante;*/
 
 typedef struct{
-	t_list* tarea;
+	char** tarea;
 }listaTareas;
 
 
@@ -161,6 +162,18 @@ typedef struct{
 	uint32_t pid;
 	t_pagina* paginas;
 }tabla_paginas_proceso;
+
+
+
+typedef struct{
+
+	t_tabla_segmentos* segmentoPid;
+	t_tabla_segmentos* segmentoTid;
+	t_tabla_segmentos* segmentoTarea;
+
+}t_tablaDeProceso;
+
+
 
 
 t_patota_envio* recibir_patota(int socket);
@@ -190,7 +203,7 @@ void actualizar_posicion_tripulante(Tripulante* trip);
 void actualizarIdTareaARealizar(Tripulante* trip);
 
 
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa,t_list* tablaDeProceso, int pid);
+t_tabla_segmentos* guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoCosa, int pid);
 int existeSegmento();
 
 void crear_estructuras();
