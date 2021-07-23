@@ -91,7 +91,7 @@ void repararSize(char* recurso)
 
 	char** bloquesTotales = string_split(bloquesEnUso,",");
 
-	int tamanio = strlen(bloquesEnUso)/2;
+	int tamanio = contarComas(bloquesEnUso);
 
 	for(int i = 0; i<tamanio; i++)
 	{
@@ -128,7 +128,7 @@ void repararBlockCount(char* recurso)
 
 	char* bloquesEnUso = buscarBloquesUsados(filePath);
 
-	int tamanio = strlen(bloquesEnUso)/2;
+	int tamanio = contarComas(bloquesEnUso);
 
 	pthread_mutex_lock(&semaforoFiles);
 
@@ -163,7 +163,7 @@ void restaurarRecurso(char* recurso, char caracter)
 
 	char** bloquesTotales = string_split(bloquesEnUso,",");
 
-	int tamanio = strlen(bloquesEnUso)/2;
+	int tamanio = contarComas(bloquesEnUso);
 
 	for(int i = 0; i<tamanio; i++)
 	{
@@ -228,7 +228,7 @@ enviar_mensaje_por_codigo(buffer,BITACORA,trip->conexion);
 }
 
 
-
+//
 
 void recibir_movimiento(int socket)
 {

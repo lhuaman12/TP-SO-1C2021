@@ -223,7 +223,18 @@ void borrarContenido(char* id)
 
 }
 
-
+int contarComas(char* palabra)
+{
+	int total = 0;
+	for(int i=0; i<strlen(palabra); i++)
+	{
+		if(palabra[i]==',')
+		{
+			total++;
+		}
+	}
+	return total;
+}
 
 
 int contarBloques()

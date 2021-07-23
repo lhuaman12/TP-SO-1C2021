@@ -101,7 +101,7 @@ char* obtenerBitacora(char* id)
 	strcpy(path,RUTA_BITACORA);
 	string_append_with_format(&path,"Tripulante%s.ims",id);
 
-	char* lista_mensajes = malloc(70);
+	char* lista_mensajes = malloc(900);
 	strcpy(lista_mensajes,"");
 
 	char* buffer = malloc(BLOCK_SIZE);
@@ -115,9 +115,7 @@ char* obtenerBitacora(char* id)
 	//{"1","2","3"..}
 	int i = 0;
 
-	int tamanio = strlen(bloquesEnUso)/2;
-
-	//t_bloque* bloqueMomentaneo = malloc(sizeof(t_bloque));
+	int tamanio = contarComas(bloquesEnUso);
 
 	for(i = 0; i<tamanio; i++)
 	{

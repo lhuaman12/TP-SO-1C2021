@@ -33,7 +33,7 @@ int buscarSizeContenido(char* id);
 //BLOQUES EN DISCO
 void guardarEnBloque(char* contenido,int id_bloque);
 
-
+int contarComas(char* palabra);
 int contarBloques();
 int calcularBloquesPorContenido(char* contenido);
 int calcularBloquesPorTamanio(int tamanio);

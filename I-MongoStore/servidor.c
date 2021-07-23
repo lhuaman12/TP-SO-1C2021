@@ -141,7 +141,7 @@ void* atender_tripulante(Tripulante* trip)
 							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
 							break;
 						default:
-							log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
 							break;
 						}
 		}
