@@ -32,7 +32,7 @@ void consumirBasura(int cantidad);
 
 char* obtenerBitacora(char* id);
 
-void registrarMovimiento(int id,char* posX_Inicial,char* posY_Inicial,char* posX_Final,char* posY_Final);
+void registrarMovimiento(int id,char* posX_Final,char* posY_Final);
 void registrarInicioTarea(int id,char* tarea);
 void registrarFinTarea(int id,char* tarea);
 void registrarFinSabotaje(int id);

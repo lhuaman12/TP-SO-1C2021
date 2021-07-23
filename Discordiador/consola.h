@@ -72,4 +72,7 @@ void salir_expulsado(t_tripulante* tripulante);
 void planificacion_round_robin();
 bool tripulante_sin_quantum(t_tripulante* tripulante);
 void ejecutar_tripulante_restando_quantum(t_tripulante* tripulante);
+
+void imprimir_bitacora(char* id);
+
 #endif /* UTILS_CONSOLA_H_ */

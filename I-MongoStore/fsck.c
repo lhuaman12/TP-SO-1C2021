@@ -230,6 +230,43 @@ enviar_mensaje_por_codigo(buffer,BITACORA,trip->conexion);
 
 
 
+void recibir_movimiento(int socket)
+{
+	char* mensaje = recibir_y_guardar_mensaje(socket);
+	char** mensaje_decriptado = string_split(mensaje,",");
+
+	int id = atoi(mensaje_decriptado[0]);
+	char* posx = mensaje_decriptado[1];
+	char* posy = mensaje_decriptado[2];
+
+	registrarMovimiento(id,posx,posy);
+
+}
+
+void recibir_inicio_tarea(int socket)
+{
+	char* mensaje = recibir_y_guardar_mensaje(socket);
+	char** mensaje_decriptado = string_split(mensaje,",");
+
+	int id = atoi(mensaje_decriptado[0]);
+	char* tarea = mensaje_decriptado[1];
+
+	registrarInicioTarea(id,tarea);
+}
+
+void recibir_fin_tarea(int socket)
+{
+	char* mensaje = recibir_y_guardar_mensaje(socket);
+	char** mensaje_decriptado = string_split(mensaje,",");
+
+	int id = atoi(mensaje_decriptado[0]);
+	char* tarea = mensaje_decriptado[1];
+
+	registrarFinTarea(id,tarea);
+}
+
+
+
 
 
 

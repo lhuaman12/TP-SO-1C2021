@@ -16,21 +16,9 @@ int main(void) {
 
 	iniciar_conexiones();
 
-	pthread_create(&hiloIMONGO,NULL,escucharIMONGO,NULL);
-
-	pthread_detach(hiloIMONGO);
-
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
 
 	pthread_join(consola,NULL);
-
-
-
-
-
-
-
-
 
 	return 0;
 }
@@ -99,44 +87,6 @@ char* pedir_algo(int socket,char* pid)
 }
 
 */
-
-
-
-
-
-void* escucharIMONGO()
-{
-	escuchaEn(SOCKET_IMONGO,configuracion_user->puerto_file_system);
-	while(1)
-		{
-		int conec = aceptarConexion(SOCKET_IMONGO);
-		atender_IMONGO(conec);
-		}
-}
-
-void atender_IMONGO(int conexion)
-{
-	while(1)
-		{
-		int cod_op = recibir_operacion(conexion);
-						switch(cod_op)
-						{
-
-					    case MENSAJE:
-							recibir_mensaje_encriptado(conexion,discordiador_logger);
-							break;
-					    case BITACORA:
-					    	recibir_bitacora(conexion,discordiador_logger);
-					    	break;
-						case -1:
-							log_error(discordiador_logger, "El cliente se desconecto. Terminando servidor");
-							break;
-						default:
-							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
-							break;
-						}
-		}
-}
 
 
 void iniciar_conexiones()

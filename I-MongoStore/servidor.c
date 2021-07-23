@@ -20,8 +20,6 @@ int main(void)
 }
 
 
-
-
 void prender_server()
 {
 	int puerto_escucha = PUERTO_DISC;
@@ -109,10 +107,6 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-						case INICIAR_PATOTAS:
-							log_debug(log_IMONGO,"LLEGO UNA PATOTA");
-							recibir_patota(trip->conexion);
-							break;
 						case GENERAR_OXIGENO:
 							generarOxigeno(atoi(recibir_id(trip->conexion)));
 							break;
@@ -131,9 +125,14 @@ void* atender_tripulante(Tripulante* trip)
 						case CONSUMIR_BASURA:
 							consumirBasura(atoi(recibir_id(trip->conexion)));
 							break;
-
-					    case MENSAJE:
-							recibir_mensaje_encriptado(trip->conexion,trip->log);
+						case REGISTRAR_MOVIMIENTO:
+							recibir_movimiento(trip->conexion);
+							break;
+						case REGISTRAR_INICIO_TAREA:
+							recibir_inicio_tarea(trip->conexion);
+							break;
+						case REGISTRAR_FIN_TAREA:
+							recibir_fin_tarea(trip->conexion);
 							break;
 					    case OBTENER_BITACORA:
 					    	responder_bitacora(trip);
@@ -142,11 +141,13 @@ void* atender_tripulante(Tripulante* trip)
 							log_error(trip->log, "El cliente se desconecto. Terminando servidor");
 							break;
 						default:
-							//log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
+							log_warning(trip->log, "Operacion desconocida. No quieras meter la pata");
 							break;
 						}
 		}
 }
+
+//
 
 
 void init_directorios()

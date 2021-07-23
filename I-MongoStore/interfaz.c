@@ -26,11 +26,11 @@ void consumirBasura(int cantidad)
 {
 	consumirRecurso("Basura",cantidad);
 }
-void registrarMovimiento(int id,char* posX_Inicial,char* posY_Inicial,char* posX_Final,char* posY_Final)
+void registrarMovimiento(int id,char* posX_Final,char* posY_Final)
 {
 	char* palabra = malloc(50);
-	strcpy(palabra,"Se mueve de ");
-	string_append_with_format(&palabra,"%s|%s a %s|%s",posX_Inicial,posY_Inicial,posX_Final,posY_Final);
+	strcpy(palabra,"Se mueve ");
+	string_append_with_format(&palabra,"a %s|%s",posX_Final,posY_Final);
 	guardarBitacora(string_itoa(id),palabra);
 	free(palabra);
 }

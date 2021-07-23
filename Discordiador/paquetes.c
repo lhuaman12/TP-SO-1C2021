@@ -36,3 +36,31 @@ void enviar_patota(t_patota_envio* patota,int socket_ram)
 	enviar_mensaje_por_codigo("0",FIN_PATOTA,socket_ram);
 
 }
+
+
+void enviar_movimiento(t_tripulante* trip)
+{
+	char* palabra = malloc(100);
+	strcpy(palabra,"");
+
+	char* pid = string_itoa(trip->PID);
+	char* posx = string_itoa(trip->posicion->x);
+	char* posy = string_itoa(trip->posicion->y);
+
+	string_append_with_format(&palabra,"%s,",pid);
+	string_append_with_format(&palabra,"%s,",posx);
+	string_append_with_format(&palabra,"%s,",posy);
+
+	enviar_mensaje_por_codigo(palabra,REGISTRAR_MOVIMIENTO,SOCKET_IMONGO);
+
+}
+
+
+
+
+
+
+
+
+
+

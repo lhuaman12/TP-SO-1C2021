@@ -12,7 +12,7 @@
 
 void restaurarRecurso(char* recurso, char caracter);
 int analizarBloque(int posicion);
-void responder_bitacora(Tripulante* trip);
+
 
 //SABOTAJES
 void repararSuperBloque();
@@ -21,6 +21,12 @@ void repararBitmap();
 void repararSize(char* recurso);
 void repararBlockCount(char* recurso);
 void repararMD5(char* recurso,char caracter);
+
+
+void responder_bitacora(Tripulante* trip);
+void recibir_movimiento(int socket);
+void recibir_inicio_tarea(int socket);
+void recibir_fin_tarea(int socket);
 
 
 

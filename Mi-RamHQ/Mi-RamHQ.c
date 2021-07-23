@@ -14,7 +14,6 @@ void iniciar_logger()
 
 //	iniciar_mapa("Nivel Base",4,4);
 
-
 }
 
 //INICIALIZAR VALORES DE CONFIG
@@ -315,9 +314,11 @@ void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato
 
 		t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
 
-		segmentoDisponible->elementoGuardado = malloc(tamanioCosa);
+		//segmentoDisponible->elementoGuardado = malloc(tamanioCosa);
 
-		memcpy(segmentoDisponible->elementoGuardado,cosa,tamanioCosa);
+		//memcpy(segmentoDisponible->elementoGuardado,cosa,tamanioCosa);
+
+		segmentoDisponible->elementoGuardado = cosa;
 
 		segmentoDisponible->ocupado = true;
 
@@ -746,6 +747,8 @@ void prender_server()
 	log_info(miRam_logger,"<> SERVIDOR LISTO....");
 	asignar_escuchas(SOCKET_ESCUCHA,puerto_escucha,atender_tripulante);
 
+
+	//
 	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
 	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
 }
@@ -803,21 +806,21 @@ void iniciarPatota(t_patota_envio* patota)
 	//LO QUE GUARDAMOS INDEX/TAREA1/TAREA2...
 
 
-	    t_list* tareas= list_create();
+	    t_list* tareas = list_create();
 
-	    list_add_in_index(tareas,0,0);
+	    list_add(tareas,0);
 
 		t_list* tablaDeProceso = list_create();
 
 		for(i=1;i<=cantidadDeTareas;i++){
 
-		tipo_tarea* tarea= malloc(sizeof(tipo_tarea));
+		//tipo_tarea* tarea= malloc(sizeof(tipo_tarea));
 
-		tarea->nombreTarea = tareas_decriptadas[i];
+		//tarea->nombreTarea = tareas_decriptadas[i];
 
 		//asignarIdATarea(tareas_decriptadas[i],tarea);
 
-		list_add_in_index(tareas,i,tarea);
+		list_add(tareas,tareas_decriptadas[i]);
 		}
 
 		pcb* pcb = crear_PCB(pid,tareas);
@@ -843,11 +846,15 @@ void iniciarPatota(t_patota_envio* patota)
 
 	    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso,pid);
 
-	    guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaDeProceso,pid);
+	    guardar_cosa_en_segmento_adecuado(tareas,(tareas->elements_count)*10,TAREAS,tablaDeProceso,pid);
 
 	    //SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
 
-	    //list_add_in_index(listaDeTablas,atoi(patota->id_patota),tablaDeProceso);
+	    list_add(listaDeTablas,tablaDeProceso);
+
+
+
+
 
 
 	//    log_destroy(miRam_logger);
@@ -979,7 +986,20 @@ void actualizar_posicion_tripulante(Tripulante* trip)
 char* buscarProximaTarea(char* pid)
 {
 
-	t_tabla_segmentos* segmentoAEliminar;
+	char* tareas[5] ={"GENERAR_OXIGENO 10;3;5;5","JUEGA_FORZA;1;3;6","GENERAR_COMIDA 15;3;3;5","JUEGA_LOL;1;2;5","SIN_TAREAS"};
+
+	pthread_mutex_lock(&hiloCont);
+
+	contador_global++;
+
+	pthread_mutex_unlock(&hiloCont);
+
+
+	return tareas[contador_global];
+
+
+
+/*
 		bool es_lista_tarea(t_tabla_segmentos* segmentoGuardado){
 
 			if(segmentoGuardado->tipo_dato==TAREAS){
@@ -988,8 +1008,18 @@ char* buscarProximaTarea(char* pid)
 
 			}
 		}
+		bool es_el_pid(t_tabla_segmentos* segmentoGuardado){
 
-		t_list* tablaBuscada = list_get(listaDeTablas, pid);
+			if(segmentoGuardado->pid == atoi(pid)){
+
+				return true;
+			}
+		}
+
+
+		t_list* tablaBuscada = list_find(listaDeTablas,es_el_pid);
+
+		//pcb* pcb = list_find(tablaBuscada,es_el_pcb);
 
 		t_list* tareas = list_find(tablaBuscada,es_lista_tarea);
 
@@ -1002,6 +1032,7 @@ char* buscarProximaTarea(char* pid)
 		list_add_in_index(tareas,0,contador);
 
 		return list_get(tareas,contador);
+*/
 
 }
 
@@ -1014,9 +1045,9 @@ void actualizarIdTareaARealizar(Tripulante* trip)
 
 	sleep(1);
 
-	//char* proximo_mensaje = buscarProximaTarea(pid);
+	char* proximo_mensaje = buscarProximaTarea(pid);
 
-	char* proximo_mensaje = "FUNCIONA;1;3;5";
+	//char* proximo_mensaje = "FUNCIONA;1;3;5";
 
 	enviar_mensaje_por_codigo(proximo_mensaje,MENSAJE,trip->conexion);
 
@@ -1035,8 +1066,40 @@ int main(){
 	iniciar_logger();
 	reservar_memoria();
 	crear_estructuras();
+
+	pthread_mutex_init(&hiloCont,NULL);
+	contador_global = 0;
+
+
 	prender_server();
 
+/*
+
+	t_list* tareas = list_create();
+	list_add(tareas,"HOLA");
+	list_add(tareas,"CHAU");
+
+	t_list* tablaPrc = list_create();
+
+	 guardar_cosa_en_segmento_adecuado(tareas,sizeof(tareas),TAREAS,tablaPrc,1);
+
+
+	 char* tarea = buscarProximaTarea("1");
+
+*/
+
+
+
+	t_patota_envio* patota = malloc(sizeof(t_patota_envio));
+	patota->id_patota="1";
+	patota->tareas ="2,COMER;0;0;5,CAGAR;0;5;6";
+	patota->trips="2,1,0,0,2,0,0";
+
+	iniciarPatota(patota);
+
+	char* tarea = buscarProximaTarea(patota->id_patota);
+
+	log_info(miRam_logger,"Es: %s",tarea);
 
 
     return 0;

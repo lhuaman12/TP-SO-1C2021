@@ -48,12 +48,23 @@ void ejecutar_comando(char** lectura) {
 		expulsar_tripulante(lectura[1]);
 	}
 	else if(strcmp(lectura[0],"OBTENER_BITACORA")==0){
-		enviar_mensaje_por_codigo(lectura[1],OBTENER_BITACORA,SOCKET_IMONGO);//TODO mensaje de TID al mongo y devuelve string de info
+		imprimir_bitacora(lectura[1]);
+
 	}
 
 	else {
 		printf("Comando incorrecto\n");
 	}
+}
+
+void imprimir_bitacora(char* id)
+{
+	enviar_mensaje_por_codigo(id,OBTENER_BITACORA,SOCKET_IMONGO);
+
+	recibir_operacion(SOCKET_IMONGO);
+	char* bitacora = recibir_y_guardar_mensaje(SOCKET_IMONGO);
+	log_info(discordiador_logger,"LA BITACORA DE %s es %s",id,bitacora);
+
 }
 
 void iniciar_planificacion(){
@@ -301,6 +312,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			tripulante->posicion->x++;
 			mover_en_x--;
 			ciclos_de_reloj++;
+			enviar_movimiento(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&(tripulante->esperar_ejecucion_tripulante));
 		}
@@ -317,6 +329,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			mover_en_y--;
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
+			enviar_movimiento(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
@@ -337,6 +350,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			mover_en_x++;
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
+			enviar_movimiento(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 
@@ -352,6 +366,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			mover_en_y++;
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
+			enviar_movimiento(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
