@@ -21,7 +21,7 @@ void iniciar_logger()
 void iniciar_config()
 {
 
-	miRam_config = config_create("../miRam.config");
+	miRam_config = config_create("./miRam.config");
 
 
 	PUERTO_ESCUCHA_MIRAM =config_get_int_value(miRam_config,"PUERTO_ESCUCHA_MIRAM");
@@ -305,28 +305,35 @@ void mostrarElSemento(){
 // GUARDA LA COSA EN LA TABLA DE SEGMENTOS Y EN MEMORIA SI EXISTE EL SEGMENTO VACIO
 
 
-void guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa,t_list* tablaDeProceso,int pid)
+t_tabla_segmentos* guardar_cosa_en_segmento_adecuado(void *cosa,uint32_t tamanioCosa,tipo_dato_guardado tipoDeCosa, int pid)
 {
 	int indiceDeGuardado;
 
 	if(existe_segmento_libre(tamanioCosa))
 	{
 
-		t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
 
-		//segmentoDisponible->elementoGuardado = malloc(tamanioCosa);
 
-		//memcpy(segmentoDisponible->elementoGuardado,cosa,tamanioCosa);
+			t_tabla_segmentos* segmentoDisponible = recortar_segmento_y_devolverlo(tamanioCosa);
 
-		segmentoDisponible->elementoGuardado = cosa;
+			segmentoDisponible->base = malloc(tamanioCosa);//
 
-		segmentoDisponible->ocupado = true;
+			memcpy(segmentoDisponible->base,cosa,tamanioCosa);//
 
-		segmentoDisponible->tipo_dato = tipoDeCosa;
 
-		segmentoDisponible->pid= pid;
+			segmentoDisponible->ocupado = true;
+			segmentoDisponible->tipo_dato = tipoDeCosa;
+			segmentoDisponible->pid= pid;
+			segmentoDisponible->elementoGuardado = cosa;
+			if(tipoDeCosa == PCB){
+				return segmentoDisponible;
 
-		list_add(tablaDeProceso, segmentoDisponible);
+			}else{
+				segmentoDisponible->elementoMateo = cosa;
+			}
+
+			return segmentoDisponible;
+
 
 
 	    }else{
@@ -788,9 +795,13 @@ void iniciarPatota(t_patota_envio* patota)
 	int i,j;
 	int k=1;
 
+	t_tablaDeProceso* nuevoProceso = malloc(sizeof(t_tablaDeProceso));
+
 	char** tareas_decriptadas = malloc(300);
 
 	tareas_decriptadas = string_split(patota->tareas,",");
+
+
 
 	char** tripulantes_decriptados = malloc(300);
 
@@ -798,33 +809,20 @@ void iniciarPatota(t_patota_envio* patota)
 
 	int pid = atoi(patota->id_patota);
 
+
 	int cantidadDeTareas = atoi(tareas_decriptadas[0]);
 
 	int cantidadDeTripulantes = atoi(tripulantes_decriptados[0]);
 
+	nuevoProceso->segmentoTarea = guardar_cosa_en_segmento_adecuado(tareas_decriptadas,(cantidadDeTareas*sizeof(char*)),TAREAS,pid);
+
+
 	//LO QUE RECIBIMOS CANT_T/TAREA1/TAREA2...
 	//LO QUE GUARDAMOS INDEX/TAREA1/TAREA2...
 
+		pcb* pcb = crear_PCB(pid,nuevoProceso->segmentoTarea->base);
 
-	    t_list* tareas = list_create();
-
-	    list_add(tareas,0);
-
-		t_list* tablaDeProceso = list_create();
-
-		for(i=1;i<=cantidadDeTareas;i++){
-
-		//tipo_tarea* tarea= malloc(sizeof(tipo_tarea));
-
-		//tarea->nombreTarea = tareas_decriptadas[i];
-
-		//asignarIdATarea(tareas_decriptadas[i],tarea);
-
-		list_add(tareas,tareas_decriptadas[i]);
-		}
-
-		pcb* pcb = crear_PCB(pid,tareas);
-
+		tcb** listaTripulantes = malloc(sizeof(tcb)*cantidadDeTripulantes);
 
 		for(j=0;j<cantidadDeTripulantes;j++){
 		t_tripulante* tripulante = malloc(sizeof(t_tripulante));
@@ -835,25 +833,22 @@ void iniciarPatota(t_patota_envio* patota)
 		tripulante->pos_y = atoi(tripulantes_decriptados[k+2]);
 		tripulante->estado = "NEW";
 
-		tcb* tcb = crear_TCB(tripulante,list_get(tareas,0),pcb);
-
+		tcb* tcb = crear_TCB(tripulante,0,pcb);
+		listaTripulantes[j] = tcb ;
 		k+=3;
 
-		guardar_cosa_en_segmento_adecuado(tcb,tamanioTCB,TCB,tablaDeProceso,pid);
 
 		}
 
+		nuevoProceso->segmentoTid = guardar_cosa_en_segmento_adecuado(listaTripulantes,sizeof(tcb)*cantidadDeTripulantes,TCB,pid);
 
-	    guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,tablaDeProceso,pid);
+	    nuevoProceso->segmentoPid = guardar_cosa_en_segmento_adecuado(pcb,tamanioPCB,PCB,pid);
 
-	    guardar_cosa_en_segmento_adecuado(tareas,(tareas->elements_count)*10,TAREAS,tablaDeProceso,pid);
+
 
 	    //SE GUARDA LA TABLA DE PROCESO EN LA LISTA DE TABLAS EN EL INDICE QUE COINCIDE CON EL PID
 
-	    list_add(listaDeTablas,tablaDeProceso);
-
-
-
+	    list_add(listaDeTablas,nuevoProceso);
 
 
 
@@ -986,7 +981,7 @@ void actualizar_posicion_tripulante(Tripulante* trip)
 char* buscarProximaTarea(char* pid)
 {
 
-	char* tareas[5] ={"GENERAR_OXIGENO 10;3;5;5","JUEGA_FORZA;1;3;6","GENERAR_COMIDA 15;3;3;5","JUEGA_LOL;1;2;5","SIN_TAREAS"};
+/*	char* tareas[5] ={"GENERAR_OXIGENO 10;3;5;5","JUEGA_FORZA;1;3;6","GENERAR_COMIDA 15;3;3;5","JUEGA_LOL;1;2;5","SIN_TAREAS"};
 
 	pthread_mutex_lock(&hiloCont);
 
@@ -996,10 +991,10 @@ char* buscarProximaTarea(char* pid)
 
 
 	return tareas[contador_global];
+*/
 
 
 
-/*
 		bool es_lista_tarea(t_tabla_segmentos* segmentoGuardado){
 
 			if(segmentoGuardado->tipo_dato==TAREAS){
@@ -1017,22 +1012,27 @@ char* buscarProximaTarea(char* pid)
 		}
 
 
-		t_list* tablaBuscada = list_find(listaDeTablas,es_el_pid);
+		t_tablaDeProceso* tablaBuscada = list_find(listaDeTablas,es_el_pid);
 
-		//pcb* pcb = list_find(tablaBuscada,es_el_pcb);
+		t_tabla_segmentos* tareas = tablaBuscada->segmentoTarea;
 
-		t_list* tareas = list_find(tablaBuscada,es_lista_tarea);
+		tcb** tcb = tablaBuscada->segmentoTid->elementoMateo;
 
-		int contador = list_get(tareas,0);
+		int indice = (tcb[0])->idProxInstruccion;
 
-		contador += 1;
+		char** tareasBuscadas = tablaBuscada->segmentoTid->elementoMateo;
+
+		char* tarea = tareasBuscadas[indice];
+
+		return tarea;
+
 
 		// cambiar identificador de proxima tarea del tcb, bruno del futuro pete
 
-		list_add_in_index(tareas,0,contador);
+		//list_add_in_index(tareas,0,contador);
 
-		return list_get(tareas,contador);
-*/
+
+
 
 }
 
@@ -1071,7 +1071,7 @@ int main(){
 	contador_global = 0;
 
 
-	prender_server();
+	//prender_server();
 
 /*
 
