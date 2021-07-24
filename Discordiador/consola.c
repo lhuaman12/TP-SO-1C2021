@@ -218,7 +218,7 @@ void submodulo_tripulante(t_tripulante* tripulante){
 	t_posicion desplazamiento;
 
 	while(1){
-		sem_wait(&tripulante->semaforo_tripulante);
+		//sem_wait(&tripulante->semaforo_tripulante);
 		/// Si no tenemos tareas o ya la hemos terminado la buscamos en ram y lo normalizamos para poder operar con sus argumentos
 		if(tripulante->tarea_actual==NULL || termino_tarea){
 			//int conexion = aceptarConexion(tripulante->socket_ram);
