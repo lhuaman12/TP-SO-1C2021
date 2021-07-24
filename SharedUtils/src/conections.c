@@ -86,8 +86,8 @@ void aceptar_tripulante(int conexion, void* atender(Tripulante* trip))
 	nuevo_tripulante->conexion = aceptarConexion(conexion);
 	if(nuevo_tripulante->conexion != -1)
 	{
-		log_info(nuevo_tripulante->log,"NUEVO TRIPULANTE");
-		pthread_create(&(nuevo_tripulante->hilo),NULL,atender,nuevo_tripulante);
+		//log_info(nuevo_tripulante->log,"NUEVO TRIPULANTE");
+		pthread_create(&(nuevo_tripulante->hilo),NULL,(void*)atender,nuevo_tripulante);
 		pthread_detach(nuevo_tripulante->hilo);
 	}
 }

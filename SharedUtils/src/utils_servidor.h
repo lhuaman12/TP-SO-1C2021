@@ -56,6 +56,6 @@ char* recibir_y_guardar_mensaje(int socket_cliente);
 int recibir_operacion(int);
 char* recibir_id(int socket_cliente);
 
-void recibir_bitacora(int cliente_fd,t_log* logg);
+void recibir_bitacora(int cliente_fd);
 
 #endif /* CONEXIONES_H_ */

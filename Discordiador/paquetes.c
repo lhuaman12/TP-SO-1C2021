@@ -23,6 +23,23 @@ t_patota_envio* crear_patota(char* id,char* tareas,char* trips)
 
 	return nuevaPatota;
 }
+void enviar_cambio_estado(int socket,char* estado, int tid)
+{
+	char* mensaje = malloc(strlen(estado)+1);
+	strcpy(mensaje,"");
+	char* id = string_itoa(tid);
+	string_append_with_format(&mensaje,"%s,",id);
+	string_append_with_format(&mensaje,"%s,",estado);
+
+	conectar_envio(socket,configuracion_user->ip_ram,configuracion_user->puerto_ram);
+
+	enviar_mensaje_por_codigo(mensaje,CAMBIO_ESTADO,socket);
+
+	free(mensaje);
+	free(id);
+
+}
+
 
 void enviar_IO(int socket,char* tarea,char* cantidad)
 {
@@ -127,8 +144,10 @@ void enviar_actualizar_pos(t_tripulante* trip)
 
 	enviar_mensaje_por_codigo(palabra,POSICION_TRIPULANTE_ACTUALIZADA,trip->socket_ram);
 
-	recibir_operacion(trip->socket_ram);
-	char* respuesta = recibir_y_guardar_mensaje(trip->socket_ram);
+	//recibir_operacion(trip->socket_ram);
+	//char* respuesta = recibir_y_guardar_mensaje(trip->socket_ram);
+
+
 
 	//TODO: EVALUAR SI LLEGO BIEN
 

@@ -8,6 +8,26 @@
 #include "fsck.h"
 
 
+char* obtenerPosicion()
+{
+	char* posiciones = POSICIONES_SABOTAJE;
+	posiciones = string_substring_until(posiciones,strlen(posiciones)-1);
+	posiciones = string_substring(posiciones,1,strlen(posiciones));
+	char** posiciones_separadas = string_split(posiciones,",");
+	char* valor = posiciones_separadas[numero_sabotaje];
+
+	numero_sabotaje++;
+
+	if(numero_sabotaje == sabotajes_max)
+	{
+		log_warning(log_IMONGO,"<> NO MAS SABOTAJES");
+	}
+	return valor;
+
+	free(posiciones_separadas);
+
+}
+
 //PERFECTO
 void repararSuperBloque()
 {

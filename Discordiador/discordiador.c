@@ -8,13 +8,15 @@ int main(void) {
 
 	pthread_t consola;
 	pthread_t hiloIMONGO;
-	pthread_t hiloRAM;
 	iniciar_logger("disc.log");
 	setear_configs();
 
 	configurar_planificacion();
 
 	iniciar_conexiones();
+
+	//pthread_create(&hiloIMONGO,NULL,(void*)escuchaSabotajes,NULL);
+	//pthread_detach(hiloIMONGO);
 
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
 
@@ -24,70 +26,6 @@ int main(void) {
 }
 
 
-char* pedir_algo(int socket,char* pid)
-{
-	int socket_envio = crearSocket();
-
-	conectar_envio(socket_envio,configuracion_user->ip_ram,configuracion_user->puerto_ram);
-
-	enviar_mensaje_por_codigo(pid,ENVIAR_PROXIMA_TAREA,socket_envio);
-
-	/*
-	int conexionEscucha = escuchar_puerto(socket,(configuracion_user->puerto_ram)+1,discordiador_logger);
-
-	if(conexionEscucha == -1)
-	{
-		log_error(discordiador_logger,"ERROR EN LA CONEXION");
-	}
-	*/
-
-	while(1)
-	{
-		int cod_op = recibir_operacion(socket_envio);
-		switch(cod_op)
-		{
-
-			case MENSAJE:
-			return recibir_y_guardar_mensaje(socket_envio);
-			break;
-		}
-	}
-}
-
-/*
-
-char* pedir_algo(int socket,char* pid)
-{
-	int socket_envio = crearSocket();
-
-	//
-
-	conectar_envio(socket_envio,configuracion_user->ip_ram,configuracion_user->puerto_ram);
-
-	enviar_mensaje_por_codigo(pid,ENVIAR_PROXIMA_TAREA,socket_envio);
-
-	int conexionEscucha = escuchar_puerto(socket,(configuracion_user->puerto_ram)+1,discordiador_logger);
-
-	if(conexionEscucha == -1)
-	{
-		log_error(discordiador_logger,"ERROR EN LA CONEXION");
-	}
-
-	while(1)
-	{
-		int cod_op = recibir_operacion(conexionEscucha);
-		switch(cod_op)
-		{
-
-			case MENSAJE:
-			return recibir_y_guardar_mensaje(conexionEscucha);
-			break;
-		}
-	}
-}
-
-*/
-
 
 void iniciar_conexiones()
 {
@@ -96,8 +34,46 @@ void iniciar_conexiones()
 
 	SOCKET_IMONGO =crearSocket();
 	conectar_envio(SOCKET_IMONGO,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
+	//enviar_mensaje_por_codigo("0",SABOTAJE,SOCKET_IMONGO);
+
 }
 
+void atender_sabotaje(int socket)
+{
+	//px,py
+	char* posicion = recibir_y_guardar_mensaje(socket);
+	char** mensaje_dec = string_split(posicion,"|");
+
+	sabotaje->posicion->x = atoi(mensaje_dec[0]);
+	sabotaje->posicion->y = atoi(mensaje_dec[1]);
+	sabotaje->hay_sabotaje=true;
+
+	free(mensaje_dec);
+}
+void leer_bitacora(int socket)
+{
+	char* mensaje = recibir_y_guardar_mensaje(socket);
+	log_info(discordiador_logger,"LA BITACORA ES: %s",mensaje);
+}
+
+void* escuchaSabotajes()
+{
+	while(1)
+	{
+		int codigo = recibir_operacion(SOCKET_IMONGO);
+		switch(codigo)
+		{
+		case BITACORA:
+			leer_bitacora(SOCKET_IMONGO);
+			break;
+		case SABOTAJE:
+			atender_sabotaje(SOCKET_IMONGO);
+			break;
+		}
+
+	}
+
+}
 
 void iniciar_logger(char* path) {
 	discordiador_logger = log_create(path, "Discordiador logger", 1, LOG_LEVEL_INFO);
@@ -173,73 +149,3 @@ void inicializar_estructuras(){
 
 }
 
-/*
- void* crear_escucha(int puerto)
- {
- int codigoEscucha = crearSocket();
- log_info(discordiador_logger,"CLIENTE LISTO PARA ESCUCHAR");
- int conexion_escucha = escuchar_puerto(codigoEscucha,puerto);
- if(conexion_escucha == -1)
- {
- log_info(discordiador_logger,"ERROR: LA CONEXION ES -1");
- }
-
- while(1)
- {
- int cod_op = recibir_operacion(conexion_escucha);
- switch(cod_op)
- {
-
- case MENSAJE:
- //recibir_mensaje(cliente_fd);
- log_info(discordiador_logger,"ME LLEGO UN MENSAJE");
- recibir_mensaje_encriptado(conexion_escucha,discordiador_logger);
- break;
- case -1:
- log_error(discordiador_logger, "El cliente se desconecto. Terminando servidor");
- return EXIT_FAILURE;
- default:
- log_warning(discordiador_logger, "Operacion desconocida. No quieras meter la pata");
- break;
- }
- }
- return EXIT_SUCCESS;
- }
-
- */
-
-
-/// conexion bidireccional discordiador cliente y ramhq servidor
-/*
-void iniciar_conexiones(void) {
-	conexion_ram_hq = crear_conexion(configuracion_user->ip_ram,
-			configuracion_user->puerto_ram);
-	log_info(logger, "conexion con ram hq establecida\n");
-	conexion_mongo_store=crear_conexion(configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
-	 log_info(logger,"conexion con ram hq establecida\n");
-
-}
-*/
-/*
-void hilo_escucha_ramhq(void) {
-	int op;
-	char *mensaje;
-	char **mensaje_descifrado;
-
-	while (1) {
-		op = recibir_operacion(conexion_ram_hq);
-		switch (op) {
-		case CONFIRMACION_INICIAR_PATOTA:
-			printf("holis");
-			break;
-		}
-		case -1:
-			printf("Error");
-			break;
-		default:
-			printf("Operacion Desconocida");
-			break;
-
-	}
-}
-*/

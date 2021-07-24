@@ -60,11 +60,6 @@ void ejecutar_comando(char** lectura) {
 void imprimir_bitacora(char* id)
 {
 	enviar_mensaje_por_codigo(id,OBTENER_BITACORA,SOCKET_IMONGO);
-
-	recibir_operacion(SOCKET_IMONGO);
-	char* bitacora = recibir_y_guardar_mensaje(SOCKET_IMONGO);
-	log_info(discordiador_logger,"LA BITACORA DE %s es %s",id,bitacora);
-
 }
 
 void iniciar_planificacion(){
@@ -146,6 +141,7 @@ void iniciar_planificacion_fifo(){
 					tripulante_aux=list_remove_by_condition(estructura_planificacion->tripulantes_exec,(void*)tripulante_pide_bloqueo);
 					log_info(discordiador_logger,"Tripulante %d pasando de EXEC a BLOCKED",tripulante_aux->TID);
 					tripulante_aux->estado=BLOCKED;
+					enviar_cambio_estado(tripulante_aux->socket_ram,"B",tripulante_aux->TID);
 					queue_push(estructura_planificacion->cola_tripulantes_block,tripulante_aux);
 					cant_tripulantes_piden_bloqueo--;
 				}
@@ -157,6 +153,7 @@ void iniciar_planificacion_fifo(){
 			tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 			if(tripulante_aux->no_tiene_tareas){
 				log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
+				//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
 				queue_pop(estructura_planificacion->cola_tripulantes_block);
 				destruir_recursos_tripulante(tripulante_aux);
 			}
@@ -167,6 +164,7 @@ void iniciar_planificacion_fifo(){
 			tripulante_aux=queue_pop(estructura_planificacion->cola_tripulantes_new);
 			log_info(discordiador_logger,"Tripulante %d pasando de NEW a READY",tripulante_aux->TID);
 			tripulante_aux->estado=READY;
+			enviar_cambio_estado(tripulante_aux->socket_ram,"R",tripulante_aux->TID);
 			queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux);
 		}
 
@@ -177,6 +175,7 @@ void iniciar_planificacion_fifo(){
 				tripulante_aux = queue_pop(estructura_planificacion->cola_tripulantes_block);
 				queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux);
 				log_info(discordiador_logger,"Tripulante:%d pasando de BLOCKED a READY",tripulante_aux->TID);
+				enviar_cambio_estado(tripulante_aux->socket_ram,"R",tripulante_aux->TID);
 				// darle un ciclo al siguiente tripulante bloqueado
 				if(queue_size(estructura_planificacion->cola_tripulantes_block)!=0){
 					tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
@@ -192,6 +191,7 @@ void iniciar_planificacion_fifo(){
 			list_add(estructura_planificacion->tripulantes_exec,tripulante_aux);
 			tripulante_aux->estado=EXEC; //pasamos a estado ejecutando
 			log_info(discordiador_logger,"Tripulante %d pasando de READY a EXEC",tripulante_aux->TID);
+			enviar_cambio_estado(tripulante_aux->socket_ram,"E",tripulante_aux->TID);
 
 		}
 
@@ -226,7 +226,8 @@ void submodulo_tripulante(t_tripulante* tripulante){
 				tripulante->no_tiene_tareas=1;
 				tripulante->estado=EXIT;
 				//TODO: Avisar a ram que termine, aunque el sabe porque le pedi una tarea vacia
-				log_info(discordiador_logger,"Tripulante:%d termino todas sus tareas, pasa a EXIT",tripulante->TID); //TODO: intentar sacar este log y que lo haga el planificador
+				log_info(discordiador_logger,"Tripulante:%d termino todas sus tareas, pasa a EXIT",tripulante->TID);
+				//enviar_cambio_estado(tripulante->socket_ram,"f",tripulante->TID);//TODO: intentar sacar este log y que lo haga el planificador
 				pthread_exit(NULL);
 			}
 			termino_tarea=0;
@@ -986,6 +987,7 @@ void planificacion_round_robin(){
 				tripulante_aux=list_remove_by_condition(estructura_planificacion->tripulantes_exec,(void*)tripulante_sin_quantum);
 				tripulante_aux->estado=READY;
 				log_info(discordiador_logger,"Tripulante %d sin quantum pasando de EXEC a READY ",tripulante_aux->TID);
+				enviar_cambio_estado(tripulante_aux->socket_ram,"R",tripulante_aux->TID);
 				queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux);
 			}
 
@@ -995,6 +997,7 @@ void planificacion_round_robin(){
 					tripulante_aux=list_remove_by_condition(estructura_planificacion->tripulantes_exec,(void*)tripulante_pide_bloqueo);
 					log_info(discordiador_logger,"Tripulante %d pasando de EXEC a BLOCKED",tripulante_aux->TID);
 					tripulante_aux->estado=BLOCKED;
+					enviar_cambio_estado(tripulante_aux->socket_ram,"B",tripulante_aux->TID);
 					queue_push(estructura_planificacion->cola_tripulantes_block,tripulante_aux);
 					cant_tripulantes_piden_bloqueo--;
 				}
@@ -1005,6 +1008,7 @@ void planificacion_round_robin(){
 			tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 			if(tripulante_aux->no_tiene_tareas){
 				log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
+				//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
 				queue_pop(estructura_planificacion->cola_tripulantes_block);
 				destruir_recursos_tripulante(tripulante_aux);
 			}
@@ -1014,6 +1018,7 @@ void planificacion_round_robin(){
 			tripulante_aux=queue_pop(estructura_planificacion->cola_tripulantes_new);
 			log_info(discordiador_logger,"Tripulante %d pasando de NEW a READY",tripulante_aux->TID);
 			tripulante_aux->estado=READY;
+			enviar_cambio_estado(tripulante_aux->socket_ram,"R",tripulante_aux->TID);
 			queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux);
 		}
 			// en cada ciclo chequeo si termino su rafaga IO
@@ -1024,6 +1029,7 @@ void planificacion_round_robin(){
 				queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux);
 				log_info(discordiador_logger,"Tripulante:%d pasando de BLOCKED a READY",tripulante_aux->TID);
 				// darle un ciclo al siguiente tripulante bloqueado
+				enviar_cambio_estado(tripulante_aux->socket_ram,"R",tripulante_aux->TID);
 				if(queue_size(estructura_planificacion->cola_tripulantes_block)!=0){
 					tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 					sem_post(&tripulante_aux->semaforo_tripulante);
@@ -1038,6 +1044,7 @@ void planificacion_round_robin(){
 				list_add(estructura_planificacion->tripulantes_exec,tripulante_aux);
 				tripulante_aux->estado=EXEC; //pasamos a estado ejecutando
 				log_info(discordiador_logger,"Tripulante %d pasando de READY a EXEC con %d de Quantum",tripulante_aux->TID,quantum_disponible);
+				enviar_cambio_estado(tripulante_aux->socket_ram,"E",tripulante_aux->TID);
 			}
 
 		if(list_size(estructura_planificacion->tripulantes_exec)!=0)

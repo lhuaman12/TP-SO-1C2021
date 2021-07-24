@@ -49,6 +49,10 @@ int BLOCK_SIZE;
 int NUEVO_FS;
 char* BITMAP;
 
+int SOCKET_DISC;
+int numero_sabotaje;
+int sabotajes_max;
+
 // *PARA EL BITMAP
 char* RUTA_BITMAP;
 void* bufferBitArray;
@@ -98,8 +102,9 @@ void init_bloques_vacio();
 void init_bitmap();
 void init_bloques_usado();
 
+void guardarSocket(int socket);
 void* atender_tripulante(Tripulante* trip);
-
+void avisarDisc();
 
 char* buscar_tareas(char* path);
 char* contarTareas(char* palabra);

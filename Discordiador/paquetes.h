@@ -30,6 +30,7 @@ void enviar_IO(int socket,char* tarea,char* cantidad);
 void enviar_movimiento(t_tripulante* trip);
 void enviar_inicio_tarea(int socket,char* tarea,int tid);
 void enviar_fin_tarea(int socket,char* tarea,int tid);
+void enviar_cambio_estado(int socket,char* estado,int tid);
 
 
 #endif /* PAQUETES_H_ */

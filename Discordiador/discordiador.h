@@ -56,7 +56,9 @@ char* pedir_algo(int socket,char* pid);
 void atender_RAM(int conexion);
 void atender_IMONGO(int conexion);
 
-
+void* escuchaSabotajes();
+void leer_bitacora(int socket);
+void atender_sabotaje(int socket);
 
 
 void iniciar_logger(char* path);

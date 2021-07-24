@@ -8,7 +8,7 @@ int main(void)
 	iniciar_filesystem();
 
 
-	//registrarInicioTarea(2,"GOla");
+	signal(SIGUSR1,avisarDisc);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -18,7 +18,13 @@ int main(void)
 
 
 }
-
+void avisarDisc()
+{
+	log_info(log_IMONGO,"ME QUIEREN MATAR");
+	char* posicion = obtenerPosicion();
+	log_warning(log_IMONGO,"%s",posicion);
+	enviar_mensaje_por_codigo(posicion,SABOTAJE,SOCKET_DISC);
+}
 
 void prender_server()
 {
@@ -100,6 +106,12 @@ void init_bitmap()
 
 }
 
+
+void guardarSocket(int socket)
+{
+	SOCKET_DISC = socket;
+}
+
 void* atender_tripulante(Tripulante* trip)
 {
 	while(1)
@@ -107,6 +119,9 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
+						case SABOTAJE:
+							guardarSocket(trip->conexion);
+							break;
 						case GENERAR_OXIGENO:
 							generarOxigeno(atoi(recibir_id(trip->conexion)));
 							break;
@@ -204,6 +219,8 @@ void leer_config()
 	PUERTO_DISC = config_get_int_value(config_IMONGO,"PUERTO");
 
 	POSICIONES_SABOTAJE = config_get_string_value(config_IMONGO,"POSICIONES_SABOTAJE");
+	numero_sabotaje = 0;
+	sabotajes_max = (strlen(POSICIONES_SABOTAJE)-2)/2;
 
 	RUTA_BITMAP = string_from_format("%s/Bitmap.ims",PUNTO_MONTAJE);
 	RUTA_SUPER_BLOQUE = string_from_format("%s/SuperBloque.ims",PUNTO_MONTAJE);

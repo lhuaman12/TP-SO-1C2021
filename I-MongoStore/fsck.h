@@ -12,7 +12,7 @@
 
 void restaurarRecurso(char* recurso, char caracter);
 int analizarBloque(int posicion);
-
+char* obtenerPosicion();
 
 //SABOTAJES
 void repararSuperBloque();
