@@ -218,6 +218,7 @@ void submodulo_tripulante(t_tripulante* tripulante){
 	t_posicion desplazamiento;
 
 	while(1){
+		sem_wait(&tripulante->semaforo_tripulante);
 		/// Si no tenemos tareas o ya la hemos terminado la buscamos en ram y lo normalizamos para poder operar con sus argumentos
 		if(tripulante->tarea_actual==NULL || termino_tarea){
 			//int conexion = aceptarConexion(tripulante->socket_ram);
@@ -383,10 +384,18 @@ void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea){
 
 		conectar_envio(tripulante->socket_ram,configuracion_user->ip_ram,configuracion_user->puerto_ram);
 
-		enviar_mensaje_por_codigo(string_itoa(tripulante->PID),ENVIAR_PROXIMA_TAREA,tripulante->socket_ram);
+		char* mensaje = malloc(20);
+		strcpy(mensaje,"");
+		string_append_with_format(&mensaje,"%d,",tripulante->PID);
+		string_append_with_format(&mensaje,"%d,",tripulante->TID);
+
+		enviar_mensaje_por_codigo(mensaje,ENVIAR_PROXIMA_TAREA,tripulante->socket_ram);
 
 		recibir_operacion(tripulante->socket_ram);
 		tripulante->tarea_actual = recibir_y_guardar_mensaje(tripulante->socket_ram);
+
+		free(mensaje);
+
 }
 
 

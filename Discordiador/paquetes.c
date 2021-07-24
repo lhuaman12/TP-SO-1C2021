@@ -43,18 +43,42 @@ void enviar_movimiento(t_tripulante* trip)
 	char* palabra = malloc(100);
 	strcpy(palabra,"");
 
-	char* pid = string_itoa(trip->PID);
+	char* tid = string_itoa(trip->TID);
 	char* posx = string_itoa(trip->posicion->x);
 	char* posy = string_itoa(trip->posicion->y);
 
-	string_append_with_format(&palabra,"%s,",pid);
+	string_append_with_format(&palabra,"%s,",tid);
 	string_append_with_format(&palabra,"%s,",posx);
 	string_append_with_format(&palabra,"%s,",posy);
 
 	enviar_mensaje_por_codigo(palabra,REGISTRAR_MOVIMIENTO,SOCKET_IMONGO);
+	free(palabra);
 
 }
 
+void enviar_actualizar_pos(t_tripulante* trip)
+{
+	char* palabra = malloc(100);
+	strcpy(palabra,"");
+
+	char* tid =	string_itoa(trip->TID);
+	char* posx = string_itoa(trip->posicion->x);
+	char* posy = string_itoa(trip->posicion->y);
+
+	string_append_with_format(&palabra,"%s,",tid);
+	string_append_with_format(&palabra,"%s,",posx);
+	string_append_with_format(&palabra,"%s,",posy);
+
+	enviar_mensaje_por_codigo(palabra,POSICION_TRIPULANTE_ACTUALIZADA,trip->socket_ram);
+
+	recibir_operacion(trip->socket_ram);
+	char* respuesta = recibir_y_guardar_mensaje(trip->socket_ram);
+
+	//TODO: EVALUAR SI LLEGO BIEN
+
+	free(palabra);
+
+}
 
 
 

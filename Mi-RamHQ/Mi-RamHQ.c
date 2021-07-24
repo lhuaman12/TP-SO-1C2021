@@ -744,18 +744,13 @@ void* atender_tripulante(Tripulante* trip)
 
 
 
-
-
 void prender_server()
 {
-
 	int puerto_escucha = PUERTO_ESCUCHA_MIRAM;
 	int SOCKET_ESCUCHA = crearSocket();
 	log_info(miRam_logger,"<> SERVIDOR LISTO....");
 	asignar_escuchas(SOCKET_ESCUCHA,puerto_escucha,atender_tripulante);
 
-
-	//
 	// SE ESCUCHA AL MISMO TIEMPO VARIOS CLIENTES, PARA PODER RECIBIR
 	// DISTINTOS TIPOS DE MEMSAJE, SE AGREGAN LA FUNCION ENVIAR MENSAJE Y RECIBIR MENSAJE EN RESPECTIVOS DOCUMENTOS
 }
@@ -1071,7 +1066,7 @@ int main(){
 	contador_global = 0;
 
 
-	//prender_server();
+	prender_server();
 
 /*
 

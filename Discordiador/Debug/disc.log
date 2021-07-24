@@ -1670,3 +1670,199 @@
 [INFO] 00:39:45:117 Discordiador logger/(14091:14091): Inicio de logs de discordiador..
 [INFO] 00:39:45:117 Discordiador logger/(14091:14091): Seteando las configuraciones..
 [INFO] 00:39:55:171 Discordiador logger/(14091:14094): LA BITACORA DE 1 es Se mueve a 1|0Se mueve a 1|1Se mueve a 1|2Se mueve a 1|3Se mueve a 2|3Se mueve a 3|3Se mueve a 2|3Se mueve a 2|2Se mueve a 1|2
+[INFO] 21:47:16:430 Discordiador logger/(12036:12036): Inicio de logs de discordiador..
+[INFO] 21:47:16:434 Discordiador logger/(12036:12036): Seteando las configuraciones..
+[INFO] 21:47:40:416 Discordiador logger/(12036:12038): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 21:47:40:416 Discordiador logger/(12036:12038): Creada patota 1
+[INFO] 22:41:39:885 Discordiador logger/(12663:12663): Inicio de logs de discordiador..
+[INFO] 22:41:39:885 Discordiador logger/(12663:12663): Seteando las configuraciones..
+[INFO] 22:41:55:273 Discordiador logger/(12663:12666): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 22:41:55:275 Discordiador logger/(12663:12666): Creada patota 1
+[INFO] 22:48:42:940 Discordiador logger/(13021:13021): Inicio de logs de discordiador..
+[INFO] 22:48:42:940 Discordiador logger/(13021:13021): Seteando las configuraciones..
+[INFO] 22:49:17:015 Discordiador logger/(13021:13024): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 22:49:17:017 Discordiador logger/(13021:13024): Creada patota 1
+[INFO] 22:51:40:145 Discordiador logger/(13106:13106): Inicio de logs de discordiador..
+[INFO] 22:51:40:154 Discordiador logger/(13106:13106): Seteando las configuraciones..
+[INFO] 22:51:53:505 Discordiador logger/(13106:13108): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 22:51:53:508 Discordiador logger/(13106:13108): Creada patota 1
+[INFO] 22:56:26:335 Discordiador logger/(13243:13243): Inicio de logs de discordiador..
+[INFO] 22:56:26:336 Discordiador logger/(13243:13243): Seteando las configuraciones..
+[INFO] 22:56:52:909 Discordiador logger/(13250:13250): Inicio de logs de discordiador..
+[INFO] 22:56:52:916 Discordiador logger/(13250:13250): Seteando las configuraciones..
+[INFO] 22:57:10:449 Discordiador logger/(13250:13252): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 22:57:10:451 Discordiador logger/(13250:13252): Creada patota 1
+[INFO] 23:02:45:662 Discordiador logger/(13422:13422): Inicio de logs de discordiador..
+[INFO] 23:02:45:687 Discordiador logger/(13422:13422): Seteando las configuraciones..
+[INFO] 23:02:55:563 Discordiador logger/(13422:13433): Iniciado planificacion FIFO..
+[INFO] 23:02:55:564 Discordiador logger/(13422:13433): Ciclo de cpu:1
+[INFO] 23:02:56:564 Discordiador logger/(13422:13433): Ciclo de cpu:2
+[INFO] 23:02:57:565 Discordiador logger/(13422:13433): Ciclo de cpu:3
+[INFO] 23:02:58:565 Discordiador logger/(13422:13433): Ciclo de cpu:4
+[INFO] 23:02:59:566 Discordiador logger/(13422:13433): Ciclo de cpu:5
+[INFO] 23:03:00:567 Discordiador logger/(13422:13433): Ciclo de cpu:6
+[INFO] 23:03:01:568 Discordiador logger/(13422:13433): Ciclo de cpu:7
+[INFO] 23:03:02:569 Discordiador logger/(13422:13433): Ciclo de cpu:8
+[INFO] 23:03:03:569 Discordiador logger/(13422:13433): Ciclo de cpu:9
+[INFO] 23:03:04:571 Discordiador logger/(13422:13433): Ciclo de cpu:10
+[INFO] 23:03:05:571 Discordiador logger/(13422:13433): Ciclo de cpu:11
+[INFO] 23:03:06:572 Discordiador logger/(13422:13433): Ciclo de cpu:12
+[INFO] 23:03:07:572 Discordiador logger/(13422:13433): Ciclo de cpu:13
+[INFO] 23:03:08:573 Discordiador logger/(13422:13433): Ciclo de cpu:14
+[INFO] 23:03:09:574 Discordiador logger/(13422:13433): Ciclo de cpu:15
+[INFO] 23:03:10:575 Discordiador logger/(13422:13433): Ciclo de cpu:16
+[INFO] 23:03:11:576 Discordiador logger/(13422:13433): Ciclo de cpu:17
+[INFO] 23:03:12:578 Discordiador logger/(13422:13433): Ciclo de cpu:18
+[INFO] 23:03:13:578 Discordiador logger/(13422:13433): Ciclo de cpu:19
+[INFO] 23:03:14:579 Discordiador logger/(13422:13433): Ciclo de cpu:20
+[INFO] 23:03:15:579 Discordiador logger/(13422:13433): Ciclo de cpu:21
+[INFO] 23:03:16:592 Discordiador logger/(13422:13433): Ciclo de cpu:22
+[INFO] 23:03:17:593 Discordiador logger/(13422:13433): Ciclo de cpu:23
+[INFO] 23:03:18:594 Discordiador logger/(13422:13433): Ciclo de cpu:24
+[INFO] 23:03:19:595 Discordiador logger/(13422:13433): Ciclo de cpu:25
+[INFO] 23:03:20:595 Discordiador logger/(13422:13433): Ciclo de cpu:26
+[INFO] 23:03:21:596 Discordiador logger/(13422:13433): Ciclo de cpu:27
+[INFO] 23:03:22:597 Discordiador logger/(13422:13433): Ciclo de cpu:28
+[INFO] 23:03:23:598 Discordiador logger/(13422:13433): Ciclo de cpu:29
+[INFO] 23:03:24:598 Discordiador logger/(13422:13433): Ciclo de cpu:30
+[INFO] 23:03:25:599 Discordiador logger/(13422:13433): Ciclo de cpu:31
+[INFO] 23:03:26:600 Discordiador logger/(13422:13433): Ciclo de cpu:32
+[INFO] 23:03:27:601 Discordiador logger/(13422:13433): Ciclo de cpu:33
+[INFO] 23:03:28:601 Discordiador logger/(13422:13433): Ciclo de cpu:34
+[INFO] 23:03:29:602 Discordiador logger/(13422:13433): Ciclo de cpu:35
+[INFO] 23:03:30:602 Discordiador logger/(13422:13433): Ciclo de cpu:36
+[INFO] 23:04:01:665 Discordiador logger/(13449:13449): Inicio de logs de discordiador..
+[INFO] 23:04:01:674 Discordiador logger/(13449:13449): Seteando las configuraciones..
+[INFO] 23:07:22:969 Discordiador logger/(13738:13738): Inicio de logs de discordiador..
+[INFO] 23:07:22:976 Discordiador logger/(13738:13738): Seteando las configuraciones..
+[INFO] 23:07:42:925 Discordiador logger/(13738:13741): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:07:42:926 Discordiador logger/(13738:13741): Creada patota 1
+[INFO] 23:18:59:647 Discordiador logger/(3787:3787): Inicio de logs de discordiador..
+[INFO] 23:18:59:655 Discordiador logger/(3787:3787): Seteando las configuraciones..
+[INFO] 23:19:19:263 Discordiador logger/(3787:3789): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:19:19:266 Discordiador logger/(3787:3789): Creada patota 1
+[INFO] 23:23:09:873 Discordiador logger/(3976:3976): Inicio de logs de discordiador..
+[INFO] 23:23:09:878 Discordiador logger/(3976:3976): Seteando las configuraciones..
+[INFO] 23:23:18:270 Discordiador logger/(3976:3979): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:23:18:274 Discordiador logger/(3976:3979): Creada patota 1
+[INFO] 23:25:41:228 Discordiador logger/(4010:4010): Inicio de logs de discordiador..
+[INFO] 23:25:41:239 Discordiador logger/(4010:4010): Seteando las configuraciones..
+[INFO] 23:25:48:954 Discordiador logger/(4010:4013): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:25:48:958 Discordiador logger/(4010:4013): Creada patota 1
+[INFO] 23:29:20:536 Discordiador logger/(4113:4113): Inicio de logs de discordiador..
+[INFO] 23:29:20:538 Discordiador logger/(4113:4113): Seteando las configuraciones..
+[INFO] 23:29:32:180 Discordiador logger/(4113:4115): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:29:32:182 Discordiador logger/(4113:4115): Creada patota 1
+[INFO] 23:32:32:247 Discordiador logger/(4212:4212): Inicio de logs de discordiador..
+[INFO] 23:32:32:247 Discordiador logger/(4212:4212): Seteando las configuraciones..
+[INFO] 23:32:41:061 Discordiador logger/(4212:4215): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:32:41:062 Discordiador logger/(4212:4215): Creada patota 1
+[INFO] 23:34:35:105 Discordiador logger/(4266:4266): Inicio de logs de discordiador..
+[INFO] 23:34:35:105 Discordiador logger/(4266:4266): Seteando las configuraciones..
+[INFO] 23:34:45:243 Discordiador logger/(4266:4267): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:34:45:245 Discordiador logger/(4266:4267): Creada patota 1
+[INFO] 23:40:55:534 Discordiador logger/(4477:4477): Inicio de logs de discordiador..
+[INFO] 23:40:55:534 Discordiador logger/(4477:4477): Seteando las configuraciones..
+[INFO] 23:41:13:283 Discordiador logger/(4485:4485): Inicio de logs de discordiador..
+[INFO] 23:41:13:283 Discordiador logger/(4485:4485): Seteando las configuraciones..
+[INFO] 23:41:54:455 Discordiador logger/(4485:4487): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:41:54:458 Discordiador logger/(4485:4487): Creada patota 1
+[INFO] 23:43:48:416 Discordiador logger/(4576:4576): Inicio de logs de discordiador..
+[INFO] 23:43:48:416 Discordiador logger/(4576:4576): Seteando las configuraciones..
+[INFO] 23:43:56:695 Discordiador logger/(4576:4578): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:43:56:698 Discordiador logger/(4576:4578): Creada patota 1
+[INFO] 23:44:35:787 Discordiador logger/(4604:4604): Inicio de logs de discordiador..
+[INFO] 23:44:35:788 Discordiador logger/(4604:4604): Seteando las configuraciones..
+[INFO] 23:44:42:056 Discordiador logger/(4604:4605): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:44:42:057 Discordiador logger/(4604:4605): Creada patota 1
+[INFO] 23:51:52:006 Discordiador logger/(4783:4783): Inicio de logs de discordiador..
+[INFO] 23:51:52:007 Discordiador logger/(4783:4783): Seteando las configuraciones..
+[INFO] 23:51:58:195 Discordiador logger/(4783:4785): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 23:51:58:199 Discordiador logger/(4783:4785): Creada patota 1
+[INFO] 00:00:52:797 Discordiador logger/(4965:4965): Inicio de logs de discordiador..
+[INFO] 00:00:52:797 Discordiador logger/(4965:4965): Seteando las configuraciones..
+[INFO] 00:01:00:257 Discordiador logger/(4965:4967): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:01:00:259 Discordiador logger/(4965:4967): Creada patota 1
+[INFO] 00:01:30:086 Discordiador logger/(4969:4969): Inicio de logs de discordiador..
+[INFO] 00:01:30:087 Discordiador logger/(4969:4969): Seteando las configuraciones..
+[INFO] 00:03:06:861 Discordiador logger/(5070:5070): Inicio de logs de discordiador..
+[INFO] 00:03:06:861 Discordiador logger/(5070:5070): Seteando las configuraciones..
+[INFO] 00:03:15:097 Discordiador logger/(5070:5072): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:03:15:098 Discordiador logger/(5070:5072): Creada patota 1
+[INFO] 00:03:21:793 Discordiador logger/(5070:5074): Iniciado planificacion FIFO..
+[INFO] 00:03:21:794 Discordiador logger/(5070:5074): Ciclo de cpu:1
+[INFO] 00:03:21:794 Discordiador logger/(5070:5074): Tripulante 1 pasando de NEW a READY
+[INFO] 00:03:21:794 Discordiador logger/(5070:5074): Tripulante 1 pasando de READY a EXEC
+[INFO] 00:05:34:619 Discordiador logger/(5153:5153): Inicio de logs de discordiador..
+[INFO] 00:05:34:619 Discordiador logger/(5153:5153): Seteando las configuraciones..
+[INFO] 00:05:42:349 Discordiador logger/(5153:5154): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:05:42:349 Discordiador logger/(5153:5154): Creada patota 1
+[INFO] 00:05:49:658 Discordiador logger/(5153:5160): Iniciado planificacion FIFO..
+[INFO] 00:05:49:658 Discordiador logger/(5153:5160): Ciclo de cpu:1
+[INFO] 00:05:49:660 Discordiador logger/(5153:5160): Tripulante 1 pasando de NEW a READY
+[INFO] 00:05:49:660 Discordiador logger/(5153:5160): Tripulante 1 pasando de READY a EXEC
+[INFO] 00:11:00:336 Discordiador logger/(5367:5367): Inicio de logs de discordiador..
+[INFO] 00:11:00:338 Discordiador logger/(5367:5367): Seteando las configuraciones..
+[INFO] 00:11:06:551 Discordiador logger/(5367:5369): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:11:06:560 Discordiador logger/(5367:5369): Creada patota 1
+[INFO] 00:13:08:951 Discordiador logger/(5456:5456): Inicio de logs de discordiador..
+[INFO] 00:13:08:951 Discordiador logger/(5456:5456): Seteando las configuraciones..
+[INFO] 00:13:15:470 Discordiador logger/(5456:5458): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:13:15:472 Discordiador logger/(5456:5458): Creada patota 1
+[INFO] 00:14:53:623 Discordiador logger/(5543:5543): Inicio de logs de discordiador..
+[INFO] 00:14:53:624 Discordiador logger/(5543:5543): Seteando las configuraciones..
+[INFO] 00:15:02:305 Discordiador logger/(5543:5545): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:15:02:319 Discordiador logger/(5543:5545): Creada patota 1
+[INFO] 00:17:12:457 Discordiador logger/(5543:5663): Iniciado planificacion FIFO..
+[INFO] 00:17:12:457 Discordiador logger/(5543:5663): Ciclo de cpu:1
+[INFO] 00:17:12:457 Discordiador logger/(5543:5663): Tripulante 1 pasando de NEW a READY
+[INFO] 00:17:12:457 Discordiador logger/(5543:5663): Tripulante 1 pasando de READY a EXEC
+[INFO] 00:19:45:000 Discordiador logger/(5765:5765): Inicio de logs de discordiador..
+[INFO] 00:19:45:006 Discordiador logger/(5765:5765): Seteando las configuraciones..
+[INFO] 00:19:56:684 Discordiador logger/(5765:5767): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:19:56:691 Discordiador logger/(5765:5767): Creada patota 1
+[INFO] 00:20:59:977 Discordiador logger/(5765:5875): Iniciado planificacion FIFO..
+[INFO] 00:20:59:978 Discordiador logger/(5765:5875): Ciclo de cpu:1
+[INFO] 00:20:59:978 Discordiador logger/(5765:5875): Tripulante 1 pasando de NEW a READY
+[INFO] 00:20:59:978 Discordiador logger/(5765:5875): Tripulante 1 pasando de READY a EXEC
+[INFO] 00:21:45:244 Discordiador logger/(5981:5981): Inicio de logs de discordiador..
+[INFO] 00:21:45:244 Discordiador logger/(5981:5981): Seteando las configuraciones..
+[INFO] 00:22:35:653 Discordiador logger/(5981:5982): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:22:35:662 Discordiador logger/(5981:5982): Creada patota 1
+[INFO] 00:23:05:615 Discordiador logger/(5981:6115): Iniciado planificacion FIFO..
+[INFO] 00:23:05:615 Discordiador logger/(5981:6115): Ciclo de cpu:1
+[INFO] 00:23:05:615 Discordiador logger/(5981:6115): Tripulante 1 pasando de NEW a READY
+[INFO] 00:23:05:615 Discordiador logger/(5981:6115): Tripulante 1 pasando de READY a EXEC
+[INFO] 00:27:14:555 Discordiador logger/(6336:6336): Inicio de logs de discordiador..
+[INFO] 00:27:14:556 Discordiador logger/(6336:6336): Seteando las configuraciones..
+[INFO] 00:28:04:794 Discordiador logger/(6336:6357): Iniciado planificacion FIFO..
+[INFO] 00:28:04:795 Discordiador logger/(6336:6357): Ciclo de cpu:1
+[INFO] 00:28:05:795 Discordiador logger/(6336:6357): Ciclo de cpu:2
+[INFO] 00:28:06:796 Discordiador logger/(6336:6357): Ciclo de cpu:3
+[INFO] 00:28:07:797 Discordiador logger/(6336:6357): Ciclo de cpu:4
+[INFO] 00:28:08:798 Discordiador logger/(6336:6357): Ciclo de cpu:5
+[INFO] 00:28:09:799 Discordiador logger/(6336:6357): Ciclo de cpu:6
+[INFO] 00:28:10:799 Discordiador logger/(6336:6357): Ciclo de cpu:7
+[INFO] 00:28:11:800 Discordiador logger/(6336:6357): Ciclo de cpu:8
+[INFO] 00:28:12:800 Discordiador logger/(6336:6357): Ciclo de cpu:9
+[INFO] 00:28:13:802 Discordiador logger/(6336:6357): Ciclo de cpu:10
+[INFO] 00:28:14:803 Discordiador logger/(6336:6357): Ciclo de cpu:11
+[INFO] 00:28:15:805 Discordiador logger/(6336:6357): Ciclo de cpu:12
+[INFO] 00:28:16:806 Discordiador logger/(6336:6357): Ciclo de cpu:13
+[INFO] 00:28:17:806 Discordiador logger/(6336:6357): Ciclo de cpu:14
+[INFO] 00:28:21:191 Discordiador logger/(6358:6358): Inicio de logs de discordiador..
+[INFO] 00:28:21:191 Discordiador logger/(6358:6358): Seteando las configuraciones..
+[INFO] 00:28:43:938 Discordiador logger/(6358:6359): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:28:43:938 Discordiador logger/(6358:6359): Creada patota 1
+[INFO] 00:29:36:648 Discordiador logger/(6358:6517): Iniciado planificacion FIFO..
+[INFO] 00:29:36:648 Discordiador logger/(6358:6517): Ciclo de cpu:1
+[INFO] 00:29:36:648 Discordiador logger/(6358:6517): Tripulante 1 pasando de NEW a READY
+[INFO] 00:29:36:648 Discordiador logger/(6358:6517): Tripulante 1 pasando de READY a EXEC
+[INFO] 00:36:10:019 Discordiador logger/(6778:6778): Inicio de logs de discordiador..
+[INFO] 00:36:10:019 Discordiador logger/(6778:6778): Seteando las configuraciones..
+[INFO] 00:36:19:189 Discordiador logger/(6778:6780): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 00:36:19:190 Discordiador logger/(6778:6780): Creada patota 1
+[INFO] 00:36:25:201 Discordiador logger/(6778:6783): Iniciado planificacion FIFO..
+[INFO] 00:36:25:201 Discordiador logger/(6778:6783): Ciclo de cpu:1
+[INFO] 00:36:25:201 Discordiador logger/(6778:6783): Tripulante 1 pasando de NEW a READY
+[INFO] 00:36:25:201 Discordiador logger/(6778:6783): Tripulante 1 pasando de READY a EXEC
