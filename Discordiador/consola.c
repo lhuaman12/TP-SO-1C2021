@@ -218,11 +218,8 @@ void submodulo_tripulante(t_tripulante* tripulante){
 	t_posicion desplazamiento;
 
 	while(1){
-		//sem_wait(&tripulante->semaforo_tripulante);
 		/// Si no tenemos tareas o ya la hemos terminado la buscamos en ram y lo normalizamos para poder operar con sus argumentos
 		if(tripulante->tarea_actual==NULL || termino_tarea){
-			//int conexion = aceptarConexion(tripulante->socket_ram);
-
 			obtener_tarea_en_ram(tripulante,&referencia_a_tarea); //recibir tarea completa EJ REGAR_PLANTA;1;2;3 o GENERAR_OXIGENO 2;1;2;4. SI TERMINO RECIBE SIN_TAREAS
 
 			if(strcmp(tripulante->tarea_actual,"SIN_TAREAS")==0){
@@ -251,10 +248,14 @@ void submodulo_tripulante(t_tripulante* tripulante){
 		desplazar_tripulante(tripulante,&desplazamiento); // cumple 1 ciclo de cpu por unidad de desplazamiento
 		//notificar_inicio_tarea(tripulante); // notificar la tarea al mongo store
 		if(es_tarea_io)
+		{
 			resolver_tarea_io(tripulante,atoi(tripulante->tarea_normalizada[4]));
+		}
 		else
+		{
 			resolver_tarea_cpu(tripulante,atoi(tripulante->tarea_normalizada[3]));
-			//notificar_fin_tarea(tripulante); // notificar al i-mongo-store
+		}
+		enviar_fin_tarea(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->TID);
 
 		// No necesito mutex aca porque la planificacion esta pausada en el momento del sabotaje
 		if(tripulante->es_elegido_para_sabotaje){ // tengo que realizar el movimiento de nuevo o tengo que resolver la tarea de nuevo
@@ -279,9 +280,14 @@ void resolver_tarea_cpu(t_tripulante* tripulante,int rafagas_de_cpu){
 		tripulante_es_expulsado=tripulante->es_expulsado;
 		pthread_mutex_unlock(&tripulante->mutex);
 		if (tripulante_es_expulsado)
+		{
 			salir_expulsado(tripulante);
+		}
 		if(cont_rafagas==0)
+		{
 			log_info(discordiador_logger,"Tripulante:%d Comenzo tarea %s",tripulante->TID,tripulante->tarea_actual);
+			enviar_inicio_tarea(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->TID);
+		}
 		if(cont_rafagas==rafagas_de_cpu-1)
 			log_info(discordiador_logger,"Tripulante:%d Termino tarea %s con %d rafagas de CPU",tripulante->TID,tripulante->tarea_actual,cont_rafagas);
 		sem_post(&tripulante->esperar_ejecucion_tripulante);
@@ -437,6 +443,8 @@ void resolver_tarea_io(t_tripulante* tripulante,int rafaga_de_io){
 	tripulante->pide_bloqueo=1;
 	tripulante->rafaga_io_restantes=rafaga_de_io;
 	log_info(discordiador_logger,"Tripulante:%d pide acceso a I/O",tripulante->TID);  // 1 ciclo de cpu para pedir bloqueo
+	enviar_IO(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->tarea_normalizada[1]);
+
 	//TODO: notificar ram y mongo  //notificar_estado_ram(tripulante);
 	sem_post(&tripulante->esperar_ejecucion_tripulante);
 
@@ -612,7 +620,7 @@ t_tripulante* crear_tripulante(int32_t pid, char* posicion) { //posicion en form
 	tripulante->es_expulsado=0;
 	tripulante->es_elegido_para_sabotaje=0;
 	tripulante->tarea_normalizada=NULL;
-	tripulante->socket_envio = crearSocket();
+	tripulante->socket_imongo = crearSocket();
 	tripulante->socket_ram = crearSocket();
 
 

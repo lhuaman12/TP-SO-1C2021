@@ -277,6 +277,7 @@ void agregarCaracterFile(char* path,char caracter)
 
 	char* palabra = malloc(2);
 	palabra[0]=caracter;
+	palabra[1]=0;
 
 	config_set_value(recurso,"CARACTER_LLENADO",palabra);
 

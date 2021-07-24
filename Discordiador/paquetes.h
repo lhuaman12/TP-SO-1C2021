@@ -26,8 +26,10 @@ typedef struct
 void enviar_prueba(int socket);
 t_patota_envio* crear_patota(char* id,char* tareas,char* trips);
 void enviar_patota(t_patota_envio* patota, int socket_cliente);
-
+void enviar_IO(int socket,char* tarea,char* cantidad);
 void enviar_movimiento(t_tripulante* trip);
+void enviar_inicio_tarea(int socket,char* tarea,int tid);
+void enviar_fin_tarea(int socket,char* tarea,int tid);
 
 
 #endif /* PAQUETES_H_ */

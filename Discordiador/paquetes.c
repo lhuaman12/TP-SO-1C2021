@@ -24,7 +24,63 @@ t_patota_envio* crear_patota(char* id,char* tareas,char* trips)
 	return nuevaPatota;
 }
 
+void enviar_IO(int socket,char* tarea,char* cantidad)
+{
+	conectar_envio(socket,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
 
+	if(strcmp(tarea,"GENERAR_OXIGENO")==0)
+	{
+		enviar_mensaje_por_codigo(cantidad,GENERAR_OXIGENO,socket);
+	}else if(strcmp(tarea,"GENERAR_COMIDA")==0)
+	{
+		enviar_mensaje_por_codigo(cantidad,GENERAR_COMIDA,socket);
+	}else if(strcmp(tarea,"GENERAR_BASURA")==0)
+	{
+		enviar_mensaje_por_codigo(cantidad,GENERAR_BASURA,socket);
+	}else if(strcmp(tarea,"CONSUMIR_OXIGENO")==0)
+	{
+		enviar_mensaje_por_codigo(cantidad,CONSUMIR_OXIGENO,socket);
+	}else if(strcmp(tarea,"CONSUMIR_COMIDA")==0)
+	{
+		enviar_mensaje_por_codigo(cantidad,CONSUMIR_COMIDA,socket);
+	}else if(strcmp(tarea,"CONSUMIR_BASURA")==0)
+	{
+		enviar_mensaje_por_codigo(cantidad,CONSUMIR_BASURA,socket);
+	}
+
+	//liberar_conexion(socket);
+}
+
+void enviar_inicio_tarea(int socket,char* tarea,int tid)
+{
+	conectar_envio(socket,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
+
+	char* mensaje = malloc(strlen(tarea)+1);
+	strcpy(mensaje,"");
+	char* id = string_itoa(tid);
+	string_append_with_format(&mensaje,"%s,",id);
+	string_append_with_format(&mensaje,"%s,",tarea);
+
+	enviar_mensaje_por_codigo(mensaje,REGISTRAR_INICIO_TAREA,socket);
+	free(mensaje);
+	free(id);
+
+}
+void enviar_fin_tarea(int socket,char* tarea,int tid)
+{
+	conectar_envio(socket,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
+
+	char* mensaje = malloc(strlen(tarea)+1);
+	strcpy(mensaje,"");
+	char* id = string_itoa(tid);
+	string_append_with_format(&mensaje,"%s,",id);
+	string_append_with_format(&mensaje,"%s,",tarea);
+
+	enviar_mensaje_por_codigo(mensaje,REGISTRAR_FIN_TAREA,socket);
+	free(mensaje);
+	free(id);
+
+}
 void enviar_patota(t_patota_envio* patota,int socket_ram)
 {
 	enviar_mensaje_por_codigo(patota->id_patota,INICIAR_PATOTAS,socket_ram);
