@@ -503,26 +503,38 @@ void nueva_patota(char *cantidad_tripulantes,char** posiciones,char* tareas) {
 	char* trips = unir_tripulantes(cantidad_tripulantes,posiciones);
 	enviar_patota(crear_patota(string_itoa(patota->PID),tareas,trips),SOCKET_RAM);
 
+	recibir_operacion(SOCKET_RAM);
+	char* mensaje = recibir_y_guardar_mensaje(SOCKET_RAM);
 
-	for (i = 0; i < patota->cantidad_tripulantes; i++) {
-		if(posiciones==NULL){
-			tripulantes[i] = crear_tripulante(patota->PID, NULL);
-			queue_push(estructura_planificacion->cola_tripulantes_new,tripulantes[i]);
-			continue;
-		}
-		if (hay_posicion && posiciones[i] != NULL)
-			tripulantes[i] = crear_tripulante(patota->PID,posiciones[i]);
-		else{
-			tripulantes[i] = crear_tripulante(patota->PID, NULL);
-			hay_posicion=false;
-		}
-		queue_push(estructura_planificacion->cola_tripulantes_new,tripulantes[i]);
+	if(strcmp(mensaje,"OK")==0)
+	{
+		for (i = 0; i < patota->cantidad_tripulantes; i++) {
+				if(posiciones==NULL){
+					tripulantes[i] = crear_tripulante(patota->PID, NULL);
+					queue_push(estructura_planificacion->cola_tripulantes_new,tripulantes[i]);
+					continue;
+				}
+				if (hay_posicion && posiciones[i] != NULL)
+					tripulantes[i] = crear_tripulante(patota->PID,posiciones[i]);
+				else{
+					tripulantes[i] = crear_tripulante(patota->PID, NULL);
+					hay_posicion=false;
+				}
+				queue_push(estructura_planificacion->cola_tripulantes_new,tripulantes[i]);
+			}
+			patota->tripulantes=tripulantes;
+
+			list_add(lista_patotas, patota);
+			log_info(discordiador_logger,"Creada patota %d",patota->PID);
+			free(trips);
+
+	}else
+	{
+		log_error(discordiador_logger,"NO HAY ESPACIO  EN MEMORIA");
+		free(patota);
+		free(tripulantes);
+		free(trips);
 	}
-	patota->tripulantes=tripulantes;
-
-	list_add(lista_patotas, patota);
-	log_info(discordiador_logger,"Creada patota %d",patota->PID);
-	free(trips);
 
 }
 
