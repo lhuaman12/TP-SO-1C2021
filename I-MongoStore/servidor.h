@@ -81,7 +81,7 @@ t_log* log_IMONGO;
 t_config* config_IMONGO;
 t_config* super_config;
 pthread_t hiloSincro;
-
+pthread_t hiloSabotaje;
 
 
 //FUNCIONES
@@ -105,6 +105,7 @@ void init_bloques_usado();
 void guardarSocket(int socket);
 void* atender_tripulante(Tripulante* trip);
 void avisarDisc();
+void enviarAlerta(char* posicion);
 
 char* buscar_tareas(char* path);
 char* contarTareas(char* palabra);

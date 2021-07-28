@@ -14,7 +14,7 @@ int main(void){
 	logger = log_create("miRam.log", "Mi-RAM",1, LOG_LEVEL_DEBUG);
 
 	//signal(SIGUSR1, &signalCompactacion);
-	//signal(SIGUSR2, &signalDump);
+	signal(SIGUSR1, &signalDump);
 
 	int feedback = iniciarMemoria();
 
@@ -140,7 +140,6 @@ void* atender_tripulante(Tripulante* trip)
 					break;
 				case EXPULSAR_TRIPULANTES:
 					expulsarTripulante(trip->conexion);
-					//expulsar_tripulante(trip);
 					break;
 				case CAMBIO_ESTADO:
 					cambiarEstado(trip->conexion);
@@ -162,7 +161,7 @@ void* atender_tripulante(Tripulante* trip)
 
 void cargar_configuracion(void)
 {
-	miRam_config = config_create("./miRam.config"); //Leo el archivo de configuracion
+	miRam_config = config_create("../miRam.config"); //Leo el archivo de configuracion
 
 	if (miRam_config == NULL) {
 		perror("Archivo de configuracion de MI-RAM no encontrado");
@@ -185,11 +184,11 @@ void cargar_configuracion(void)
 
 
 void signalCompactacion(int sig){
-	log_info(logger, "Recibi la senial de compactar, compactando...");
+	log_info(logger, "Recibi la señial de compactar, compactando...");
 	//compactacion();
 }
 void signalDump(int sig){
-
+	log_info(logger,"Recibi la señal de hacer Dump, creando dump..");
 	dump();
 }
 
@@ -197,7 +196,7 @@ void signalDump(int sig){
 void dump(){
 
 	if(string_equals_ignore_case(ESQUEMA_MEM, "SEGMENTACION")){
-		//dumpSegmentacion();
+		dumpSegmentacion();
 	}else if(string_equals_ignore_case(ESQUEMA_MEM, "PAGINACION")){
 		dumpPaginacion();
 	}

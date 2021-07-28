@@ -10,7 +10,7 @@
 
 #include "estructurasMemoria.h"
 #include "estructurasCliente-Servidor.h"
-//
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <commons/log.h>

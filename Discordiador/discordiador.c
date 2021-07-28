@@ -7,16 +7,12 @@
 int main(void) {
 
 	pthread_t consola;
-	pthread_t hiloIMONGO;
 	iniciar_logger("disc.log");
 	setear_configs();
 
 	configurar_planificacion();
 
 	iniciar_conexiones();
-
-	//pthread_create(&hiloIMONGO,NULL,(void*)escuchaSabotajes,NULL);
-	//pthread_detach(hiloIMONGO);
 
 	pthread_create(&consola, NULL, (void*) consola_discordiador, NULL);
 
@@ -36,6 +32,12 @@ void iniciar_conexiones()
 	conectar_envio(SOCKET_IMONGO,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
 	//enviar_mensaje_por_codigo("0",SABOTAJE,SOCKET_IMONGO);
 
+	SOCKET_SABOTAJE = crearSocket();
+	pthread_create(&hiloIMONGO,NULL,(void*)escuchaSabotajes,NULL);
+	pthread_detach(hiloIMONGO);
+
+
+
 }
 
 void atender_sabotaje(int socket)
@@ -50,25 +52,20 @@ void atender_sabotaje(int socket)
 
 	free(mensaje_dec);
 }
-void leer_bitacora(int socket)
-{
-	char* mensaje = recibir_y_guardar_mensaje(socket);
-	log_info(discordiador_logger,"LA BITACORA ES: %s",mensaje);
-}
 
 void* escuchaSabotajes()
 {
+	int conexion = -1;
+	escuchaEn(SOCKET_SABOTAJE,(configuracion_user->puerto_file_system)+1);
 	while(1)
 	{
-		int codigo = recibir_operacion(SOCKET_IMONGO);
-		switch(codigo)
+		conexion = aceptarConexion(SOCKET_SABOTAJE);
+
+		if(conexion!=-1)
 		{
-		case BITACORA:
-			leer_bitacora(SOCKET_IMONGO);
-			break;
-		case SABOTAJE:
-			atender_sabotaje(SOCKET_IMONGO);
-			break;
+			log_info(discordiador_logger,"CONECTO");
+			recibir_operacion(conexion);
+			atender_sabotaje(conexion);
 		}
 
 	}

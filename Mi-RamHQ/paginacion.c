@@ -1451,7 +1451,7 @@ FILE * file;
 
     char* nombreDeArchivo = dameNombre();
 
-    log_info(logger,"Creo un archivo con el nombre %s\n", nombreDeArchivo);
+   // log_info(logger,"Creo un archivo con el nombre %s\n", nombreDeArchivo);
 
     char* time = temporal_get_string_time("%d/%m/%y %H:%M:%S");
 

@@ -18,7 +18,7 @@ int iniciarMemoria(void){
     if (string_equals_ignore_case(ESQUEMA_MEM,"PAGINACION")){
         control = iniciarPaginacion();
     }else if(string_equals_ignore_case(ESQUEMA_MEM, "SEGMENTACION")){
-        //control = iniciarSegmentacion();
+        control = iniciarSegmentacion();
     }
 
     return control; //DEVUELVE 0 SI FALLA LA ELEGIDA

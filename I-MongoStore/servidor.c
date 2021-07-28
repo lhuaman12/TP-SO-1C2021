@@ -6,7 +6,7 @@ int main(void)
 	iniciar_log();
 	leer_config();
 	iniciar_filesystem();
-
+	SOCKET_DISC = crearSocket();
 
 	signal(SIGUSR1,avisarDisc);
 
@@ -23,6 +23,14 @@ void avisarDisc()
 	log_info(log_IMONGO,"ME QUIEREN MATAR");
 	char* posicion = obtenerPosicion();
 	log_warning(log_IMONGO,"%s",posicion);
+
+	pthread_create(&hiloSabotaje,NULL,(void*)enviarAlerta,posicion);
+	pthread_detach(hiloSabotaje);
+}
+
+void enviarAlerta(char* posicion)
+{
+	conectar_envio(SOCKET_DISC,IP,PUERTO_DISC+1);
 	enviar_mensaje_por_codigo(posicion,SABOTAJE,SOCKET_DISC);
 }
 
@@ -33,6 +41,7 @@ void prender_server()
 
 	log_info(log_IMONGO,"SERVIDOR LISTO");
 	asignar_escuchas(socket_interno,puerto_escucha,atender_tripulante);
+
 }
 void* sincronizarDisco()
 {
@@ -107,11 +116,6 @@ void init_bitmap()
 }
 
 
-void guardarSocket(int socket)
-{
-	SOCKET_DISC = socket;
-}
-
 void* atender_tripulante(Tripulante* trip)
 {
 	while(1)
@@ -119,9 +123,6 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-						case SABOTAJE:
-							guardarSocket(trip->conexion);
-							break;
 						case GENERAR_OXIGENO:
 							generarOxigeno(atoi(recibir_id(trip->conexion)));
 							break;

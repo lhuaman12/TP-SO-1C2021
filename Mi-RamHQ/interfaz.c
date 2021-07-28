@@ -360,12 +360,14 @@ void actualizarUbicacion(int socket_cliente){
 	//liberar_conexion(socket_cliente);
 }
 
+//TOTO ES EL MEJOR
+
 t_tcb* buscarTcb(int tid){
 
 	t_tcb* nuevaTcb;
 
 	if(elegirEsquema() == SEGMENTACION){
-		//nuevaTcb = buscarTripulante(tid);
+		nuevaTcb = buscarTripulante(tid);
 
 	}else if(elegirEsquema() == PAGINACION){
 		nuevaTcb = p_buscarTripulante(tid);
@@ -380,12 +382,12 @@ void actualizarTripulante(t_tcb* tcb){
 
 
 	if(elegirEsquema() == SEGMENTACION){
-		//s_actualizarTripulante(tcb);
+		s_actualizarTripulante(tcb);
 	}else if(elegirEsquema() == PAGINACION){
 		p_actualizarTripulante(tcb);
 	}
 
-	free(tcb);
+	//free(tcb);
 
 }
 
@@ -437,7 +439,7 @@ void enviarOperacion(int socket_cliente)
     {
 		//ACTUALIZO EL TRIPULANTE
 		tcb->proxInstruccion ++;
-		tcb-> estado = 'r';
+		tcb-> estado = 'n';
 
 		actualizarTripulante(tcb);
 
@@ -466,53 +468,7 @@ char* p_enviarOp(t_tcb* tcb,int idPatota){
 	char* tarea = buscarTareaPaginacion(idPatota, tcb->proxInstruccion);
 	return tarea;
 }
-/*
-t_paquete* armarPaquete(char* tarea, int esLaUltima){
 
-	//SACAMOS LA INFO DE LA TAREA
-	char** splitPorPuntoYcoma = string_split(tarea, ";"); 						// SEPARA CODIGO PARAMETROS ; POSX ; POSY ; TIEMPO
-	char** splitPorEspacio = string_split(splitPorPuntoYcoma[0], " "); 			// SEPARA CODIGO PARAMETROS
-
-	//PASAMOS LA INFO DE LA TAREA A INTS
-	op_code codigoOperacion;
-	if(			string_equals_ignore_case(splitPorEspacio[0], "GENERAR_OXIGENO")) { codigoOperacion= GENERAR_OXIGENO;	}
-	else if(	string_equals_ignore_case(splitPorEspacio[0], "CONSUMIR_OXIGENO")){ codigoOperacion= CONSUMIR_OXIGENO;	}
-	else if(	string_equals_ignore_case(splitPorEspacio[0], "GENERAR_COMIDA"))  { codigoOperacion= GENERAR_COMIDA;	}
-	else if(	string_equals_ignore_case(splitPorEspacio[0], "CONSUMIR_COMIDA")) { codigoOperacion= CONSUMIR_COMIDA;	}
-	else if(	string_equals_ignore_case(splitPorEspacio[0], "GENERAR_BASURA"))  { codigoOperacion= GENERAR_BASURA;	}
-	else if(	string_equals_ignore_case(splitPorEspacio[0], "DESCARTAR_BASURA")){ codigoOperacion= REGISTRAR_INICIO_TAREA;	}//DESCARTAR BASURA
-	else                                                                          { codigoOperacion= REGISTRAR_MOVIMIENTO;           }
-
-	int posX 				= atoi(splitPorPuntoYcoma[1]);
-	int posY 				= atoi(splitPorPuntoYcoma[2]);
-
-	int parametros;
-	if(splitPorEspacio[1] != NULL){
-		parametros 			= atoi(splitPorEspacio[1]);
-	}
-	else{
-		parametros = 0;
-	}
-
-	int tiempo 				= atoi(splitPorPuntoYcoma[3]);
-
-	log_info(logger,"Tengo la tarea %s, posX: %d posY: %d parametros: %d, tiempo:%d ult: %d",splitPorEspacio[0],posX,posY,parametros,tiempo,esLaUltima);
-
-	//CREAMOS EL PAQUETE
-	t_paquete* nuevoPaquete = crear_paquete_con_codigo_op(codigoOperacion);
-	agregar_entero_a_paquete(nuevoPaquete, posX);
-	agregar_entero_a_paquete(nuevoPaquete, posY);
-	agregar_entero_a_paquete(nuevoPaquete, parametros);
-	agregar_entero_a_paquete(nuevoPaquete, tiempo);
-	agregar_entero_a_paquete(nuevoPaquete, esLaUltima);
-
-	liberarStringArray(splitPorPuntoYcoma);
-	liberarStringArray(splitPorEspacio);
-
-	return nuevoPaquete;
-}
-
-*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////CAMBIAR ESTADO
 void cambiarEstado(int socket_cliente){
@@ -525,7 +481,7 @@ void cambiarEstado(int socket_cliente){
 	int tid = atoi(mensaje_dec[0]);
 	char* estado = mensaje_dec[1];
 
-	log_info(logger, "El nuevo estado del tripulante %d es %c", tid, estado[0]);
+	//log_info(logger, "El nuevo estado del tripulante %d es %c", tid, estado[0]);
 
 	if(string_equals_ignore_case(estado, "f"))
 	{
@@ -541,7 +497,7 @@ void cambiarEstado(int socket_cliente){
 	}
 
 	//enviar_mensaje_por_codigo("OK",MENSAJE,socket_cliente);
-	log_info(logger,"Envio ok");
+	//log_info(logger,"Envio ok");
 	//liberar_conexion(socket_cliente);
-	free(estado);
+	//free(estado);
 }

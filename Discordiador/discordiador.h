@@ -22,6 +22,8 @@
 //CONEXIONES
 int SOCKET_RAM;
 int SOCKET_IMONGO;
+int SOCKET_SABOTAJE;
+pthread_t hiloIMONGO;
 
 //OTROS
 typedef struct {

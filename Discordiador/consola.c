@@ -60,6 +60,12 @@ void ejecutar_comando(char** lectura) {
 void imprimir_bitacora(char* id)
 {
 	enviar_mensaje_por_codigo(id,OBTENER_BITACORA,SOCKET_IMONGO);
+
+	recibir_operacion(SOCKET_IMONGO);
+	char* mensaje = recibir_y_guardar_mensaje(SOCKET_IMONGO);
+	log_info(discordiador_logger,"LA BITACORA ES: %s",mensaje);
+
+
 }
 
 void iniciar_planificacion(){
@@ -396,12 +402,16 @@ void obtener_tarea_en_ram(t_tripulante* tripulante,int* referencia_tarea){
 		string_append_with_format(&mensaje,"%d,",tripulante->PID);
 		string_append_with_format(&mensaje,"%d,",tripulante->TID);
 
+		log_info(discordiador_logger,"Solicito nueva tarea");
+
 		enviar_mensaje_por_codigo(mensaje,ENVIAR_PROXIMA_TAREA,tripulante->socket_ram);
 
 		recibir_operacion(tripulante->socket_ram);
 		tripulante->tarea_actual = recibir_y_guardar_mensaje(tripulante->socket_ram);
 
 		free(mensaje);
+
+		//liberar_conexion(tripulante->socket_ram);
 
 }
 
