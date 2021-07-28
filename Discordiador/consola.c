@@ -829,6 +829,7 @@ void iniciar_resolucion_sabotaje(){
 
 	//////////////////////// volver a la normalidad
 	while(queue_size(estructura_planificacion->cola_tripulantes_block_emergencia)!=0){
+		log_info(discordiador_logger,"ELEMENTOS: %d",queue_size(estructura_planificacion->cola_tripulantes_block_emergencia));
 		tripulante_aux=queue_pop(estructura_planificacion->cola_tripulantes_block_emergencia);
 		queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux); // pasar de BLOCK emergencias a READY notificar a ram
 	}
@@ -892,13 +893,14 @@ void resolver_sabotaje(t_tripulante* tripulante,t_posicion* posicion){
 	do{
 		sleep(configuracion_user->retardo_ciclo_cpu);
 		sem_post(&tripulante_sabotaje->semaforo);
-
 	}
 	while (tripulante_sabotaje->tripulante->posicion->x != tripulante_sabotaje->posicion->x || tripulante_sabotaje->tripulante->posicion->y != tripulante_sabotaje->posicion->y);
 	log_info(discordiador_logger,"Tripulante %d Invocando FSK..",tripulante_sabotaje->tripulante->TID);
 	//invocar_fsk() al mongostore
+	avisar_fsck(tripulante->socket_imongo,tripulante->TID);
 	sleep(configuracion_user->duracion_sabotaje);
 	// termino
+
 
 }
 

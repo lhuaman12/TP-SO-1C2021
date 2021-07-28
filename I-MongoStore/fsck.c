@@ -28,6 +28,22 @@ char* obtenerPosicion()
 
 }
 
+void iniciarFSCK()
+{
+	repararSuperBloque();
+	repararBitmap();
+
+	/////////////////////////
+
+	//repararSize();
+	//repararBlockCount();
+	//repararMD5();
+}
+
+
+
+
+
 //PERFECTO
 void repararSuperBloque()
 {
@@ -67,7 +83,7 @@ void repararBitmap()
 	fclose(bitmap);
 	pthread_mutex_unlock(&semaforoBitmap);
 
-	log_debug(log_IMONGO,"<> START: Reparar Bitmap");
+	log_debug(log_IMONGO,"<> END: Reparar Bitmap");
 
 }
 
@@ -75,7 +91,7 @@ void repararBitmap()
 int analizarBloque(int posicion){
 
 
-	log_debug(log_IMONGO,"<> START: Analisis Bloque %d",posicion);
+	//log_debug(log_IMONGO,"<> START: Analisis Bloque %d",posicion);
 
 	bool criterioBusqueda(t_bloque* block)
 	{

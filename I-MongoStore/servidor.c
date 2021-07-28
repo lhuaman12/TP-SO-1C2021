@@ -9,6 +9,7 @@ int main(void)
 	SOCKET_DISC = crearSocket();
 
 	signal(SIGUSR1,avisarDisc);
+	signal(SIGUSR2,iniciarFSCK);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -123,6 +124,12 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
+						case DESCARTAR_BASURA:
+							break;
+						case SABOTAJE:
+							recibir_id(trip->conexion);
+							iniciarFSCK();
+							break;
 						case GENERAR_OXIGENO:
 							generarOxigeno(atoi(recibir_id(trip->conexion)));
 							break;

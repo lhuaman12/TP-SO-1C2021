@@ -37,9 +37,13 @@ void enviar_cambio_estado(int socket,char* estado, int tid)
 
 	free(mensaje);
 	free(id);
-
 }
-
+void avisar_fsck(int socket,int tid)
+{
+	char* id = string_itoa(tid);
+	conectar_envio(socket,configuracion_user->ip_file_system,configuracion_user->puerto_file_system);
+	enviar_mensaje_por_codigo(id,SABOTAJE,socket);
+}
 
 void enviar_IO(int socket,char* tarea,char* cantidad)
 {

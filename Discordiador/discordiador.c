@@ -99,6 +99,9 @@ void setear_configs() {
 	configuracion_user->retardo_ciclo_cpu = atoi(config_get_string_value(discordiador_config,"RETARDO_CICLO_CPU"));
 	configuracion_user->grado_multitarea=atoi(config_get_string_value(discordiador_config,"GRADO_MULTITAREA"));
 	configuracion_user->quantum = atoi(config_get_string_value(discordiador_config,"QUANTUM"));
+
+	configuracion_user->duracion_sabotaje = config_get_int_value(discordiador_config,"DURACION_SABOTAJE");
+
 	/////
 	inicializar_estructuras();
 

@@ -15,6 +15,9 @@ int analizarBloque(int posicion);
 char* obtenerPosicion();
 
 //SABOTAJES
+void iniciarFSCK();
+
+
 void repararSuperBloque();
 void repararBitmap();
 
