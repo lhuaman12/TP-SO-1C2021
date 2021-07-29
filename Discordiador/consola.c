@@ -126,8 +126,26 @@ void iniciar_planificacion_fifo(){
 
 	while(1){
 		//TODO:mutex
-		if(sabotaje->hay_sabotaje)
+		if(sabotaje->hay_sabotaje){
+			sabotaje->hay_sabotaje=false;
+			//// Chequeo si algun tripulante finalizo antes de empezar la planificacion
+			while(list_any_satisfy(estructura_planificacion->tripulantes_exec,(void*)tripulante_finaliza)){
+				tripulante_aux=list_remove_by_condition(estructura_planificacion->tripulantes_exec,(void*)tripulante_finaliza);
+				destruir_recursos_tripulante(tripulante_aux);
+			}
+			if(queue_size(estructura_planificacion->cola_tripulantes_block)!=0){
+				tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
+				if(tripulante_aux->no_tiene_tareas){
+					log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
+					//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
+					queue_pop(estructura_planificacion->cola_tripulantes_block);
+					destruir_recursos_tripulante(tripulante_aux);
+				}
+			}
+			/////////////////////////////////////////////////////
+			log_info(discordiador_logger,"Iniciando resolucion de sabotaje..");
 			iniciar_resolucion_sabotaje();
+		}
 
 		ciclo++;
 
@@ -895,8 +913,7 @@ void resolver_sabotaje(t_tripulante* tripulante,t_posicion* posicion){
 		sem_post(&tripulante_sabotaje->semaforo);
 	}
 	while (tripulante_sabotaje->tripulante->posicion->x != tripulante_sabotaje->posicion->x || tripulante_sabotaje->tripulante->posicion->y != tripulante_sabotaje->posicion->y);
-	log_info(discordiador_logger,"Tripulante %d Invocando FSK..",tripulante_sabotaje->tripulante->TID);
-	//invocar_fsk() al mongostore
+	log_info(discordiador_logger,"Tripulante %d Invocando FSCK..",tripulante_sabotaje->tripulante->TID);
 	avisar_fsck(tripulante->socket_imongo,tripulante->TID);
 	sleep(configuracion_user->duracion_sabotaje);
 	// termino
@@ -983,9 +1000,26 @@ void planificacion_round_robin(){
 
 	while(1){
 		//TODO:mutex
-		if(sabotaje->hay_sabotaje)
+		if(sabotaje->hay_sabotaje){
+			sabotaje->hay_sabotaje=false;
+		//// Chequeo si algun tripulante finalizo antes de empezar la planificacion
+			while(list_any_satisfy(estructura_planificacion->tripulantes_exec,(void*)tripulante_finaliza)){
+				tripulante_aux=list_remove_by_condition(estructura_planificacion->tripulantes_exec,(void*)tripulante_finaliza);
+				destruir_recursos_tripulante(tripulante_aux);
+			}
+			if(queue_size(estructura_planificacion->cola_tripulantes_block)!=0){
+				tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
+				if(tripulante_aux->no_tiene_tareas){
+					log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
+					//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
+					queue_pop(estructura_planificacion->cola_tripulantes_block);
+					destruir_recursos_tripulante(tripulante_aux);
+				}
+			}
+					/////////////////////////////////////////////////////
+			log_info(discordiador_logger,"Iniciando resolucion de sabotaje..");
 			iniciar_resolucion_sabotaje();
-
+		}
 		ciclo++;
 		log_info(discordiador_logger,"Ciclo de cpu:%d",ciclo);
 		cant_tripulantes_ejecutando = list_size(estructura_planificacion->tripulantes_exec);

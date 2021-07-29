@@ -45,9 +45,11 @@ void atender_sabotaje(int socket)
 	//px,py
 	char* posicion = recibir_y_guardar_mensaje(socket);
 	char** mensaje_dec = string_split(posicion,"|");
-
-	sabotaje->posicion->x = atoi(mensaje_dec[0]);
-	sabotaje->posicion->y = atoi(mensaje_dec[1]);
+	int x = atoi(mensaje_dec[0]);
+	int y = atoi(mensaje_dec[1]);
+	log_info(discordiador_logger,"Me llego un sabotaje en X:%d Y:%d",x,y);
+	sabotaje->posicion->x = x;
+	sabotaje->posicion->y = y;
 	sabotaje->hay_sabotaje=true;
 
 	free(mensaje_dec);
