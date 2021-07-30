@@ -269,28 +269,29 @@ void submodulo_tripulante(t_tripulante* tripulante){
 			}
 
 		}
-		//notificar_estado_ram(tripulante);
+
 		desplazar_tripulante(tripulante,&desplazamiento); // cumple 1 ciclo de cpu por unidad de desplazamiento
-		//notificar_inicio_tarea(tripulante); // notificar la tarea al mongo store
-		if(es_tarea_io)
-		{
+
+		if(es_tarea_io && !tripulante->es_elegido_para_sabotaje){
 			resolver_tarea_io(tripulante,atoi(tripulante->tarea_normalizada[4]));
+			enviar_fin_tarea(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->TID);
+			termino_tarea=1;
+			liberar_recursos(tripulante->tarea_normalizada);
+		}
+		else if(!es_tarea_io && !tripulante->es_elegido_para_sabotaje) {
+			resolver_tarea_cpu(tripulante,atoi(tripulante->tarea_normalizada[3]));
+			if(!tripulante->es_elegido_para_sabotaje){
+				enviar_fin_tarea(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->TID);
+				termino_tarea=1;
+				liberar_recursos(tripulante->tarea_normalizada);
+			}
+			else
+				tripulante->es_elegido_para_sabotaje=0;
 		}
 		else
-		{
-			resolver_tarea_cpu(tripulante,atoi(tripulante->tarea_normalizada[3]));
-		}
-		enviar_fin_tarea(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->TID);
-
-		// No necesito mutex aca porque la planificacion esta pausada en el momento del sabotaje
-		if(tripulante->es_elegido_para_sabotaje){ // tengo que realizar el movimiento de nuevo o tengo que resolver la tarea de nuevo
 			tripulante->es_elegido_para_sabotaje=0;
-			desplazar_tripulante(tripulante,&desplazamiento);
-			resolver_tarea_cpu(tripulante,atoi(tripulante->tarea_normalizada[3]));
-		}
-		termino_tarea=1;
-		liberar_recursos(tripulante->tarea_normalizada);
-		//free(tripulante->tarea_normalizada);
+		//termino_tarea=1;
+		//liberar_recursos(tripulante->tarea_normalizada);
 	}
 }
 
@@ -298,7 +299,7 @@ void resolver_tarea_cpu(t_tripulante* tripulante,int rafagas_de_cpu){
 	int cont_rafagas;
 	int tripulante_es_expulsado;
 
-	for (cont_rafagas=0;cont_rafagas<rafagas_de_cpu && !tripulante->es_elegido_para_sabotaje; cont_rafagas++){
+	for (cont_rafagas=0;cont_rafagas<rafagas_de_cpu && !tripulante->es_elegido_para_sabotaje; cont_rafagas++){ //TODO: no importa si tiene tarea en curso su tarea tiene que realizarlo de nuevo si hay sabotaje
 		sem_wait(&tripulante->semaforo_tripulante);
 
 		pthread_mutex_lock(&tripulante->mutex);
@@ -314,7 +315,7 @@ void resolver_tarea_cpu(t_tripulante* tripulante,int rafagas_de_cpu){
 			enviar_inicio_tarea(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->TID);
 		}
 		if(cont_rafagas==rafagas_de_cpu-1)
-			log_info(discordiador_logger,"Tripulante:%d Termino tarea %s con %d rafagas de CPU",tripulante->TID,tripulante->tarea_actual,cont_rafagas);
+			log_info(discordiador_logger,"Tripulante:%d Termino tarea %s con %d rafagas de CPU",tripulante->TID,tripulante->tarea_actual,cont_rafagas+1);
 		sem_post(&tripulante->esperar_ejecucion_tripulante);
 
 	}
@@ -330,7 +331,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 	int ciclos_de_reloj=0; //cantidad de ciclos de reloj transcurridos
 	int fue_expulsado;
 
-	while(ciclos_de_reloj!=rafaga_de_cpu){
+	while(ciclos_de_reloj!=rafaga_de_cpu && !tripulante->es_elegido_para_sabotaje){
 
 		if(mover_en_x>0 && !tripulante->es_elegido_para_sabotaje ){
 
@@ -366,11 +367,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
 
-		pthread_mutex_lock(&tripulante->mutex);
-		fue_expulsado=tripulante->es_expulsado;
-		pthread_mutex_unlock(&tripulante->mutex);
-
-		if(mover_en_x<0 && !tripulante->es_elegido_para_sabotaje && !fue_expulsado){
+		if(mover_en_x<0 && !tripulante->es_elegido_para_sabotaje){
 			sem_wait(&tripulante->semaforo_tripulante);
 
 			pthread_mutex_lock(&tripulante->mutex);
@@ -387,7 +384,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 
 		}
-		if(mover_en_y<0 && !tripulante->es_elegido_para_sabotaje && !fue_expulsado){
+		if(mover_en_y<0 && !tripulante->es_elegido_para_sabotaje){
 			sem_wait(&tripulante->semaforo_tripulante);
 			pthread_mutex_lock(&tripulante->mutex);
 			fue_expulsado=tripulante->es_expulsado;
@@ -615,17 +612,15 @@ char* unir_tripulantes(char* cant_tripulantes,char** posiciones)
 
 		}
 		else{
-			posicion_aux = obtener_posicion(posiciones[i]);
+			hay_posicion=0;
+			posicion_aux = obtener_posicion(NULL);
 			strcpy(aux,string_itoa(tid_tripulante_actual));
 			string_append(&buffer,aux);
 			string_append(&buffer,",");
-			strcpy(aux,string_itoa(posicion_aux->x));
-			string_append(&buffer,aux);
+			string_append(&buffer,"0");
 			string_append(&buffer,",");
-			strcpy(aux,string_itoa(posicion_aux->y));
-			string_append(&buffer,aux);
+			string_append(&buffer,"0");
 			string_append(&buffer,",");
-			hay_posicion=0;
 			tid_tripulante_actual++;
 		}
 	}
@@ -676,13 +671,12 @@ t_posicion* obtener_posicion(char* posicion) { // x|y
 		posicion_respuesta->y = 0;
 	}
 	else {
-
-		const char* delimitador = "|";
-		char* valor;
-		valor = strtok(posicion, delimitador);
-		posicion_respuesta->x = atoi(valor);
-		valor = strtok(NULL, delimitador);
-		posicion_respuesta->y = atoi(valor);
+		char* x = string_from_format("%c",posicion[0]); // parcheado bug de coordenadas
+		char* y = string_from_format("%c",posicion[2]);
+		posicion_respuesta->x = atoi(x);
+		posicion_respuesta->y = atoi(y);
+		free(x);
+		free(y);
 	}
 
 	return posicion_respuesta;
@@ -843,7 +837,7 @@ void iniciar_resolucion_sabotaje(){
 	list_destroy(lista_auxiliar_bloqueados);
 
 	//////////tripulante X resuelve el sabotaje
-	resolver_sabotaje(tripulante_aux,sabotaje->posicion);
+	resolver_sabotaje(tripulante_elegido_sabotaje,sabotaje->posicion);
 
 	//////////////////////// volver a la normalidad
 	while(queue_size(estructura_planificacion->cola_tripulantes_block_emergencia)!=0){
@@ -851,6 +845,7 @@ void iniciar_resolucion_sabotaje(){
 		tripulante_aux=queue_pop(estructura_planificacion->cola_tripulantes_block_emergencia);
 		queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_aux); // pasar de BLOCK emergencias a READY notificar a ram
 	}
+	queue_push(estructura_planificacion->cola_tripulantes_ready,tripulante_elegido_sabotaje);
 	log_info(discordiador_logger,"Termino el sabotaje reanudando planificacion..");
 
 }
@@ -915,9 +910,7 @@ void resolver_sabotaje(t_tripulante* tripulante,t_posicion* posicion){
 	while (tripulante_sabotaje->tripulante->posicion->x != tripulante_sabotaje->posicion->x || tripulante_sabotaje->tripulante->posicion->y != tripulante_sabotaje->posicion->y);
 	log_info(discordiador_logger,"Tripulante %d Invocando FSCK..",tripulante_sabotaje->tripulante->TID);
 	avisar_fsck(tripulante->socket_imongo,tripulante->TID);
-	sleep(configuracion_user->duracion_sabotaje);
-	// termino
-
+	sleep(configuracion_user->duracion_sabotaje); //TODO: revisar porque el tripulante se bloquea luego del sabotaje
 
 }
 

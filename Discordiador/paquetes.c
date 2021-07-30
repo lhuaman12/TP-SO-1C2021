@@ -128,7 +128,8 @@ void enviar_movimiento(t_tripulante* trip)
 	string_append_with_format(&palabra,"%s,",posx);
 	string_append_with_format(&palabra,"%s,",posy);
 
-	enviar_mensaje_por_codigo(palabra,REGISTRAR_MOVIMIENTO,SOCKET_IMONGO);
+	enviar_mensaje_por_codigo(palabra,REGISTRAR_MOVIMIENTO,SOCKET_IMONGO); //TODO: tripulante->socket_mongo
+	//TODO: falta mandar movimiento a ram
 	free(palabra);
 
 }
