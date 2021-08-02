@@ -356,7 +356,7 @@ void actualizarUbicacion(int socket_cliente){
 	char charId = intToChar(tid);
 	moverTripulante(charId,nuevaPosX,nuevaPosY);
 
-	enviar_mensaje_por_codigo("OK",MENSAJE,socket_cliente);
+	//enviar_mensaje_por_codigo("OK",MENSAJE,socket_cliente);
 	//liberar_conexion(socket_cliente);
 }
 

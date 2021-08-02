@@ -11,7 +11,7 @@ int main(void){
 
 	cargar_configuracion();
 
-	logger = log_create("miRam.log", "Mi-RAM",1, LOG_LEVEL_DEBUG);
+	logger = log_create("miRam.log", "Mi-RAM",0, LOG_LEVEL_DEBUG);
 
 	//signal(SIGUSR1, &signalCompactacion);
 	signal(SIGUSR1, &signalDump);
@@ -23,7 +23,7 @@ int main(void){
 	}
 
 
-	//crearMapaVacio();
+	crearMapaVacio();
 
 	prender_server();
 
@@ -185,7 +185,7 @@ void cargar_configuracion(void)
 
 void signalCompactacion(int sig){
 	log_info(logger, "Recibi la señial de compactar, compactando...");
-	//compactacion();
+	compactacion();
 }
 void signalDump(int sig){
 	log_info(logger,"Recibi la señal de hacer Dump, creando dump..");

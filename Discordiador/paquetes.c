@@ -147,12 +147,12 @@ void enviar_actualizar_pos(t_tripulante* trip)
 	string_append_with_format(&palabra,"%s,",posx);
 	string_append_with_format(&palabra,"%s,",posy);
 
+	conectar_envio(trip->socket_ram,configuracion_user->ip_ram,configuracion_user->puerto_ram);
+
 	enviar_mensaje_por_codigo(palabra,POSICION_TRIPULANTE_ACTUALIZADA,trip->socket_ram);
 
 	//recibir_operacion(trip->socket_ram);
 	//char* respuesta = recibir_y_guardar_mensaje(trip->socket_ram);
-
-
 
 	//TODO: EVALUAR SI LLEGO BIEN
 

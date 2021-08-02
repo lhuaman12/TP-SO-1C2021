@@ -54,8 +54,8 @@ void expulsarDelMapa(char unId){
 //Visualizar al tripulante en el mapa
 void dibujar_tripulante(char id, int posX, int posY){
 
-    //error = personaje_crear(nivel,id, posX,posY);
-    //ASSERT_CREATE(id,error);
+    error = personaje_crear(nivel,id, posX,posY);
+    ASSERT_CREATE(id,error);
     actualizar_Nivel();
 }
 

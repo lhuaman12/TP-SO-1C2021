@@ -251,7 +251,7 @@ void submodulo_tripulante(t_tripulante* tripulante){
 				tripulante->estado=EXIT;
 				//TODO: Avisar a ram que termine, aunque el sabe porque le pedi una tarea vacia
 				log_info(discordiador_logger,"Tripulante:%d termino todas sus tareas, pasa a EXIT",tripulante->TID);
-				//enviar_cambio_estado(tripulante->socket_ram,"f",tripulante->TID);//TODO: intentar sacar este log y que lo haga el planificador
+				enviar_cambio_estado(tripulante->socket_ram,"f",tripulante->TID);//TODO: intentar sacar este log y que lo haga el planificador
 				pthread_exit(NULL);
 			}
 			termino_tarea=0;
@@ -346,6 +346,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			mover_en_x--;
 			ciclos_de_reloj++;
 			enviar_movimiento(tripulante);
+			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&(tripulante->esperar_ejecucion_tripulante));
 		}
@@ -363,6 +364,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
 			enviar_movimiento(tripulante);
+			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
@@ -380,6 +382,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
 			enviar_movimiento(tripulante);
+			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 
@@ -396,6 +399,7 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
 			enviar_movimiento(tripulante);
+			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}

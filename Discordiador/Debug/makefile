@@ -25,10 +25,10 @@ endif
 all: Discordiador
 
 dependents:
-	-cd /home/utnso/tp-2021-1c-bastardosSinGloria/SharedUtils/Debug && $(MAKE) all
+	-cd /home/utnso/shared-library-so/SharedUtils/Debug && $(MAKE) clean all
 
 # Tool invocations
-Discordiador: $(OBJS) $(USER_OBJS) /home/utnso/tp-2021-1c-bastardosSinGloria/SharedUtils/Debug/libSharedUtils.so
+Discordiador: $(OBJS) $(USER_OBJS) /home/utnso/shared-library-so/SharedUtils/Debug/libSharedUtils.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
 	gcc -L/home/utnso/shared-library-so/SharedUtils/Debug -o "Discordiador" $(OBJS) $(USER_OBJS) $(LIBS)
@@ -41,6 +41,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
-/home/utnso/tp-2021-1c-bastardosSinGloria/SharedUtils/Debug/libSharedUtils.so:
+/home/utnso/shared-library-so/SharedUtils/Debug/libSharedUtils.so:
 
 -include ../makefile.targets
