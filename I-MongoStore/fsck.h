@@ -16,7 +16,7 @@ char* obtenerPosicion();
 
 //SABOTAJES
 void iniciarFSCK();
-
+void repararFiles();
 
 void repararSuperBloque();
 void repararBitmap();

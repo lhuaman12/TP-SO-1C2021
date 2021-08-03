@@ -28,6 +28,7 @@
 #include"interfaz.h"
 #include"bitmap.h"
 #include"fsck.h"
+#include "md5.h"
 
 #include "recibir_paquete.h"
 

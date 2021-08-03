@@ -35,14 +35,53 @@ void iniciarFSCK()
 
 	/////////////////////////
 
-	//repararSize();
-	//repararBlockCount();
-	//repararMD5();
+	repararFiles();
 }
 
 
-
-
+void repararFiles()
+{
+	for(int i = 0; i< 1;i++)
+	{
+			if(i==0)
+			{
+			char* filePath = malloc(70);
+			strcpy(filePath,RUTA_FILES);
+			string_append_with_format(&filePath,"%s.ims","Oxigeno");
+				if(existeArchivo(filePath))
+				{
+					repararSize("Oxigeno");
+					repararBlockCount("Oxigeno");
+					repararMD5("Oxigeno",'O');
+				}
+			free(filePath);
+			} else if(i==1)
+			{
+			char* filePath = malloc(70);
+			strcpy(filePath,RUTA_FILES);
+			string_append_with_format(&filePath,"%s.ims","Comida");
+			if(existeArchivo(filePath))
+			{
+				repararSize("Comida");
+				repararBlockCount("Comida");
+				repararMD5("Comida",'C');
+			}
+			free(filePath);
+			} else if(i==2)
+			{
+			char* filePath = malloc(70);
+			strcpy(filePath,RUTA_FILES);
+			string_append_with_format(&filePath,"%s.ims","Basura");
+			if(existeArchivo(filePath))
+			{
+				repararSize("Basura");
+				repararBlockCount("Basura");
+				repararMD5("Basura",'B');
+			}
+			free(filePath);
+		}
+	}
+}
 
 //PERFECTO
 void repararSuperBloque()
