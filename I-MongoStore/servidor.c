@@ -9,7 +9,7 @@ int main(void)
 	SOCKET_DISC = crearSocket();
 
 	signal(SIGUSR1,avisarDisc);
-	signal(SIGUSR2,iniciarFSCK);
+	//signal(SIGUSR2,iniciarFSCK);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -27,12 +27,14 @@ void avisarDisc()
 
 	pthread_create(&hiloSabotaje,NULL,(void*)enviarAlerta,posicion);
 	pthread_detach(hiloSabotaje);
+
 }
 
 void enviarAlerta(char* posicion)
 {
 	conectar_envio(SOCKET_DISC,IP,PUERTO_DISC+1);
 	enviar_mensaje_por_codigo(posicion,SABOTAJE,SOCKET_DISC);
+	pthread_exit(NULL);
 }
 
 void prender_server()

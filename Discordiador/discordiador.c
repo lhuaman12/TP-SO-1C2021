@@ -51,6 +51,7 @@ void atender_sabotaje(int socket)
 	sabotaje->posicion->x = x;
 	sabotaje->posicion->y = y;
 	sabotaje->hay_sabotaje=true;
+	liberar_conexion(socket);
 
 	free(mensaje_dec);
 }

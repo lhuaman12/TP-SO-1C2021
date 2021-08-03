@@ -834,8 +834,10 @@ void iniciar_resolucion_sabotaje(){
 	tripulante_elegido_sabotaje= list_get_minimum(lista_auxiliar,(void*)tripulante_mas_cercano_al_sabotaje); // tengo al tripulante mas cercano al sabotaje
 	for(int i=0;i<list_size(lista_auxiliar);i++){
 		tripulante_aux=list_get(lista_auxiliar,i);
-		if(tripulante_elegido_sabotaje->TID!=tripulante_aux->TID)
-			queue_push(estructura_planificacion->cola_tripulantes_block_emergencia,tripulante_aux); // pasar a bloqueados por emergencia
+		if(tripulante_elegido_sabotaje->TID!=tripulante_aux->TID){
+			queue_push(estructura_planificacion->cola_tripulantes_block_emergencia,tripulante_aux);// pasar a bloqueados por emergencia
+			enviar_cambio_estado(tripulante_aux->socket_ram,"B",tripulante_aux->TID);
+		}
 	}
 	list_destroy(lista_auxiliar);
 	list_destroy(lista_auxiliar_bloqueados);
@@ -933,6 +935,8 @@ void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje)
 			tripulante_sabotaje->tripulante->posicion->x++;
 			mover_en_x--;
 			ciclos_de_reloj++;
+			enviar_movimiento(tripulante_sabotaje->tripulante);
+			enviar_actualizar_pos(tripulante_sabotaje->tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante_sabotaje->tripulante->TID,tripulante_sabotaje->tripulante->posicion->x,tripulante_sabotaje->tripulante->posicion->y);
 			//sem_post(&(tripulante->esperar_ejecucion_tripulante));
 
@@ -943,6 +947,8 @@ void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje)
 			mover_en_y--;
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
+			enviar_movimiento(tripulante_sabotaje->tripulante);
+			enviar_actualizar_pos(tripulante_sabotaje->tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante_sabotaje->tripulante->TID,tripulante_sabotaje->tripulante->posicion->x,tripulante_sabotaje->tripulante->posicion->y);
 			//sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
@@ -953,6 +959,8 @@ void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje)
 			mover_en_x++;
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
+			enviar_movimiento(tripulante_sabotaje->tripulante);
+			enviar_actualizar_pos(tripulante_sabotaje->tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante_sabotaje->tripulante->TID,tripulante_sabotaje->tripulante->posicion->x,tripulante_sabotaje->tripulante->posicion->y);
 			//sem_post(&tripulante->esperar_ejecucion_tripulante);
 
@@ -963,6 +971,8 @@ void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje)
 			mover_en_y++;
 			ciclos_de_reloj++;
 			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
+			enviar_movimiento(tripulante_sabotaje->tripulante);
+			enviar_actualizar_pos(tripulante_sabotaje->tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante_sabotaje->tripulante->TID,tripulante_sabotaje->tripulante->posicion->x,tripulante_sabotaje->tripulante->posicion->y);
 			//sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}

@@ -406,7 +406,7 @@ char* buscarTareaEsquema(t_tcb* tcb,int pid){
 void expulsarTripulanteID(int idTripu){
 	//LO SACO DEL MAPA
 	char charId = intToChar(idTripu);
-	//expulsarDelMapa(charId);
+	expulsarDelMapa(charId);
 
     if(elegirEsquema() == SEGMENTACION){
         s_expulsarTripulante(idTripu);
