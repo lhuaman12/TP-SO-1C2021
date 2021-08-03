@@ -92,7 +92,7 @@ char* recibir_y_guardar_mensaje(int socket_cliente)
 {
 	int size;
 	char* buffer = recibir_buffer(&size, socket_cliente);
-	printf("\n Me llego el mensaje %s \n", buffer);
+	//printf("\n Me llego el mensaje %s \n", buffer);
 	return buffer;
 	free(buffer);
 }
@@ -103,7 +103,7 @@ char* recibir_id(int socket_cliente)
 {
 	int size;
 	char* buffer = recibir_buffer(&size, socket_cliente);
-	printf("\n Me llego el ID %s \n", buffer);
+	//printf("\n Me llego el ID %s \n", buffer);
 	return buffer;
 	free(buffer);
 }
