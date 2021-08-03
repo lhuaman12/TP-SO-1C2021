@@ -6,10 +6,8 @@ int main(void)
 	iniciar_log();
 	leer_config();
 	iniciar_filesystem();
-	SOCKET_DISC = crearSocket();
 
 	signal(SIGUSR1,avisarDisc);
-	//signal(SIGUSR2,iniciarFSCK);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -32,8 +30,11 @@ void avisarDisc()
 
 void enviarAlerta(char* posicion)
 {
+	SOCKET_DISC = crearSocket();
+	log_info(log_IMONGO,"ENVIANDO_ALETRA");
 	conectar_envio(SOCKET_DISC,IP,PUERTO_DISC+1);
 	enviar_mensaje_por_codigo(posicion,SABOTAJE,SOCKET_DISC);
+
 	pthread_exit(NULL);
 }
 

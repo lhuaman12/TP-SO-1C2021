@@ -52,7 +52,6 @@ void atender_sabotaje(int socket)
 	sabotaje->posicion->y = y;
 	sabotaje->hay_sabotaje=true;
 	liberar_conexion(socket);
-
 	free(mensaje_dec);
 }
 
@@ -70,7 +69,6 @@ void* escuchaSabotajes()
 			recibir_operacion(conexion);
 			atender_sabotaje(conexion);
 		}
-
 	}
 
 }
