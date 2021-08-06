@@ -11,7 +11,7 @@ int main(void)
 
 	signal(SIGUSR2,guardar);
 
-	signal(SIGUSR1,iniciarFSCK);
+	signal(SIGUSR1,descartarBasura);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -36,7 +36,7 @@ void avisarDisc()
 
 void guardar()
 {
-	generarRecurso("Oxigeno",'O',50);
+	generarRecurso("Basura",'B',10);
 
 }
 
@@ -162,6 +162,10 @@ void* atender_tripulante(Tripulante* trip)
 							break;
 						case CONSUMIR_BASURA:
 							consumirBasura(atoi(recibir_id(trip->conexion)));
+							break;
+						case DESCARTAR_BASURA:
+							recibir_id(trip->conexion);
+							descartarBasura();
 							break;
 						case REGISTRAR_MOVIMIENTO:
 							recibir_movimiento(trip->conexion);

@@ -213,6 +213,17 @@ void agregarTamanioFile(char* path,int tamanio)
 void sacarBloque(char* id,char* path)
 {
 	char* bloquesEnUso = buscarBloquesUsados(path);
+
+	int bloquesTotales = contarComas(bloquesEnUso);
+
+	log_warning(log_IMONGO,"es: %d",bloquesTotales);
+
+	if(bloquesTotales <= 1)
+	{
+		eliminarFile(path);
+	}
+	else
+	{
 	char* palabra = malloc(strlen(bloquesEnUso));
 	strcpy(palabra,"\0");
 	char* palabra_momentanea = malloc(2);
@@ -238,6 +249,8 @@ void sacarBloque(char* id,char* path)
 	crearMD5(path,md5);
 	free(palabra_momentanea);
 	free(palabra);
+	}
+
 }
 
 void decrementarTamanioFile(char* path,int tamanio)

@@ -29,6 +29,7 @@ void consumirComida(int cantidad);
 
 void generarBasura(int cantidad);
 void consumirBasura(int cantidad);
+void descartarBasura();
 
 char* obtenerBitacora(char* id);
 

@@ -34,7 +34,7 @@ void iniciarFSCK()
 	//repararBitmap();
 
 	/////////////////////////
-
+	consumirRecurso("Basura",20);
 	//repararFiles();
 }
 

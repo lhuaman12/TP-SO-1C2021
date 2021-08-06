@@ -292,15 +292,30 @@ void guardarContenidoBitacora(char* path, char* contenido)
 	free(bloquesGuardados);
 }
 
+void descartarBasura()
+{
+	char* path = malloc(70);
+	strcpy(path,RUTA_FILES);
+	string_append_with_format(&path,"Basura.ims");
 
+	if(existeArchivo(path))
+	{
+		int tamanio = obtenerSizeFile(path);
+		consumirRecurso("Basura",tamanio);
+	}
+	else
+	{
+		log_warning(log_IMONGO,"NO HAY BASURA");
+	}
+
+	free(path);
+}
 
 void consumirRecurso(char* recurso,int cantidad)
 {
 	char* path = malloc(70);
 	strcpy(path,RUTA_FILES);
 	string_append_with_format(&path,"%s.ims",recurso);
-
-	int cantidadActual = cantidad;
 
 	int bloquesABorrar = calcularBloquesPorTamanio(cantidad);
 
@@ -327,10 +342,6 @@ void consumirRecurso(char* recurso,int cantidad)
 	{
 		sacarCantidad(atoi(bloquesTotales[i]),cantidades[i],path);
 	}
-
-	//char* bloquesActualizados = buscarBloquesUsados(path);
-
-	decrementarTamanioFile(path,cantidad);
 
 	free(path);
 

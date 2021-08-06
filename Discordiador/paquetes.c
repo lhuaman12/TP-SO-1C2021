@@ -76,6 +76,9 @@ void enviar_IO(int socket,char* tarea,char* cantidad)
 	}else if(strcmp(tarea,"CONSUMIR_BASURA")==0)
 	{
 		enviar_mensaje_por_codigo(cantidad,CONSUMIR_BASURA,socket);
+	}else if(strcmp(tarea,"DESCARTAR_BASURA")==0)
+	{
+		enviar_mensaje_por_codigo("0",DESCARTAR_BASURA,socket);
 	}
 
 	//liberar_conexion(socket);

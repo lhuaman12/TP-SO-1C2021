@@ -166,19 +166,24 @@ void sacarCantidad(int id,int cantidad,char* path)
 		return bloque->id == id;
 	}
 
+	t_bloque* bloqueNuevo = malloc(sizeof(t_bloque));
+	bloqueNuevo = list_find(bloques,criterioNombre);
 
-	if(cantidad == BLOCK_SIZE)
+	if(cantidad < strlen(bloqueNuevo->contenido))
 	{
-		borrarContenido(string_itoa(id));
-		sacarBloque(string_itoa(id),path);
+		char* palabra = string_substring_until(bloqueNuevo->contenido,strlen(bloqueNuevo->contenido) - cantidad);
+		strcpy(bloqueNuevo->contenido,palabra);
+		decrementarTamanioFile(path,cantidad);
 
 	}else
 	{
-		t_bloque* bloqueNuevo = malloc(sizeof(t_bloque));
-		bloqueNuevo = list_find(bloques,criterioNombre);
-		strcpy(bloqueNuevo->contenido,string_substring_until(bloqueNuevo->contenido,BLOCK_SIZE - cantidad));
+		log_warning(log_IMONGO,"A BORRAR");
+		borrarContenido(string_itoa(id));
+		decrementarTamanioFile(path,cantidad);
+		sacarBloque(string_itoa(id),path);
 	}
 
+	//free(bloqueNuevo);
 }
 
 
