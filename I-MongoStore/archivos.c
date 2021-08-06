@@ -69,6 +69,8 @@ void eliminarFile(char* path)
 
 int obtenerSizeFile(char* path)
 {
+	pthread_mutex_lock(&semaforoFiles);
+
 	t_config* recurso = config_create(path);
 
 	char* bloquesitos = config_get_int_value(recurso,"SIZE");
@@ -77,10 +79,15 @@ int obtenerSizeFile(char* path)
 
 	config_destroy(recurso);
 
+	pthread_mutex_unlock(&semaforoFiles);
+
 }
 
 char* buscarBloquesUsados(char* path)
 {
+
+	pthread_mutex_lock(&semaforoFiles);
+
 	t_config* recurso = config_create(path);
 
 	char* bloquesitos = config_get_string_value(recurso,"BLOCKS");
@@ -89,10 +96,13 @@ char* buscarBloquesUsados(char* path)
 
 	config_destroy(recurso);
 
+	pthread_mutex_unlock(&semaforoFiles);
 }
 
 char* obtenerMD5(char* path)
 {
+	pthread_mutex_lock(&semaforoFiles);
+
 	t_config* recurso = config_create(path);
 
 	char* md5 = config_get_string_value(recurso,"MD5_ARCHIVO");
@@ -100,6 +110,8 @@ char* obtenerMD5(char* path)
 	return md5;
 
 	config_destroy(recurso);
+
+	pthread_mutex_unlock(&semaforoFiles);
 
 }
 void reemplazarBloquesFile(char* path,char* bloquesUsados)

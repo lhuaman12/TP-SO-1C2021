@@ -137,7 +137,7 @@ void iniciar_planificacion_fifo(){
 				tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 				if(tripulante_aux->no_tiene_tareas){
 					log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
-					//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
+					enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
 					queue_pop(estructura_planificacion->cola_tripulantes_block);
 					destruir_recursos_tripulante(tripulante_aux);
 				}
@@ -177,7 +177,7 @@ void iniciar_planificacion_fifo(){
 			tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 			if(tripulante_aux->no_tiene_tareas){
 				log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
-				//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
+				enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
 				queue_pop(estructura_planificacion->cola_tripulantes_block);
 				destruir_recursos_tripulante(tripulante_aux);
 			}
@@ -1018,7 +1018,7 @@ void planificacion_round_robin(){
 				tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 				if(tripulante_aux->no_tiene_tareas){
 					log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
-					//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
+					enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
 					queue_pop(estructura_planificacion->cola_tripulantes_block);
 					destruir_recursos_tripulante(tripulante_aux);
 				}
@@ -1061,7 +1061,7 @@ void planificacion_round_robin(){
 			tripulante_aux = queue_peek(estructura_planificacion->cola_tripulantes_block);
 			if(tripulante_aux->no_tiene_tareas){
 				log_info(discordiador_logger,"Tripulante %d pasando de BLOCKED a EXIT",tripulante_aux->TID);
-				//enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
+				enviar_cambio_estado(tripulante_aux->socket_ram,"f",tripulante_aux->TID);
 				queue_pop(estructura_planificacion->cola_tripulantes_block);
 				destruir_recursos_tripulante(tripulante_aux);
 			}

@@ -25,7 +25,7 @@ endif
 all: Discordiador
 
 dependents:
-	-cd /home/utnso/shared-library-so/SharedUtils/Debug && $(MAKE) all
+	-cd /home/utnso/shared-library-so/SharedUtils/Debug && $(MAKE) clean all
 
 # Tool invocations
 Discordiador: $(OBJS) $(USER_OBJS) /home/utnso/shared-library-so/SharedUtils/Debug/libSharedUtils.so

@@ -150,3 +150,52 @@
 [INFO] 23:11:06:152 Mi-RAM/(13243:13261): Guarde la tcb del tripulante 1 en el segmento 2
 [INFO] 23:11:06:152 Mi-RAM/(13243:13261): Guarde la tcb de 1 en memoria
 [INFO] 23:11:06:152 Mi-RAM/(13243:13261): Envio ok
+[INFO] 00:33:39:016 Mi-RAM/(4818:4818): RAM: 4098
+[INFO] 00:35:48:867 Mi-RAM/(4951:4951): RAM: 4098
+[INFO] 00:35:48:867 Mi-RAM/(4951:4951): <> SERVIDOR LISTO....
+[INFO] 00:36:49:289 Mi-RAM/(4951:4962): <>START: Recibir patota
+[INFO] 00:36:58:348 Mi-RAM/(4951:4962): <>END: Recibir patota
+[INFO] 00:37:09:614 Mi-RAM/(4951:4962): Iniciando patota 1 con 3 tripulantes que pesa 171...
+[INFO] 00:37:10:188 Mi-RAM/(4951:4962): Hay 4098 espacio libre, quiero guardar 171
+[INFO] 00:37:10:188 Mi-RAM/(4951:4962): Guarde las tareas GENERAR_OXIGENO 12;6;4;1,GENERAR_BASURA 4;4;4;2,IR_AL_BAÑO;1;4;7,JUGAR_LOL;3;5;10,HACER_CACA;1;2;7 en el segmento 0
+[INFO] 00:37:10:188 Mi-RAM/(4951:4962): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 00:37:10:188 Mi-RAM/(4951:4962): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 00:37:56:378 Mi-RAM/(5099:5099): RAM: 4098
+[INFO] 00:37:56:378 Mi-RAM/(5099:5099): <> SERVIDOR LISTO....
+[INFO] 00:38:13:562 Mi-RAM/(5099:5115): <>START: Recibir patota
+[INFO] 00:38:21:453 Mi-RAM/(5099:5115): <>END: Recibir patota
+[INFO] 00:39:31:879 Mi-RAM/(5265:5265): RAM: 4098
+[INFO] 00:39:31:879 Mi-RAM/(5265:5265): <> SERVIDOR LISTO....
+[INFO] 00:39:54:665 Mi-RAM/(5265:5276): <>START: Recibir patota
+[INFO] 00:40:05:020 Mi-RAM/(5265:5276): <>END: Recibir patota
+[INFO] 00:40:20:699 Mi-RAM/(5265:5276): Iniciando patota 1 con 3 tripulantes que pesa 171...
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Hay 4098 espacio libre, quiero guardar 171
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde las tareas GENERAR_OXIGENO 12;6;4;1,GENERAR_BASURA 4;4;4;2,IR_AL_BAÑO;1;4;7,JUGAR_LOL;3;5;10,HACER_CACA;1;2;7 en el segmento 0
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la tcb de 1 en memoria
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la tcb de 2 en memoria
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Guarde la tcb de 3 en memoria
+[INFO] 00:40:21:624 Mi-RAM/(5265:5276): Envio ok
+[INFO] 00:40:55:790 Mi-RAM/(5265:5276): <>START: Recibir patota
+[INFO] 00:41:05:900 Mi-RAM/(5265:5276): <>END: Recibir patota
+[INFO] 00:41:17:936 Mi-RAM/(5265:5276): Iniciando patota 2 con 3 tripulantes que pesa 171...
+[INFO] 00:41:19:706 Mi-RAM/(5265:5276): Hay 3927 espacio libre, quiero guardar 171
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde las tareas GENERAR_OXIGENO 12;6;4;1,GENERAR_BASURA 4;4;4;2,IR_AL_BAÑO;1;4;7,JUGAR_LOL;3;5;10,HACER_CACA;1;2;7 en el segmento 5
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la pcb de la patota 2 en el segmento 6
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Iniciando tripulante 4 de la patota 2 en la posicion 0|0
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la tcb del tripulante 4 en el segmento 7
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la tcb de 4 en memoria
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Iniciando tripulante 5 de la patota 2 en la posicion 0|0
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la tcb del tripulante 5 en el segmento 8
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la tcb de 5 en memoria
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Iniciando tripulante 6 de la patota 2 en la posicion 0|0
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la tcb del tripulante 6 en el segmento 9
+[INFO] 00:41:19:707 Mi-RAM/(5265:5276): Guarde la tcb de 6 en memoria
+[INFO] 00:41:19:710 Mi-RAM/(5265:5276): Envio ok
+[INFO] 00:41:50:224 Mi-RAM/(5265:5347): El tripulante 2 se movio a la posicion 1|0

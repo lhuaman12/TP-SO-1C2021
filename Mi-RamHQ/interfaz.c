@@ -39,6 +39,7 @@ t_patota_envio* recibir_patota(int socket)
 			patota->trips = recibir_y_guardar_mensaje(socket);
 			break;
 		case FIN_PATOTA:
+			recibir_y_guardar_mensaje(socket);
 			i=0;
 			break;
 		default:
@@ -65,7 +66,7 @@ void iniciarPatota(int socket_cliente){
 
 	char** tareas_decriptadas = malloc(300);
 
-	tareas_decriptadas = string_split(patota->trips,",");
+	tareas_decriptadas = string_split(patota->tareas,",");
 
 	char** tripulantes_decriptados = malloc(300);
 
@@ -77,8 +78,19 @@ void iniciarPatota(int socket_cliente){
 
 	int cantidadDeTripulantes = atoi(tripulantes_decriptados[0]);
 
-	char* tareas = string_substring(patota->tareas,2,strlen(patota->tareas));
-	tareas = string_substring_until(tareas,strlen(tareas)-1);
+	char* tareas;
+
+	if(cantidadDeTareas >= 10)
+	{
+		tareas = string_substring(patota->tareas,3,strlen(patota->tareas));
+		tareas = string_substring_until(tareas,strlen(tareas)-1);
+	}else
+	{
+		tareas = string_substring(patota->tareas,2,strlen(patota->tareas));
+		tareas = string_substring_until(tareas,strlen(tareas)-1);
+	}
+
+	printf("TAREAS: %s",tareas);
 
 	int tamanioTotal = 21 * cantidadDeTripulantes + (strlen(tareas)+1) + 8;
 
