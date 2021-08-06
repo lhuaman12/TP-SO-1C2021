@@ -34,6 +34,7 @@ m:
 
 .SILENT: clean
 .PHONY: clean
+
 clean:
 	make -sC $(discordiador_path) clean
 	make -sC $(MiRamHQ_path) clean
