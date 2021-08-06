@@ -30,12 +30,11 @@ char* obtenerPosicion()
 
 void iniciarFSCK()
 {
-	//repararSuperBloque();
-	//repararBitmap();
+	repararSuperBloque();
+	repararBitmap();
 
-	/////////////////////////
-	consumirRecurso("Basura",20);
-	//repararFiles();
+	////////////////////////
+	repararFiles();
 }
 
 
@@ -55,6 +54,9 @@ void repararFiles()
 					repararMD5("Oxigeno",'O');
 
 
+				}else
+				{
+					log_warning(log_IMONGO,"NO EXISTE OXIGENO");
 				}
 			free(filePath);
 			} else if(i==1)
@@ -68,6 +70,10 @@ void repararFiles()
 				repararBlockCount("Comida");
 				repararMD5("Comida",'C');
 			}
+			else
+			{
+				log_warning(log_IMONGO,"NO EXISTE COMIDA");
+			}
 			free(filePath);
 			} else if(i==2)
 			{
@@ -79,6 +85,10 @@ void repararFiles()
 				repararSize("Basura");
 				repararBlockCount("Basura");
 				repararMD5("Basura",'B');
+			}
+			else
+			{
+				log_warning(log_IMONGO,"NO EXISTE BASURA");
 			}
 			free(filePath);
 		}

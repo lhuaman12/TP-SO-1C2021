@@ -7,11 +7,9 @@ int main(void)
 	leer_config();
 	iniciar_filesystem();
 
-	//signal(SIGUSR1,avisarDisc);
+	signal(SIGUSR1,avisarDisc);
 
-	signal(SIGUSR2,guardar);
-
-	signal(SIGUSR1,descartarBasura);
+//	signal(SIGUSR1,descartarBasura);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -139,8 +137,6 @@ void* atender_tripulante(Tripulante* trip)
 		int cod_op = recibir_operacion(trip->conexion);
 						switch(cod_op)
 						{
-						case DESCARTAR_BASURA:
-							break;
 						case SABOTAJE:
 							recibir_id(trip->conexion);
 							iniciarFSCK();

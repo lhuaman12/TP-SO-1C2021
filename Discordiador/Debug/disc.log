@@ -14203,3 +14203,110 @@
 [INFO] 03:41:43:778 Discordiador logger/(6412:6418): Tripulante:1 Termino tarea SALUDAR;2;7;1 con 1 rafagas de CPU
 [INFO] 03:41:43:778 Discordiador logger/(6412:6418): Solicito nueva tarea
 [INFO] 03:41:43:779 Discordiador logger/(6412:6418): Tripulante:1 termino todas sus tareas, pasa a EXIT
+[INFO] 16:16:32:622 Discordiador logger/(8712:8712): Inicio de logs de discordiador..
+[INFO] 16:16:32:645 Discordiador logger/(8712:8712): Seteando las configuraciones..
+[INFO] 16:17:05:710 Discordiador logger/(8712:8716): Creado tripulante 1 con posicion en x:2 y:2
+[INFO] 16:17:05:711 Discordiador logger/(8712:8716): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 16:17:05:711 Discordiador logger/(8712:8716): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 16:17:05:711 Discordiador logger/(8712:8716): Creada patota 1
+[INFO] 16:17:05:711 Discordiador logger/(8712:8734): Solicito nueva tarea
+[INFO] 16:17:05:711 Discordiador logger/(8712:8733): Solicito nueva tarea
+[INFO] 16:17:05:711 Discordiador logger/(8712:8732): Solicito nueva tarea
+[INFO] 16:17:11:771 Discordiador logger/(8712:8739): Iniciado planificacion FIFO..
+[INFO] 16:17:11:771 Discordiador logger/(8712:8739): Ciclo de cpu:1
+[INFO] 16:17:11:771 Discordiador logger/(8712:8739): Tripulante 1 pasando de NEW a READY
+[INFO] 16:17:11:771 Discordiador logger/(8712:8739): Tripulante 2 pasando de NEW a READY
+[INFO] 16:17:11:772 Discordiador logger/(8712:8739): Tripulante 3 pasando de NEW a READY
+[INFO] 16:17:11:772 Discordiador logger/(8712:8739): Tripulante 1 pasando de READY a EXEC
+[INFO] 16:17:11:772 Discordiador logger/(8712:8739): Tripulante 2 pasando de READY a EXEC
+[INFO] 16:17:11:772 Discordiador logger/(8712:8732): Tripulante:1 desplazado a X:1 Y:2
+[INFO] 16:17:11:773 Discordiador logger/(8712:8733): Tripulante:2 Comenzo tarea ARREGLAR_REACTOR;0;0;600
+[INFO] 16:17:12:775 Discordiador logger/(8712:8739): Ciclo de cpu:2
+[INFO] 16:17:12:775 Discordiador logger/(8712:8732): Tripulante:1 desplazado a X:1 Y:1
+[INFO] 16:17:13:776 Discordiador logger/(8712:8739): Ciclo de cpu:3
+[INFO] 16:17:13:776 Discordiador logger/(8712:8732): Tripulante:1 desplazado a X:0 Y:1
+[INFO] 16:17:14:777 Discordiador logger/(8712:8739): Ciclo de cpu:4
+[INFO] 16:17:14:777 Discordiador logger/(8712:8732): Tripulante:1 desplazado a X:0 Y:0
+[INFO] 16:17:15:778 Discordiador logger/(8712:8739): Ciclo de cpu:5
+[INFO] 16:17:15:778 Discordiador logger/(8712:8732): Tripulante:1 Comenzo tarea ARREGLAR_REACTOR;0;0;600
+[INFO] 16:17:16:778 Discordiador logger/(8712:8739): Ciclo de cpu:6
+[INFO] 16:17:17:779 Discordiador logger/(8712:8739): Ciclo de cpu:7
+[INFO] 16:17:18:780 Discordiador logger/(8712:8739): Ciclo de cpu:8
+[INFO] 16:17:19:781 Discordiador logger/(8712:8739): Ciclo de cpu:9
+[INFO] 16:17:20:781 Discordiador logger/(8712:8739): Ciclo de cpu:10
+[INFO] 16:17:21:782 Discordiador logger/(8712:8739): Ciclo de cpu:11
+[INFO] 16:17:22:783 Discordiador logger/(8712:8739): Ciclo de cpu:12
+[INFO] 16:17:23:783 Discordiador logger/(8712:8739): Ciclo de cpu:13
+[INFO] 16:17:24:784 Discordiador logger/(8712:8739): Ciclo de cpu:14
+[INFO] 16:17:25:785 Discordiador logger/(8712:8739): Ciclo de cpu:15
+[INFO] 16:17:26:785 Discordiador logger/(8712:8739): Ciclo de cpu:16
+[INFO] 16:17:27:786 Discordiador logger/(8712:8739): Ciclo de cpu:17
+[INFO] 16:17:28:786 Discordiador logger/(8712:8739): Ciclo de cpu:18
+[INFO] 16:17:29:786 Discordiador logger/(8712:8739): Ciclo de cpu:19
+[INFO] 16:17:30:787 Discordiador logger/(8712:8739): Ciclo de cpu:20
+[INFO] 16:17:31:788 Discordiador logger/(8712:8739): Ciclo de cpu:21
+[INFO] 16:17:32:790 Discordiador logger/(8712:8739): Ciclo de cpu:22
+[INFO] 16:17:33:790 Discordiador logger/(8712:8739): Ciclo de cpu:23
+[INFO] 16:17:34:791 Discordiador logger/(8712:8739): Ciclo de cpu:24
+[INFO] 16:17:35:792 Discordiador logger/(8712:8739): Ciclo de cpu:25
+[INFO] 16:17:36:793 Discordiador logger/(8712:8739): Ciclo de cpu:26
+[INFO] 16:17:37:795 Discordiador logger/(8712:8739): Ciclo de cpu:27
+[INFO] 16:17:38:795 Discordiador logger/(8712:8739): Ciclo de cpu:28
+[INFO] 16:17:39:796 Discordiador logger/(8712:8739): Ciclo de cpu:29
+[INFO] 16:17:40:797 Discordiador logger/(8712:8739): Ciclo de cpu:30
+[INFO] 16:18:36:442 Discordiador logger/(8781:8781): Inicio de logs de discordiador..
+[INFO] 16:18:36:443 Discordiador logger/(8781:8781): Seteando las configuraciones..
+[INFO] 16:19:03:092 Discordiador logger/(8781:8785): Creado tripulante 1 con posicion en x:2 y:2
+[INFO] 16:19:03:092 Discordiador logger/(8781:8785): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 16:19:03:092 Discordiador logger/(8781:8785): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 16:19:03:092 Discordiador logger/(8781:8785): Creada patota 1
+[INFO] 16:19:03:092 Discordiador logger/(8781:8792): Solicito nueva tarea
+[INFO] 16:19:03:092 Discordiador logger/(8781:8791): Solicito nueva tarea
+[INFO] 16:19:03:093 Discordiador logger/(8781:8790): Solicito nueva tarea
+[INFO] 16:19:07:691 Discordiador logger/(8781:8796): Iniciado planificacion FIFO..
+[INFO] 16:19:07:691 Discordiador logger/(8781:8796): Ciclo de cpu:1
+[INFO] 16:19:07:691 Discordiador logger/(8781:8796): Tripulante 1 pasando de NEW a READY
+[INFO] 16:19:07:691 Discordiador logger/(8781:8796): Tripulante 2 pasando de NEW a READY
+[INFO] 16:19:07:691 Discordiador logger/(8781:8796): Tripulante 3 pasando de NEW a READY
+[INFO] 16:19:07:692 Discordiador logger/(8781:8796): Tripulante 1 pasando de READY a EXEC
+[INFO] 16:19:07:692 Discordiador logger/(8781:8796): Tripulante 2 pasando de READY a EXEC
+[INFO] 16:19:07:692 Discordiador logger/(8781:8790): Tripulante:1 desplazado a X:1 Y:2
+[INFO] 16:19:07:693 Discordiador logger/(8781:8791): Tripulante:2 Comenzo tarea ARREGLAR_REACTOR;0;0;600
+[INFO] 16:19:08:694 Discordiador logger/(8781:8796): Ciclo de cpu:2
+[INFO] 16:19:08:695 Discordiador logger/(8781:8790): Tripulante:1 desplazado a X:1 Y:1
+[INFO] 16:19:09:696 Discordiador logger/(8781:8796): Ciclo de cpu:3
+[INFO] 16:19:09:696 Discordiador logger/(8781:8790): Tripulante:1 desplazado a X:0 Y:1
+[INFO] 16:19:10:697 Discordiador logger/(8781:8796): Ciclo de cpu:4
+[INFO] 16:19:10:699 Discordiador logger/(8781:8790): Tripulante:1 desplazado a X:0 Y:0
+[INFO] 16:19:11:700 Discordiador logger/(8781:8796): Ciclo de cpu:5
+[INFO] 16:19:11:700 Discordiador logger/(8781:8790): Tripulante:1 Comenzo tarea ARREGLAR_REACTOR;0;0;600
+[INFO] 16:19:12:700 Discordiador logger/(8781:8796): Ciclo de cpu:6
+[INFO] 16:19:13:701 Discordiador logger/(8781:8796): Ciclo de cpu:7
+[INFO] 16:19:14:702 Discordiador logger/(8781:8796): Ciclo de cpu:8
+[INFO] 16:19:15:703 Discordiador logger/(8781:8796): Ciclo de cpu:9
+[INFO] 16:19:16:704 Discordiador logger/(8781:8796): Ciclo de cpu:10
+[INFO] 16:19:17:705 Discordiador logger/(8781:8796): Ciclo de cpu:11
+[INFO] 16:19:18:707 Discordiador logger/(8781:8796): Ciclo de cpu:12
+[INFO] 16:19:19:707 Discordiador logger/(8781:8796): Ciclo de cpu:13
+[INFO] 16:19:20:711 Discordiador logger/(8781:8796): Ciclo de cpu:14
+[INFO] 16:19:21:711 Discordiador logger/(8781:8796): Ciclo de cpu:15
+[INFO] 16:19:22:712 Discordiador logger/(8781:8796): Ciclo de cpu:16
+[INFO] 16:19:23:713 Discordiador logger/(8781:8796): Ciclo de cpu:17
+[INFO] 16:19:23:896 Discordiador logger/(8781:8784): CONECTO
+[INFO] 16:19:23:896 Discordiador logger/(8781:8784): Me llego un sabotaje en X:1 Y:1
+[INFO] 16:19:24:714 Discordiador logger/(8781:8796): Iniciando resolucion de sabotaje..
+[INFO] 16:19:25:715 Discordiador logger/(8781:8816): Tripulante:3 desplazado a X:1 Y:0
+[INFO] 16:19:26:715 Discordiador logger/(8781:8816): Tripulante:3 desplazado a X:1 Y:1
+[INFO] 16:19:27:715 Discordiador logger/(8781:8796): Tripulante 3 Invocando FSCK..
+[INFO] 16:19:37:717 Discordiador logger/(8781:8796): ELEMENTOS: 2
+[INFO] 16:19:37:718 Discordiador logger/(8781:8796): ELEMENTOS: 1
+[INFO] 16:19:37:718 Discordiador logger/(8781:8796): Termino el sabotaje reanudando planificacion..
+[INFO] 16:19:37:718 Discordiador logger/(8781:8796): Ciclo de cpu:18
+[INFO] 16:19:37:718 Discordiador logger/(8781:8796): Tripulante 2 pasando de READY a EXEC
+[INFO] 16:19:37:719 Discordiador logger/(8781:8796): Tripulante 1 pasando de READY a EXEC
+[INFO] 16:19:38:720 Discordiador logger/(8781:8796): Ciclo de cpu:19
+[INFO] 16:19:39:721 Discordiador logger/(8781:8796): Ciclo de cpu:20
+[INFO] 16:19:40:723 Discordiador logger/(8781:8796): Ciclo de cpu:21
+[INFO] 16:19:41:725 Discordiador logger/(8781:8796): Ciclo de cpu:22
+[INFO] 16:19:42:732 Discordiador logger/(8781:8796): Ciclo de cpu:23
+[INFO] 16:19:43:733 Discordiador logger/(8781:8796): Ciclo de cpu:24
