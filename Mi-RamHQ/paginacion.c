@@ -424,6 +424,8 @@ char* sacarTareasPaginacion(void* infoProceso , int size ){
     return tareas;
 }
 
+
+
 //GUARDAR EN MV
 void guardarMemoriaVirtual(t_pagina* pagina){
 
