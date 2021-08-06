@@ -83,7 +83,7 @@ t_config* config_IMONGO;
 t_config* super_config;
 pthread_t hiloSincro;
 pthread_t hiloSabotaje;
-
+void guardar();
 
 //FUNCIONES
 void* sincronizarDisco();
@@ -96,6 +96,7 @@ void iniciar_filesystem();
 void init_bitmap();
 void leer_super_bloque();
 void init_directorios();
+char* crearBufferInicial(int numero);
 
 void crear_super_bloque();
 void escribir_super_bloque();

@@ -7,7 +7,11 @@ int main(void)
 	leer_config();
 	iniciar_filesystem();
 
-	signal(SIGUSR1,avisarDisc);
+	//signal(SIGUSR1,avisarDisc);
+
+	signal(SIGUSR2,guardar);
+
+	signal(SIGUSR1,iniciarFSCK);
 
 	pthread_create(&hiloSincro,NULL,sincronizarDisco,NULL);
 
@@ -17,6 +21,8 @@ int main(void)
 
 
 }
+
+
 void avisarDisc()
 {
 	log_info(log_IMONGO,"ME QUIEREN MATAR");
@@ -25,6 +31,12 @@ void avisarDisc()
 
 	pthread_create(&hiloSabotaje,NULL,(void*)enviarAlerta,posicion);
 	pthread_detach(hiloSabotaje);
+
+}
+
+void guardar()
+{
+	generarRecurso("Oxigeno",'O',50);
 
 }
 
@@ -183,7 +195,7 @@ void init_directorios()
 }
 
 
-char* crearBufferInicial(uint32_t numero)
+char* crearBufferInicial(int numero)
 {
 	return string_repeat('X',numero);
 }

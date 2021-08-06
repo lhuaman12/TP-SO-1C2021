@@ -69,24 +69,26 @@ void eliminarFile(char* path)
 
 int obtenerSizeFile(char* path)
 {
-	pthread_mutex_lock(&semaforoFiles);
+	//pthread_mutex_lock(&semaforoFiles);
 
 	t_config* recurso = config_create(path);
 
-	char* bloquesitos = config_get_int_value(recurso,"SIZE");
+	int bloquesitos = config_get_int_value(recurso,"SIZE");
 
 	return bloquesitos;
 
 	config_destroy(recurso);
 
-	pthread_mutex_unlock(&semaforoFiles);
+	//pthread_mutex_unlock(&semaforoFiles);
+
+
 
 }
 
 char* buscarBloquesUsados(char* path)
 {
 
-	pthread_mutex_lock(&semaforoFiles);
+	//pthread_mutex_lock(&semaforoFiles);
 
 	t_config* recurso = config_create(path);
 
@@ -96,12 +98,14 @@ char* buscarBloquesUsados(char* path)
 
 	config_destroy(recurso);
 
-	pthread_mutex_unlock(&semaforoFiles);
+	//pthread_mutex_unlock(&semaforoFiles);
+
+
 }
 
 char* obtenerMD5(char* path)
 {
-	pthread_mutex_lock(&semaforoFiles);
+	//pthread_mutex_lock(&semaforoFiles);
 
 	t_config* recurso = config_create(path);
 
@@ -111,7 +115,7 @@ char* obtenerMD5(char* path)
 
 	config_destroy(recurso);
 
-	pthread_mutex_unlock(&semaforoFiles);
+	//pthread_mutex_unlock(&semaforoFiles);
 
 }
 void reemplazarBloquesFile(char* path,char* bloquesUsados)
@@ -285,11 +289,13 @@ void agregarCaracterFile(char* path,char caracter)
 
 	pthread_mutex_lock(&semaforoFiles);
 
-	t_config* recurso = config_create(path);
-
 	char* palabra = malloc(2);
-	palabra[0]=caracter;
-	palabra[1]=0;
+	strcpy(palabra,"");
+	string_append_with_format(&palabra,"%c",caracter);
+
+	log_info(log_IMONGO,"%s",palabra);
+
+	t_config* recurso = config_create(path);
 
 	config_set_value(recurso,"CARACTER_LLENADO",palabra);
 
@@ -298,7 +304,7 @@ void agregarCaracterFile(char* path,char caracter)
 	config_destroy(recurso);
 
 	pthread_mutex_unlock(&semaforoFiles);
-	free(palabra);
+	//free(palabra);
 }
 
 

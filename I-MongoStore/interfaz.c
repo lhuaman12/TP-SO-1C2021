@@ -2,6 +2,10 @@
 #include "interfaz.h"
 
 
+//TODO: CONSUMIR RECURSO
+//TODO: DESCARTAR BASURA
+
+
 void generarOxigeno(int cantidad)
 {
 	generarRecurso("Oxigeno",'O',cantidad);
@@ -174,7 +178,7 @@ void generarRecurso(char* nombre, char caracter,int cantidad)
 		crearRecurso(filePath,nombre);
 		char* buffer = malloc(cantidad+1);
 		buffer = string_repeat(caracter,cantidad+1);
-		//agregarCaracterFile(filePath,caracter);
+		agregarCaracterFile(filePath,caracter);
 		guardarContenido(filePath,buffer);
 		//free(buffer);
 	}
@@ -324,7 +328,7 @@ void consumirRecurso(char* recurso,int cantidad)
 		sacarCantidad(atoi(bloquesTotales[i]),cantidades[i],path);
 	}
 
-	char* bloquesActualizados = buscarBloquesUsados(path);
+	//char* bloquesActualizados = buscarBloquesUsados(path);
 
 	decrementarTamanioFile(path,cantidad);
 

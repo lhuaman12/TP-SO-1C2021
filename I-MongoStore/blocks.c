@@ -42,11 +42,13 @@ void copiarAMemoria()
 {
 
 	int posicion = 0;
-	//char* bloqueVacio = malloc(BLOCK_SIZE);
 
 	char* bloqueVacio = crearBufferInicial(BLOCK_SIZE);
 
-	char buffer[BLOCK_SIZE];
+	//log_warning(log_IMONGO,"ESBLOQUE: %s",bloqueVacio);
+
+	char* buffer = malloc(BLOCK_SIZE);
+
 	FILE* metadata = fopen(RUTA_BLOCKS,"r+");
 
 	for(int i = 0; i<BLOCKS;i++)
@@ -54,9 +56,11 @@ void copiarAMemoria()
 		posicion = calcularPosicionBloque(i);
 		fseek(metadata,posicion,SEEK_SET);
 		fread(buffer,BLOCK_SIZE,1,metadata);
+		buffer = string_substring_until(buffer,BLOCK_SIZE);
 
 		if(strcmp(buffer,bloqueVacio)!=0)
 		{
+		//	log_warning(log_IMONGO,"ESBUFFER: %s",buffer);
 			strcpy(buffer,limpiarContenido(buffer));
 			log_debug(log_IMONGO,"<> Se cargo en memoria %d EL %s",i,buffer);
 			cargarBLoqueEnMemoria(buffer,i);
@@ -90,6 +94,7 @@ void copiarADisco()
 		{
 			fwrite(buffer,BLOCK_SIZE,1,bloques);
 			fwrite("-",1,1,bloques);
+
 		}
 	free(buffer);
 	fclose(bloques);

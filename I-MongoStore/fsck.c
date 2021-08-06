@@ -30,12 +30,12 @@ char* obtenerPosicion()
 
 void iniciarFSCK()
 {
-	repararSuperBloque();
-	repararBitmap();
+	//repararSuperBloque();
+	//repararBitmap();
 
 	/////////////////////////
 
-	repararFiles();
+	//repararFiles();
 }
 
 
@@ -53,6 +53,8 @@ void repararFiles()
 					repararSize("Oxigeno");
 					repararBlockCount("Oxigeno");
 					repararMD5("Oxigeno",'O');
+
+
 				}
 			free(filePath);
 			} else if(i==1)
@@ -148,8 +150,7 @@ int analizarBloque(int posicion){
 
 }
 
-//PROBAR RepararSize
-
+//FUNCIONA
 void repararSize(char* recurso)
 {
 
@@ -164,13 +165,17 @@ void repararSize(char* recurso)
 
 	char* bloquesEnUso = buscarBloquesUsados(filePath);
 
+	log_info(log_IMONGO,"BLOQUES: %s",bloquesEnUso);
+
 	char** bloquesTotales = string_split(bloquesEnUso,",");
 
 	int tamanio = contarComas(bloquesEnUso);
 
+
 	for(int i = 0; i<tamanio; i++)
 	{
 		contenidoActual = buscarSizeContenido(bloquesTotales[i]);
+		log_info(log_IMONGO,"Contenido: %d",contenidoActual);
 		contenidoTotal += contenidoActual;
 	}
 
@@ -178,7 +183,7 @@ void repararSize(char* recurso)
 
 	t_config* metadata = config_create(filePath);
 
-	config_set_value(metadata,"SIZE",string_itoa(contenidoActual));
+	config_set_value(metadata,"SIZE",string_itoa(contenidoTotal));
 
 	config_save(metadata);
 
@@ -248,8 +253,6 @@ void restaurarRecurso(char* recurso, char caracter)
 	eliminarFile(filePath);
 
 	log_info(log_IMONGO,"Elimino el file");
-
-	sleep(3);
 
 	generarRecurso(recurso,caracter,tamanioContenido-1);
 

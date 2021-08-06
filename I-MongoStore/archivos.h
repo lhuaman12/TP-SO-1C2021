@@ -31,7 +31,7 @@ void eliminarFile(char* path);
 void decrementarTamanioFile(char* path,int tamanio);
 void crearMD5(char* filePath,char* palabra);
 char* obtenerMD5(char* path);
-
+int obtenerSizeFile(char* path);
 
 
 #endif /* SRC_ARCHIVOS_H_ */

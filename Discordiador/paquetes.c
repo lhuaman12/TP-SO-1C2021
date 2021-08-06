@@ -23,6 +23,15 @@ t_patota_envio* crear_patota(char* id,char* tareas,char* trips)
 
 	return nuevaPatota;
 }
+
+void enviar_expulsar_tripulante(int socket,int tid)
+{
+
+	char* id = string_itoa(tid);
+	enviar_mensaje_por_codigo(id,EXPULSAR_TRIPULANTES,socket);
+}
+
+
 void enviar_cambio_estado(int socket,char* estado, int tid)
 {
 	char* mensaje = malloc(strlen(estado)+1);
