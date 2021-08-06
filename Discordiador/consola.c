@@ -302,13 +302,6 @@ void resolver_tarea_cpu(t_tripulante* tripulante,int rafagas_de_cpu){
 	for (cont_rafagas=0;cont_rafagas<rafagas_de_cpu && !tripulante->es_elegido_para_sabotaje; cont_rafagas++){ //TODO: no importa si tiene tarea en curso su tarea tiene que realizarlo de nuevo si hay sabotaje
 		sem_wait(&tripulante->semaforo_tripulante);
 
-		pthread_mutex_lock(&tripulante->mutex);
-		tripulante_es_expulsado=tripulante->es_expulsado;
-		pthread_mutex_unlock(&tripulante->mutex);
-		if (tripulante_es_expulsado)
-		{
-			salir_expulsado(tripulante);
-		}
 		if(cont_rafagas==0)
 		{
 			log_info(discordiador_logger,"Tripulante:%d Comenzo tarea %s",tripulante->TID,tripulante->tarea_actual);
@@ -316,6 +309,14 @@ void resolver_tarea_cpu(t_tripulante* tripulante,int rafagas_de_cpu){
 		}
 		if(cont_rafagas==rafagas_de_cpu-1)
 			log_info(discordiador_logger,"Tripulante:%d Termino tarea %s con %d rafagas de CPU",tripulante->TID,tripulante->tarea_actual,cont_rafagas+1);
+
+		pthread_mutex_lock(&tripulante->mutex);
+		tripulante_es_expulsado=tripulante->es_expulsado;
+		pthread_mutex_unlock(&tripulante->mutex);
+			if (tripulante_es_expulsado){
+				salir_expulsado(tripulante);
+			}
+
 		sem_post(&tripulante->esperar_ejecucion_tripulante);
 
 	}
@@ -337,17 +338,19 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 
 			sem_wait(&tripulante->semaforo_tripulante);
 
-			pthread_mutex_lock(&tripulante->mutex);
-			fue_expulsado=tripulante->es_expulsado;
-			pthread_mutex_unlock(&tripulante->mutex);
-			if (fue_expulsado)
-				salir_expulsado(tripulante);
 			tripulante->posicion->x++;
 			mover_en_x--;
 			ciclos_de_reloj++;
 			enviar_movimiento(tripulante);
 			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
+
+			pthread_mutex_lock(&tripulante->mutex); //TODO: un ayudante dijo que primero hace lo que tiene que hacer en el ciclo y luego es expulsado
+			fue_expulsado=tripulante->es_expulsado;
+			pthread_mutex_unlock(&tripulante->mutex);
+				if (fue_expulsado)
+					salir_expulsado(tripulante);
+
 			sem_post(&(tripulante->esperar_ejecucion_tripulante));
 		}
 
@@ -362,10 +365,14 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			tripulante->posicion->y++;
 			mover_en_y--;
 			ciclos_de_reloj++;
-			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
 			enviar_movimiento(tripulante);
 			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
+			pthread_mutex_lock(&tripulante->mutex);
+			fue_expulsado=tripulante->es_expulsado;
+			pthread_mutex_unlock(&tripulante->mutex);
+				if (fue_expulsado)
+					salir_expulsado(tripulante);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
 
@@ -380,10 +387,14 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			tripulante->posicion->x--;
 			mover_en_x++;
 			ciclos_de_reloj++;
-			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
 			enviar_movimiento(tripulante);
 			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
+			pthread_mutex_lock(&tripulante->mutex);
+			fue_expulsado=tripulante->es_expulsado;
+			pthread_mutex_unlock(&tripulante->mutex);
+				if (fue_expulsado)
+					salir_expulsado(tripulante);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 
 		}
@@ -397,10 +408,14 @@ void desplazar_tripulante(t_tripulante* tripulante,t_posicion* posicion){
 			tripulante->posicion->y--;
 			mover_en_y++;
 			ciclos_de_reloj++;
-			//avisar_desplazamiento(tripulante); // avisar a ramhq y mongo
 			enviar_movimiento(tripulante);
 			enviar_actualizar_pos(tripulante);
 			log_info(discordiador_logger,"Tripulante:%d desplazado a X:%d Y:%d",tripulante->TID,tripulante->posicion->x,tripulante->posicion->y);
+			pthread_mutex_lock(&tripulante->mutex);
+			fue_expulsado=tripulante->es_expulsado;
+			pthread_mutex_unlock(&tripulante->mutex);
+				if (fue_expulsado)
+					salir_expulsado(tripulante);
 			sem_post(&tripulante->esperar_ejecucion_tripulante);
 		}
 
@@ -464,30 +479,30 @@ char** normalizar_tarea(char* tarea){
 }
 
 void resolver_tarea_io(t_tripulante* tripulante,int rafaga_de_io){
-	pthread_mutex_lock(&tripulante->mutex);
-	int tripulante_es_expulsado = tripulante->es_expulsado;
-	pthread_mutex_unlock(&tripulante->mutex);
+	int tripulante_es_expulsado;
 	sem_wait(&tripulante->semaforo_tripulante);
-	if (tripulante_es_expulsado)
-		salir_expulsado(tripulante);
 	tripulante->pide_bloqueo=1;
 	tripulante->rafaga_io_restantes=rafaga_de_io;
 	log_info(discordiador_logger,"Tripulante:%d pide acceso a I/O",tripulante->TID);  // 1 ciclo de cpu para pedir bloqueo
 	enviar_IO(tripulante->socket_imongo,tripulante->tarea_normalizada[0],tripulante->tarea_normalizada[1]);
+	pthread_mutex_lock(&tripulante->mutex);
+	tripulante_es_expulsado = tripulante->es_expulsado;
+	pthread_mutex_unlock(&tripulante->mutex);
+	if (tripulante_es_expulsado)
+		salir_expulsado(tripulante);
 
-	//TODO: notificar ram y mongo  //notificar_estado_ram(tripulante);
 	sem_post(&tripulante->esperar_ejecucion_tripulante);
 
 	while(tripulante->rafaga_io_restantes!=0){
 		sem_wait(&tripulante->semaforo_tripulante);
+		if(tripulante->rafaga_io_restantes==rafaga_de_io)
+			log_info(discordiador_logger,"Tripulante:%d empieza a consumir ciclos de IO",tripulante->TID);
+		tripulante->rafaga_io_restantes--;
 		pthread_mutex_lock(&tripulante->mutex);
 		tripulante_es_expulsado=tripulante->es_expulsado;
 		pthread_mutex_unlock(&tripulante->mutex);
 		if (tripulante_es_expulsado)
 			salir_expulsado(tripulante);
-		if(tripulante->rafaga_io_restantes==rafaga_de_io)
-			log_info(discordiador_logger,"Tripulante:%d empieza a consumir ciclos de IO",tripulante->TID);
-		tripulante->rafaga_io_restantes--;
 		sem_post(&tripulante->esperar_ejecucion_tripulante);
 	}
 	tripulante->pide_bloqueo=0;
@@ -762,6 +777,7 @@ void expulsar_tripulante(char* tid_tripulante){
 					pthread_mutex_lock(&patota_aux->tripulantes[j]->mutex);
 					patota_aux->tripulantes[j]->es_expulsado=1;
 					pthread_mutex_unlock(&patota_aux->tripulantes[j]->mutex);
+
 					tripulante_encontrado=1;
 					break;
 				}
@@ -985,9 +1001,9 @@ void desplazar_tripulante_a_sabotaje(t_tripulante_sabotaje* tripulante_sabotaje)
 void salir_expulsado(t_tripulante* tripulante){
 	tripulante->estado=EXIT;
 	tripulante->no_tiene_tareas=1;
-	// TODO: informar EXIT a RAM
+	// TODO: mensaje a ram de expulsado
 	log_info(discordiador_logger,"El tripulante %d fue expulsado",tripulante->TID);
-	free(tripulante->posicion);
+	//free(tripulante->posicion);
 	sem_post(&tripulante->esperar_ejecucion_tripulante);
 
 	pthread_exit(NULL);

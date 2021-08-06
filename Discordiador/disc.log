@@ -2777,3 +2777,69 @@
 [INFO] 01:05:03:689 Discordiador logger/(10150:10168): Ciclo de cpu:10
 [INFO] 01:05:03:690 Discordiador logger/(10150:10161): Tripulante:2 desplazado a X:1 Y:4
 [INFO] 01:05:03:691 Discordiador logger/(10150:10160): Tripulante:1 desplazado a X:1 Y:2
+[INFO] 03:37:33:591 Discordiador logger/(6264:6264): Inicio de logs de discordiador..
+[INFO] 03:37:33:736 Discordiador logger/(6264:6264): Seteando las configuraciones..
+[INFO] 03:37:40:138 Discordiador logger/(6264:6282): Creado tripulante 1 con posicion en x:0 y:0
+[INFO] 03:37:40:145 Discordiador logger/(6264:6285): Solicito nueva tarea
+[INFO] 03:37:40:155 Discordiador logger/(6264:6282): Creado tripulante 2 con posicion en x:0 y:0
+[INFO] 03:37:40:162 Discordiador logger/(6264:6287): Solicito nueva tarea
+[INFO] 03:37:40:164 Discordiador logger/(6264:6282): Creado tripulante 3 con posicion en x:0 y:0
+[INFO] 03:37:40:168 Discordiador logger/(6264:6282): Creada patota 1
+[INFO] 03:37:40:171 Discordiador logger/(6264:6289): Solicito nueva tarea
+[INFO] 03:37:44:159 Discordiador logger/(6264:6291): Iniciado planificacion FIFO..
+[INFO] 03:37:44:176 Discordiador logger/(6264:6291): Ciclo de cpu:1
+[INFO] 03:37:44:188 Discordiador logger/(6264:6291): Tripulante 1 pasando de NEW a READY
+[INFO] 03:37:44:192 Discordiador logger/(6264:6291): Tripulante 2 pasando de NEW a READY
+[INFO] 03:37:44:197 Discordiador logger/(6264:6291): Tripulante 3 pasando de NEW a READY
+[INFO] 03:37:44:208 Discordiador logger/(6264:6291): Tripulante 1 pasando de READY a EXEC
+[INFO] 03:37:44:211 Discordiador logger/(6264:6291): Tripulante 2 pasando de READY a EXEC
+[INFO] 03:37:44:248 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:1 Y:0
+[INFO] 03:37:44:258 Discordiador logger/(6264:6287): Tripulante:2 desplazado a X:1 Y:0
+[INFO] 03:37:45:264 Discordiador logger/(6264:6291): Ciclo de cpu:2
+[INFO] 03:37:45:272 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:1 Y:1
+[INFO] 03:37:45:274 Discordiador logger/(6264:6287): Tripulante:2 desplazado a X:1 Y:1
+[INFO] 03:37:46:279 Discordiador logger/(6264:6291): Ciclo de cpu:3
+[INFO] 03:37:46:281 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:2 Y:1
+[INFO] 03:37:46:285 Discordiador logger/(6264:6287): Tripulante:2 desplazado a X:2 Y:1
+[INFO] 03:37:47:286 Discordiador logger/(6264:6291): Ciclo de cpu:4
+[INFO] 03:37:47:287 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:2 Y:2
+[INFO] 03:37:47:291 Discordiador logger/(6264:6287): Tripulante:2 desplazado a X:2 Y:2
+[INFO] 03:37:48:292 Discordiador logger/(6264:6291): Ciclo de cpu:5
+[INFO] 03:37:48:294 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:3 Y:2
+[INFO] 03:37:48:296 Discordiador logger/(6264:6287): Tripulante:2 desplazado a X:3 Y:2
+[INFO] 03:37:48:297 Discordiador logger/(6264:6287): El tripulante 2 fue expulsado
+[INFO] 03:37:49:301 Discordiador logger/(6264:6291): Ciclo de cpu:6
+[INFO] 03:37:49:322 Discordiador logger/(6264:6291): Tripulante 3 pasando de READY a EXEC
+[INFO] 03:37:49:326 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:4 Y:2
+[INFO] 03:37:49:329 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:1 Y:0
+[INFO] 03:37:50:332 Discordiador logger/(6264:6291): Ciclo de cpu:7
+[INFO] 03:37:50:335 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:5 Y:2
+[INFO] 03:37:50:339 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:1 Y:1
+[INFO] 03:37:51:341 Discordiador logger/(6264:6291): Ciclo de cpu:8
+[INFO] 03:37:51:342 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:6 Y:2
+[INFO] 03:37:51:346 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:2 Y:1
+[INFO] 03:37:52:347 Discordiador logger/(6264:6291): Ciclo de cpu:9
+[INFO] 03:37:52:348 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:7 Y:2
+[INFO] 03:37:52:354 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:2 Y:2
+[INFO] 03:37:53:357 Discordiador logger/(6264:6291): Ciclo de cpu:10
+[INFO] 03:37:53:358 Discordiador logger/(6264:6285): Tripulante:1 Comenzo tarea ARREGLAR_REACTOR;7;2;5
+[INFO] 03:37:53:362 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:3 Y:2
+[INFO] 03:37:54:368 Discordiador logger/(6264:6291): Ciclo de cpu:11
+[INFO] 03:37:54:370 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:4 Y:2
+[INFO] 03:37:55:374 Discordiador logger/(6264:6291): Ciclo de cpu:12
+[INFO] 03:37:55:375 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:5 Y:2
+[INFO] 03:37:56:378 Discordiador logger/(6264:6291): Ciclo de cpu:13
+[INFO] 03:37:56:380 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:6 Y:2
+[INFO] 03:37:57:383 Discordiador logger/(6264:6291): Ciclo de cpu:14
+[INFO] 03:37:57:384 Discordiador logger/(6264:6285): Tripulante:1 Termino tarea ARREGLAR_REACTOR;7;2;5 con 5 rafagas de CPU
+[INFO] 03:37:57:386 Discordiador logger/(6264:6289): Tripulante:3 desplazado a X:7 Y:2
+[INFO] 03:37:57:392 Discordiador logger/(6264:6285): Solicito nueva tarea
+[INFO] 03:37:58:388 Discordiador logger/(6264:6291): Ciclo de cpu:15
+[INFO] 03:37:58:390 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:7 Y:3
+[INFO] 03:37:58:393 Discordiador logger/(6264:6289): Tripulante:3 Comenzo tarea ARREGLAR_REACTOR;7;2;5
+[INFO] 03:37:59:394 Discordiador logger/(6264:6291): Ciclo de cpu:16
+[INFO] 03:37:59:404 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:7 Y:4
+[INFO] 03:38:00:407 Discordiador logger/(6264:6291): Ciclo de cpu:17
+[INFO] 03:38:00:408 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:7 Y:5
+[INFO] 03:38:01:412 Discordiador logger/(6264:6291): Ciclo de cpu:18
+[INFO] 03:38:01:413 Discordiador logger/(6264:6285): Tripulante:1 desplazado a X:7 Y:6
