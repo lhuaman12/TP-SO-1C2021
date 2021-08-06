@@ -177,6 +177,7 @@ int p_iniciarPatota(int cantTripus, int idPatota, char* tareas, int tamanioTotal
 	if(puedoGuardarPaginacion(paginasNecesarias)){		//SI HAY LUGAR EN MP O MV
 
         //PRIMERO GUARDAMOS LAS TAREAS
+
         t_list* paginasTareas = guardarTareasPaginacion(tareas);
 
         void mostrarId(t_pagina* pag)

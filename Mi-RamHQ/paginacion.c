@@ -98,6 +98,8 @@ int puedoGuardarPaginacion(int paginasNecesarias){
     int cantFramesLibresPpal = memoriaDisponiblePag(MEM_PPAL);
     int cantFramesLibresVirtual = memoriaDisponiblePag(MEM_VIRT);
 
+    log_info(logger,"SON %d PAGINAS",cantFramesLibresPpal);
+
     if((cantFramesLibresPpal + cantFramesLibresVirtual) >= paginasNecesarias){
         return 1;
     }else{

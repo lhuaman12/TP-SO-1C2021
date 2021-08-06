@@ -11,9 +11,9 @@ int main(void){
 
 	cargar_configuracion();
 
-	logger = log_create("miRam.log", "Mi-RAM",0, LOG_LEVEL_DEBUG);
+	logger = log_create("miRam.log", "Mi-RAM",1, LOG_LEVEL_DEBUG);
 
-	//signal(SIGUSR1, &signalCompactacion);
+	signal(SIGUSR2, &signalCompactacion);
 	signal(SIGUSR1, &signalDump);
 
 	int feedback = iniciarMemoria();

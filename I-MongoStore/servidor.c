@@ -84,7 +84,7 @@ void iniciar_filesystem()
 	}else
 	{
 		leer_super_bloque();
-		init_directorios();
+		//init_directorios();
 		init_semaforos();
 		init_bitmap();
 		init_bloques_usado();
@@ -190,8 +190,14 @@ void* atender_tripulante(Tripulante* trip)
 
 void init_directorios()
 {
+
+	char* ruta = malloc(100);
+	strcpy(ruta,"");
+	string_append_with_format(&ruta,"rm -r %s",RUTA_FILES);
+	system(ruta);
 	mkdir(RUTA_FILES,S_IRWXU);
 	mkdir(RUTA_BITACORA,S_IRWXU);
+	free(ruta);
 }
 
 
