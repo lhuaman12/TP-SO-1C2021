@@ -90,7 +90,7 @@ void iniciarPatota(int socket_cliente){
 		tareas = string_substring_until(tareas,strlen(tareas)-1);
 	}
 
-	printf("TAREAS: %s",tareas);
+	//printf("TAREAS: %s",tareas);
 
 	int tamanioTotal = 21 * cantidadDeTripulantes + (strlen(tareas)+1) + 8;
 
@@ -407,7 +407,7 @@ void actualizarTripulante(t_tcb* tcb){
 char* buscarTareaEsquema(t_tcb* tcb,int pid){
 	char* tarea;
     if(elegirEsquema() == SEGMENTACION){
-		printf("Segmentacion");
+		//printf("Segmentacion");
     	tarea = s_enviarOp(tcb);
     }else if(elegirEsquema() == PAGINACION){
 		tarea = p_enviarOp(tcb, pid);

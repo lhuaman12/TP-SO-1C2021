@@ -12,7 +12,7 @@ void generarOxigeno(int cantidad)
 }
 void consumirOxigeno(int cantidad)
 {
-	consumirRecurso("Oxigeno",cantidad);
+	consumirRecurso("Oxigeno",'O',cantidad);
 }
 void generarComida(int cantidad)
 {
@@ -20,7 +20,7 @@ void generarComida(int cantidad)
 }
 void consumirComida(int cantidad)
 {
-	consumirRecurso("Comida",cantidad);
+	consumirRecurso("Comida",'C',cantidad);
 }
 void generarBasura(int cantidad)
 {
@@ -28,7 +28,7 @@ void generarBasura(int cantidad)
 }
 void consumirBasura(int cantidad)
 {
-	consumirRecurso("Basura",cantidad);
+	consumirRecurso("Basura",'B',cantidad);
 }
 void registrarMovimiento(int id,char* posX_Final,char* posY_Final)
 {
@@ -291,7 +291,7 @@ void guardarContenidoBitacora(char* path, char* contenido)
 	agregarTamanioFile(path,strlen(contenido));
 	free(bloquesGuardados);
 }
-
+/*
 void descartarBasura()
 {
 	char* path = malloc(70);
@@ -310,7 +310,34 @@ void descartarBasura()
 
 	free(path);
 }
+*/
+void descartarBasura()
+{
+	char* path = malloc(70);
+	strcpy(path,RUTA_FILES);
+	string_append_with_format(&path,"Basura.ims");
 
+	if(existeArchivo(path))
+	{
+		char* bloquesEnUso = buscarBloquesUsados(path);
+		char** bloquesTotales = string_split(bloquesEnUso,",");
+		int cantidad = contarComas(bloquesEnUso);
+
+		for(int i = 0; i<cantidad;i++)
+		{
+			borrarContenido(bloquesTotales[i]);
+		}
+
+		eliminarFile(path);
+	}
+	else
+	{
+		log_warning(log_IMONGO,"NO HAY BASURA");
+	}
+
+	free(path);
+}
+/*
 void consumirRecurso(char* recurso,int cantidad)
 {
 	char* path = malloc(70);
@@ -344,6 +371,32 @@ void consumirRecurso(char* recurso,int cantidad)
 	}
 
 	free(path);
+
+}
+*/
+void consumirRecurso(char* recurso,char caracter ,int cantidad)
+{
+	char* path = malloc(70);
+	strcpy(path,RUTA_FILES);
+	string_append_with_format(&path,"%s.ims",recurso);
+
+	int tamanioFile = obtenerSizeFile(path);
+
+	tamanioFile -= cantidad;
+
+	char* bloquesEnUso = buscarBloquesUsados(path);
+	char** bloquesTotales = string_split(bloquesEnUso,",");
+	int tamanio = contarComas(bloquesEnUso);
+
+	for(int i = 0; i<tamanio;i++)
+	{
+		borrarContenido(bloquesTotales[i]);
+	}
+		eliminarFile(path);
+
+	free(path);
+
+	generarRecurso(recurso,caracter,tamanioFile-1);
 
 }
 

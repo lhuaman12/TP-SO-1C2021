@@ -3929,3 +3929,450 @@
 [INFO] 04:39:46:424 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 6|0
 [INFO] 04:39:47:426 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 7|0
 [INFO] 04:39:48:427 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 8|0
+[INFO] 04:44:20:098 Mi-RAM/(14076:14076): RAM: 8192
+[INFO] 04:44:20:099 Mi-RAM/(14076:14076): <> SERVIDOR LISTO....
+[INFO] 04:44:35:053 Mi-RAM/(14076:14078): <>START: Recibir patota
+[INFO] 04:44:35:053 Mi-RAM/(14076:14078): <>END: Recibir patota
+[INFO] 04:44:35:054 Mi-RAM/(14076:14078): Iniciando patota 1 con 5 tripulantes que pesa 139...
+[INFO] 04:44:35:054 Mi-RAM/(14076:14078): Hay 8192 espacio libre, quiero guardar 139
+[INFO] 04:44:35:054 Mi-RAM/(14076:14078): Guarde las tareas EMPALMANDO_CABLES;8;0;600 en el segmento 0
+[INFO] 04:44:35:054 Mi-RAM/(14076:14078): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 04:44:35:054 Mi-RAM/(14076:14078): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:44:35:055 Mi-RAM/(14076:14078): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 04:44:35:055 Mi-RAM/(14076:14078): Guarde la tcb de 1 en memoria
+[INFO] 04:44:35:055 Mi-RAM/(14076:14078): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 04:44:35:055 Mi-RAM/(14076:14078): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 04:44:35:055 Mi-RAM/(14076:14078): Guarde la tcb de 2 en memoria
+[INFO] 04:44:35:055 Mi-RAM/(14076:14078): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Guarde la tcb de 3 en memoria
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Iniciando tripulante 4 de la patota 1 en la posicion 0|0
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Guarde la tcb del tripulante 4 en el segmento 5
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Guarde la tcb de 4 en memoria
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Iniciando tripulante 5 de la patota 1 en la posicion 0|0
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Guarde la tcb del tripulante 5 en el segmento 6
+[INFO] 04:44:35:056 Mi-RAM/(14076:14078): Guarde la tcb de 5 en memoria
+[INFO] 04:44:35:057 Mi-RAM/(14076:14078): Envio ok
+[INFO] 04:44:46:144 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 1|0
+[INFO] 04:44:47:114 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 2|0
+[INFO] 04:44:48:115 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 3|0
+[INFO] 04:44:49:125 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 4|0
+[INFO] 04:44:50:126 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 5|0
+[INFO] 04:44:51:128 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 6|0
+[INFO] 04:44:52:131 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 7|0
+[INFO] 04:44:53:132 Mi-RAM/(14076:14094): El tripulante 1 se movio a la posicion 8|0
+[INFO] 04:45:06:585 Mi-RAM/(14076:14092): Recibi la señal de hacer Dump, creando dump..
+[INFO] 04:45:06:585 Mi-RAM/(14076:14092): Creo un archivo con el nombre Dump_07-08-21_04-45-06.dmp
+
+[INFO] 04:45:37:214 Mi-RAM/(14076:14092): Recibi la señial de compactar, compactando...
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 1 ahora tiene base 0x83af6c0
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 0 ahora tiene base 0x83af6c8
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 2 ahora tiene base 0x83af6e2
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 3 ahora tiene base 0x83af6f7
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 4 ahora tiene base 0x83af70c
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 5 ahora tiene base 0x83af721
+[INFO] 04:45:37:215 Mi-RAM/(14076:14092): El segmento 6 ahora tiene base 0x83af736
+[INFO] 04:45:49:569 Mi-RAM/(14076:14093): Recibi la señal de hacer Dump, creando dump..
+[INFO] 04:45:49:569 Mi-RAM/(14076:14093): Creo un archivo con el nombre Dump_07-08-21_04-45-49.dmp
+
+[INFO] 04:46:22:280 Mi-RAM/(14076:14091): Recibi la señial de compactar, compactando...
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 1 ahora tiene base 0x83af6c0
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 0 ahora tiene base 0x83af6c8
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 2 ahora tiene base 0x83af6e2
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 3 ahora tiene base 0x83af6f7
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 4 ahora tiene base 0x83af70c
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 5 ahora tiene base 0x83af721
+[INFO] 04:46:22:281 Mi-RAM/(14076:14091): El segmento 6 ahora tiene base 0x83af736
+[INFO] 04:46:32:927 Mi-RAM/(14076:14091): Recibi la señal de hacer Dump, creando dump..
+[INFO] 04:46:32:927 Mi-RAM/(14076:14091): Creo un archivo con el nombre Dump_07-08-21_04-46-32.dmp
+
+[INFO] 04:47:08:287 Mi-RAM/(14076:14094): Se expulso el tripulante 1
+[INFO] 04:47:09:290 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 1|0
+[INFO] 04:47:10:292 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 2|0
+[INFO] 04:47:11:294 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 3|0
+[INFO] 04:47:12:295 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 4|0
+[INFO] 04:47:13:300 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 5|0
+[INFO] 04:47:14:303 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 6|0
+[INFO] 04:47:15:305 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 7|0
+[INFO] 04:47:16:308 Mi-RAM/(14076:14093): El tripulante 2 se movio a la posicion 8|0
+[INFO] 04:47:20:301 Mi-RAM/(14076:14092): Recibi la señial de compactar, compactando...
+[INFO] 04:47:20:302 Mi-RAM/(14076:14092): El segmento 1 ahora tiene base 0x83af6c0
+[INFO] 04:47:20:302 Mi-RAM/(14076:14092): El segmento 0 ahora tiene base 0x83af6c8
+[INFO] 04:47:20:302 Mi-RAM/(14076:14092): El segmento 3 ahora tiene base 0x83af6e2
+[INFO] 04:47:20:302 Mi-RAM/(14076:14092): El segmento 4 ahora tiene base 0x83af6f7
+[INFO] 04:47:20:302 Mi-RAM/(14076:14092): El segmento 5 ahora tiene base 0x83af70c
+[INFO] 04:47:20:302 Mi-RAM/(14076:14092): El segmento 6 ahora tiene base 0x83af721
+[INFO] 04:47:25:529 Mi-RAM/(14076:14091): Recibi la señal de hacer Dump, creando dump..
+[INFO] 04:47:25:529 Mi-RAM/(14076:14091): Creo un archivo con el nombre Dump_07-08-21_04-47-25.dmp
+
+[INFO] 06:12:10:932 Mi-RAM/(15583:15583): RAM: 8192
+[INFO] 06:12:10:986 Mi-RAM/(15583:15583): <> SERVIDOR LISTO....
+[INFO] 06:12:35:272 Mi-RAM/(15583:15585): <>START: Recibir patota
+[INFO] 06:12:35:272 Mi-RAM/(15583:15585): <>END: Recibir patota
+[INFO] 06:12:35:272 Mi-RAM/(15583:15585): Iniciando patota 1 con 3 tripulantes que pesa 309...
+[INFO] 06:12:35:272 Mi-RAM/(15583:15585): Hay 8192 espacio libre, quiero guardar 309
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde las tareas ARREGLAR_REACTOR;7;2;4,BARRER;7;7;4,GENERAR_OXIGENO 12;0;0;5,CAMINAR;2;2;1,GENERAR_COMIDA 12;3;4;5,COMER;5;5;5,CONSUMIR_COMIDA 10;5;5;5,TIRAR_TODO_AL_PISO;5;5;1,GENERAR_BASURA 30;5;5;1,BARRER;6;6;10,DESCARTAR_BASURA 0;6;6;1,SALUDAR;9;9;1 en el segmento 0
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la tcb de 1 en memoria
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la tcb de 2 en memoria
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Guarde la tcb de 3 en memoria
+[INFO] 06:12:35:273 Mi-RAM/(15583:15585): Envio ok
+[INFO] 06:13:17:264 Mi-RAM/(15583:15632): <>START: Recibir patota
+[INFO] 06:13:17:264 Mi-RAM/(15583:15632): <>END: Recibir patota
+[INFO] 06:13:17:264 Mi-RAM/(15583:15632): Iniciando patota 1 con 3 tripulantes que pesa 309...
+[INFO] 06:13:17:264 Mi-RAM/(15583:15632): Hay 7883 espacio libre, quiero guardar 309
+[INFO] 06:13:17:264 Mi-RAM/(15583:15632): Guarde las tareas ARREGLAR_REACTOR;7;2;4,BARRER;7;7;4,GENERAR_OXIGENO 12;0;0;5,CAMINAR;2;2;1,GENERAR_COMIDA 12;3;4;5,COMER;5;5;5,CONSUMIR_COMIDA 10;5;5;5,TIRAR_TODO_AL_PISO;5;5;1,GENERAR_BASURA 30;5;5;1,BARRER;6;6;10,DESCARTAR_BASURA 0;6;6;1,SALUDAR;9;9;1 en el segmento 5
+[INFO] 06:13:17:265 Mi-RAM/(15583:15632): Guarde la pcb de la patota 1 en el segmento 6
+[INFO] 06:13:17:265 Mi-RAM/(15583:15632): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:13:26:649 Mi-RAM/(15638:15638): RAM: 8192
+[INFO] 06:13:26:650 Mi-RAM/(15638:15638): <> SERVIDOR LISTO....
+[INFO] 06:13:41:399 Mi-RAM/(15644:15644): RAM: 8192
+[INFO] 06:13:41:401 Mi-RAM/(15644:15644): <> SERVIDOR LISTO....
+[INFO] 06:15:43:634 Mi-RAM/(15710:15710): RAM: 8192
+[INFO] 06:15:43:793 Mi-RAM/(15710:15710): <> SERVIDOR LISTO....
+[INFO] 06:15:56:057 Mi-RAM/(15710:15716): <>START: Recibir patota
+[INFO] 06:15:56:057 Mi-RAM/(15710:15716): <>END: Recibir patota
+[INFO] 06:15:56:057 Mi-RAM/(15710:15716): Iniciando patota 1 con 3 tripulantes que pesa 309...
+[INFO] 06:15:56:058 Mi-RAM/(15710:15716): Hay 8192 espacio libre, quiero guardar 309
+[INFO] 06:15:56:058 Mi-RAM/(15710:15716): Guarde las tareas ARREGLAR_REACTOR;7;2;4,BARRER;7;7;4,GENERAR_OXIGENO 12;0;0;5,CAMINAR;2;2;1,GENERAR_COMIDA 12;3;4;5,COMER;5;5;5,CONSUMIR_COMIDA 10;5;5;5,TIRAR_TODO_AL_PISO;5;5;1,GENERAR_BASURA 30;5;5;1,BARRER;6;6;10,DESCARTAR_BASURA 0;6;6;1,SALUDAR;9;9;1 en el segmento 0
+[INFO] 06:15:56:058 Mi-RAM/(15710:15716): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 06:15:56:058 Mi-RAM/(15710:15716): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:15:56:059 Mi-RAM/(15710:15716): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 06:15:56:059 Mi-RAM/(15710:15716): Guarde la tcb de 1 en memoria
+[INFO] 06:15:56:059 Mi-RAM/(15710:15716): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 06:15:56:059 Mi-RAM/(15710:15716): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 06:15:56:059 Mi-RAM/(15710:15716): Guarde la tcb de 2 en memoria
+[INFO] 06:15:56:059 Mi-RAM/(15710:15716): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 06:15:56:060 Mi-RAM/(15710:15716): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 06:15:56:060 Mi-RAM/(15710:15716): Guarde la tcb de 3 en memoria
+[INFO] 06:15:56:060 Mi-RAM/(15710:15716): Envio ok
+[INFO] 06:16:00:116 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 1|0
+[INFO] 06:16:01:081 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 1|0
+[INFO] 06:16:02:084 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 1|0
+[INFO] 06:16:03:085 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:16:04:088 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 1|1
+[INFO] 06:16:05:091 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 1|1
+[INFO] 06:16:06:094 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 2|1
+[INFO] 06:16:07:096 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 2|1
+[INFO] 06:16:08:098 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 2|1
+[INFO] 06:16:09:100 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:16:10:102 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 2|2
+[INFO] 06:16:11:104 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 2|2
+[INFO] 06:16:12:106 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 3|2
+[INFO] 06:16:13:107 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 3|2
+[INFO] 06:16:14:113 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 3|2
+[INFO] 06:16:15:114 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 4|2
+[INFO] 06:16:16:117 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 4|2
+[INFO] 06:16:17:118 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 4|2
+[INFO] 06:16:18:121 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 5|2
+[INFO] 06:16:19:122 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 5|2
+[INFO] 06:16:20:125 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 5|2
+[INFO] 06:16:21:129 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 6|2
+[INFO] 06:16:22:131 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 6|2
+[INFO] 06:16:23:132 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 6|2
+[INFO] 06:16:24:134 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|2
+[INFO] 06:16:25:136 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|2
+[INFO] 06:16:26:139 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|2
+[INFO] 06:16:39:161 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|3
+[INFO] 06:16:40:164 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|3
+[INFO] 06:16:41:167 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|3
+[INFO] 06:16:42:170 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|4
+[INFO] 06:16:43:173 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|4
+[INFO] 06:16:44:174 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|4
+[INFO] 06:16:45:178 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|5
+[INFO] 06:16:46:181 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|5
+[INFO] 06:16:47:183 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|5
+[INFO] 06:16:48:186 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|6
+[INFO] 06:16:49:188 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|6
+[INFO] 06:16:50:190 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|6
+[INFO] 06:16:51:192 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|7
+[INFO] 06:16:52:194 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|7
+[INFO] 06:16:53:196 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|7
+[INFO] 06:17:06:223 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 6|7
+[INFO] 06:17:07:225 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 6|7
+[INFO] 06:17:08:228 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 6|7
+[INFO] 06:17:09:232 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 6|6
+[INFO] 06:17:10:234 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 6|6
+[INFO] 06:17:11:236 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 6|6
+[INFO] 06:17:12:238 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 5|6
+[INFO] 06:17:13:241 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 5|6
+[INFO] 06:17:14:243 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 5|6
+[INFO] 06:17:15:246 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 5|5
+[INFO] 06:17:16:248 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 5|5
+[INFO] 06:17:17:250 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 5|5
+[INFO] 06:17:18:253 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 4|5
+[INFO] 06:17:19:255 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 4|5
+[INFO] 06:17:20:258 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 4|5
+[INFO] 06:17:21:261 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 4|4
+[INFO] 06:17:22:262 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 4|4
+[INFO] 06:17:23:265 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 4|4
+[INFO] 06:17:24:266 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 3|4
+[INFO] 06:17:25:267 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 3|4
+[INFO] 06:17:26:271 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 3|4
+[INFO] 06:17:27:275 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 3|3
+[INFO] 06:17:28:278 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 3|3
+[INFO] 06:17:29:280 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 3|3
+[INFO] 06:17:30:282 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 2|3
+[INFO] 06:17:31:285 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 2|3
+[INFO] 06:17:32:286 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 2|3
+[INFO] 06:17:33:287 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:17:34:290 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 2|2
+[INFO] 06:17:35:291 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 2|2
+[INFO] 06:17:36:294 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 1|2
+[INFO] 06:17:37:295 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 1|2
+[INFO] 06:17:38:298 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 1|2
+[INFO] 06:17:39:301 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:17:40:303 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 1|1
+[INFO] 06:17:41:305 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 1|1
+[INFO] 06:17:42:307 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 0|1
+[INFO] 06:17:43:311 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 0|1
+[INFO] 06:17:44:312 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 0|1
+[INFO] 06:17:45:314 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 0|0
+[INFO] 06:17:46:316 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 0|0
+[INFO] 06:17:47:318 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 0|0
+[INFO] 06:18:06:348 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 1|0
+[INFO] 06:18:07:350 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 1|0
+[INFO] 06:18:08:353 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 1|0
+[INFO] 06:18:09:355 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:18:10:357 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 1|1
+[INFO] 06:18:11:359 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 1|1
+[INFO] 06:18:12:361 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 2|1
+[INFO] 06:18:13:364 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 2|1
+[INFO] 06:18:14:367 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 2|1
+[INFO] 06:18:15:369 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:18:16:372 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 2|2
+[INFO] 06:18:17:374 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 2|2
+[INFO] 06:18:21:386 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 3|2
+[INFO] 06:18:22:389 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 3|2
+[INFO] 06:18:23:393 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 3|2
+[INFO] 06:18:24:396 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 3|3
+[INFO] 06:18:25:398 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 3|3
+[INFO] 06:18:26:401 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 3|3
+[INFO] 06:18:27:402 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 3|4
+[INFO] 06:18:28:404 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 3|4
+[INFO] 06:18:29:407 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 3|4
+[INFO] 06:18:48:437 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 4|4
+[INFO] 06:18:49:440 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 4|4
+[INFO] 06:18:50:444 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 4|4
+[INFO] 06:18:51:446 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 4|5
+[INFO] 06:18:52:449 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 4|5
+[INFO] 06:18:53:452 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 4|5
+[INFO] 06:18:54:453 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 5|5
+[INFO] 06:18:55:455 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 5|5
+[INFO] 06:18:56:457 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 5|5
+[INFO] 06:19:39:535 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 6|5
+[INFO] 06:19:40:538 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 6|5
+[INFO] 06:19:41:540 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 6|5
+[INFO] 06:19:42:542 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 6|6
+[INFO] 06:19:43:544 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 6|6
+[INFO] 06:19:44:546 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 6|6
+[INFO] 06:20:21:599 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|6
+[INFO] 06:20:22:603 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|6
+[INFO] 06:20:23:606 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|6
+[INFO] 06:20:24:607 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 7|7
+[INFO] 06:20:25:609 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 7|7
+[INFO] 06:20:26:612 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 7|7
+[INFO] 06:20:27:615 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 8|7
+[INFO] 06:20:28:618 Mi-RAM/(15710:15724): El tripulante 2 se movio a la posicion 8|7
+[INFO] 06:20:29:620 Mi-RAM/(15710:15723): El tripulante 3 se movio a la posicion 8|7
+[INFO] 06:20:30:623 Mi-RAM/(15710:15725): El tripulante 1 se movio a la posicion 8|8
+[INFO] 06:26:19:327 Mi-RAM/(16066:16066): RAM: 8192
+[INFO] 06:26:19:356 Mi-RAM/(16066:16066): <> SERVIDOR LISTO....
+[INFO] 06:26:27:958 Mi-RAM/(16066:16068): <>START: Recibir patota
+[INFO] 06:26:27:958 Mi-RAM/(16066:16068): <>END: Recibir patota
+[INFO] 06:26:27:958 Mi-RAM/(16066:16068): Iniciando patota 1 con 4 tripulantes que pesa 153...
+[INFO] 06:26:27:958 Mi-RAM/(16066:16068): Hay 8192 espacio libre, quiero guardar 153
+[INFO] 06:26:27:958 Mi-RAM/(16066:16068): Guarde las tareas GENERAR_COMIDA 12;3;4;5,COMER;5;5;5,CONSUMIR_COMIDA 10;5;5;5 en el segmento 0
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la tcb de 1 en memoria
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la tcb de 2 en memoria
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Guarde la tcb de 3 en memoria
+[INFO] 06:26:27:959 Mi-RAM/(16066:16068): Iniciando tripulante 4 de la patota 1 en la posicion 0|0
+[INFO] 06:26:27:960 Mi-RAM/(16066:16068): Guarde la tcb del tripulante 4 en el segmento 5
+[INFO] 06:26:27:960 Mi-RAM/(16066:16068): Guarde la tcb de 4 en memoria
+[INFO] 06:26:27:961 Mi-RAM/(16066:16068): Envio ok
+[INFO] 06:26:32:480 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 1|0
+[INFO] 06:26:33:445 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 1|0
+[INFO] 06:26:34:447 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 1|0
+[INFO] 06:26:35:449 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 1|0
+[INFO] 06:26:36:451 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:26:37:453 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 1|1
+[INFO] 06:26:38:455 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 1|1
+[INFO] 06:26:39:458 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 1|1
+[INFO] 06:26:40:461 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 2|1
+[INFO] 06:26:41:464 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 2|1
+[INFO] 06:26:42:467 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 2|1
+[INFO] 06:26:43:470 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 2|1
+[INFO] 06:26:44:473 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:26:45:481 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 2|2
+[INFO] 06:26:46:485 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 2|2
+[INFO] 06:26:47:487 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 2|2
+[INFO] 06:26:48:491 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 3|2
+[INFO] 06:26:49:494 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 3|2
+[INFO] 06:26:50:497 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 3|2
+[INFO] 06:26:51:500 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 3|2
+[INFO] 06:26:52:502 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 3|3
+[INFO] 06:26:53:505 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 3|3
+[INFO] 06:26:54:508 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 3|3
+[INFO] 06:26:55:512 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 3|3
+[INFO] 06:26:56:514 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 3|4
+[INFO] 06:26:57:516 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 3|4
+[INFO] 06:26:58:520 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 3|4
+[INFO] 06:26:59:521 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 3|4
+[INFO] 06:27:24:557 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 4|4
+[INFO] 06:27:25:558 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 4|4
+[INFO] 06:27:26:560 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 4|4
+[INFO] 06:27:27:562 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 4|4
+[INFO] 06:27:28:565 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 4|5
+[INFO] 06:27:29:567 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 4|5
+[INFO] 06:27:30:570 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 4|5
+[INFO] 06:27:31:573 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 4|5
+[INFO] 06:27:32:575 Mi-RAM/(16066:16080): El tripulante 1 se movio a la posicion 5|5
+[INFO] 06:27:33:578 Mi-RAM/(16066:16079): El tripulante 2 se movio a la posicion 5|5
+[INFO] 06:27:34:581 Mi-RAM/(16066:16078): El tripulante 3 se movio a la posicion 5|5
+[INFO] 06:27:35:583 Mi-RAM/(16066:16077): El tripulante 4 se movio a la posicion 5|5
+[INFO] 06:28:16:684 Mi-RAM/(16066:16080): Se expulso el tripulante 1
+[INFO] 06:28:17:686 Mi-RAM/(16066:16079): Se expulso el tripulante 2
+[INFO] 06:28:18:689 Mi-RAM/(16066:16078): Se expulso el tripulante 3
+[INFO] 06:28:19:690 Mi-RAM/(16066:16077): Se expulso el tripulante 4
+[INFO] 06:28:19:690 Mi-RAM/(16066:16077): Se elimino la patota 1
+[INFO] 06:41:21:452 Mi-RAM/(17075:17075): RAM: 8192
+[INFO] 06:41:21:453 Mi-RAM/(17075:17075): <> SERVIDOR LISTO....
+[INFO] 06:42:05:161 Mi-RAM/(17075:17081): <>START: Recibir patota
+[INFO] 06:42:05:161 Mi-RAM/(17075:17081): <>END: Recibir patota
+[INFO] 06:42:05:161 Mi-RAM/(17075:17081): Iniciando patota 1 con 1 tripulantes que pesa 78...
+[INFO] 06:42:05:161 Mi-RAM/(17075:17081): Hay 8192 espacio libre, quiero guardar 78
+[INFO] 06:42:05:162 Mi-RAM/(17075:17081): Guarde las tareas GENERAR_COMIDA 12;3;4;5,CONSUMIR_COMIDA 10;5;5;5 en el segmento 0
+[INFO] 06:42:05:162 Mi-RAM/(17075:17081): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 06:42:05:162 Mi-RAM/(17075:17081): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:42:05:162 Mi-RAM/(17075:17081): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 06:42:05:162 Mi-RAM/(17075:17081): Guarde la tcb de 1 en memoria
+[INFO] 06:42:05:162 Mi-RAM/(17075:17081): Envio ok
+[INFO] 06:42:09:188 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 1|0
+[INFO] 06:42:10:153 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:42:11:157 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 2|1
+[INFO] 06:42:12:158 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:42:13:160 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 3|2
+[INFO] 06:42:14:163 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 3|3
+[INFO] 06:42:15:166 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 3|4
+[INFO] 06:42:22:216 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 4|4
+[INFO] 06:42:23:179 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 4|5
+[INFO] 06:42:24:180 Mi-RAM/(17075:17123): El tripulante 1 se movio a la posicion 5|5
+[INFO] 06:42:30:188 Mi-RAM/(17075:17123): Se expulso el tripulante 1
+[INFO] 06:42:30:188 Mi-RAM/(17075:17123): Se elimino la patota 1
+[INFO] 06:45:36:233 Mi-RAM/(17323:17323): RAM: 8192
+[INFO] 06:45:36:234 Mi-RAM/(17323:17323): <> SERVIDOR LISTO....
+[INFO] 06:45:43:819 Mi-RAM/(17323:17330): <>START: Recibir patota
+[INFO] 06:45:43:819 Mi-RAM/(17323:17330): <>END: Recibir patota
+[INFO] 06:45:43:819 Mi-RAM/(17323:17330): Iniciando patota 1 con 1 tripulantes que pesa 78...
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Hay 8192 espacio libre, quiero guardar 78
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Guarde las tareas GENERAR_COMIDA 12;3;4;5,CONSUMIR_COMIDA 10;5;5;5 en el segmento 0
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Guarde la tcb de 1 en memoria
+[INFO] 06:45:43:820 Mi-RAM/(17323:17330): Envio ok
+[INFO] 06:45:48:392 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 1|0
+[INFO] 06:45:49:357 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:45:50:359 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 2|1
+[INFO] 06:45:51:360 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:45:52:363 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 3|2
+[INFO] 06:45:53:365 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 3|3
+[INFO] 06:45:54:368 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 3|4
+[INFO] 06:46:01:416 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 4|4
+[INFO] 06:46:02:380 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 4|5
+[INFO] 06:46:03:382 Mi-RAM/(17323:17335): El tripulante 1 se movio a la posicion 5|5
+[INFO] 06:46:09:392 Mi-RAM/(17323:17335): Se expulso el tripulante 1
+[INFO] 06:46:09:392 Mi-RAM/(17323:17335): Se elimino la patota 1
+[INFO] 06:46:52:102 Mi-RAM/(17383:17383): RAM: 8192
+[INFO] 06:46:52:104 Mi-RAM/(17383:17383): <> SERVIDOR LISTO....
+[INFO] 06:47:03:239 Mi-RAM/(17383:17385): <>START: Recibir patota
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): <>END: Recibir patota
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Iniciando patota 1 con 5 tripulantes que pesa 162...
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Hay 8192 espacio libre, quiero guardar 162
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Guarde las tareas GENERAR_COMIDA 12;3;4;5,CONSUMIR_COMIDA 10;5;5;5 en el segmento 0
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Guarde la tcb de 1 en memoria
+[INFO] 06:47:03:240 Mi-RAM/(17383:17385): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb de 2 en memoria
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb de 3 en memoria
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Iniciando tripulante 4 de la patota 1 en la posicion 0|0
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb del tripulante 4 en el segmento 5
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb de 4 en memoria
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Iniciando tripulante 5 de la patota 1 en la posicion 0|0
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb del tripulante 5 en el segmento 6
+[INFO] 06:47:03:241 Mi-RAM/(17383:17385): Guarde la tcb de 5 en memoria
+[INFO] 06:47:03:242 Mi-RAM/(17383:17385): Envio ok
+[INFO] 06:47:07:972 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 1|0
+[INFO] 06:47:08:936 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 1|0
+[INFO] 06:47:09:939 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 1|0
+[INFO] 06:47:10:940 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 1|0
+[INFO] 06:47:11:942 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 1|0
+[INFO] 06:47:12:944 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 1|1
+[INFO] 06:47:13:946 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 1|1
+[INFO] 06:47:14:948 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 1|1
+[INFO] 06:47:15:949 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 1|1
+[INFO] 06:47:16:951 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 1|1
+[INFO] 06:47:17:952 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 2|1
+[INFO] 06:47:18:954 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 2|1
+[INFO] 06:47:19:955 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 2|1
+[INFO] 06:47:20:957 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 2|1
+[INFO] 06:47:21:959 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 2|1
+[INFO] 06:47:22:961 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 2|2
+[INFO] 06:47:23:964 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 2|2
+[INFO] 06:47:24:966 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 2|2
+[INFO] 06:47:25:968 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 2|2
+[INFO] 06:47:26:970 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 2|2
+[INFO] 06:47:27:971 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 3|2
+[INFO] 06:47:28:975 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 3|2
+[INFO] 06:47:29:977 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 3|2
+[INFO] 06:47:30:979 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 3|2
+[INFO] 06:47:31:980 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 3|2
+[INFO] 06:47:32:982 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 3|3
+[INFO] 06:47:33:984 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 3|3
+[INFO] 06:47:34:986 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 3|3
+[INFO] 06:47:35:987 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 3|3
+[INFO] 06:47:36:989 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 3|3
+[INFO] 06:47:37:991 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 3|4
+[INFO] 06:47:38:994 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 3|4
+[INFO] 06:47:39:996 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 3|4
+[INFO] 06:47:40:998 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 3|4
+[INFO] 06:47:42:001 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 3|4
+[INFO] 06:48:13:043 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 4|4
+[INFO] 06:48:14:046 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 4|4
+[INFO] 06:48:15:047 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 4|4
+[INFO] 06:48:16:050 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 4|4
+[INFO] 06:48:17:052 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 4|4
+[INFO] 06:48:18:055 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 4|5
+[INFO] 06:48:19:057 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 4|5
+[INFO] 06:48:20:059 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 4|5
+[INFO] 06:48:21:061 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 4|5
+[INFO] 06:48:22:063 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 4|5
+[INFO] 06:48:23:066 Mi-RAM/(17383:17398): El tripulante 1 se movio a la posicion 5|5
+[INFO] 06:48:24:068 Mi-RAM/(17383:17397): El tripulante 2 se movio a la posicion 5|5
+[INFO] 06:48:25:071 Mi-RAM/(17383:17396): El tripulante 3 se movio a la posicion 5|5
+[INFO] 06:48:26:073 Mi-RAM/(17383:17395): El tripulante 4 se movio a la posicion 5|5
+[INFO] 06:48:27:076 Mi-RAM/(17383:17394): El tripulante 5 se movio a la posicion 5|5
+[INFO] 06:48:53:117 Mi-RAM/(17383:17398): Se expulso el tripulante 1
+[INFO] 06:48:54:119 Mi-RAM/(17383:17397): Se expulso el tripulante 2
+[INFO] 06:48:55:121 Mi-RAM/(17383:17396): Se expulso el tripulante 3
+[INFO] 06:48:56:123 Mi-RAM/(17383:17395): Se expulso el tripulante 4
+[INFO] 06:48:57:126 Mi-RAM/(17383:17394): Se expulso el tripulante 5
+[INFO] 06:48:57:126 Mi-RAM/(17383:17394): Se elimino la patota 1

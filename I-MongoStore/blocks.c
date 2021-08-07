@@ -228,7 +228,9 @@ void borrarContenido(char* id)
 				{
 					return bloque->id == atoi(id);
 				}
+
 	list_remove_by_condition(bloques,criterioNombre);
+
 	liberarBloque(atoi(id));
 
 }

@@ -46,7 +46,7 @@ void guardarContenidoBitacora(char* path, char* contenido);
 void guardarContenido(char* path, char* contenido);
 bool existeArchivo(char* nombre);
 char* sacarContenidoBloque(int id);
-void consumirRecurso(char* recurso,int cantidad);
+void consumirRecurso(char* recurso,char caracter ,int cantidad);
 void guardarBitacora(char* id_tripulante,char* mensaje);
 void generarRecurso(char* nombre, char caracter,int cantidad);
 
