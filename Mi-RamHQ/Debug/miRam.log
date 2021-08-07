@@ -3503,3 +3503,429 @@
 [INFO] 19:19:51:391 Mi-RAM/(6778:6811): El tripulante 1 se movio a la posicion 1|1
 [INFO] 19:20:06:405 Mi-RAM/(6778:6811): Se expulso el tripulante 1
 [INFO] 19:20:06:405 Mi-RAM/(6778:6811): Se elimino la patota 1
+[INFO] 04:09:24:249 Mi-RAM/(13236:13236): RAM: 128
+[INFO] 04:09:24:270 Mi-RAM/(13236:13236): SWAP: 16384
+[INFO] 04:09:24:270 Mi-RAM/(13236:13236): Tengo 4 marcos de 32 bytes en memoria principal
+[INFO] 04:09:24:270 Mi-RAM/(13236:13236): Tengo 512 marcos de 32 bytes en memoria virtual
+[INFO] 04:09:24:300 Mi-RAM/(13236:13236): <> SERVIDOR LISTO....
+[INFO] 04:10:12:780 Mi-RAM/(13236:13242): <>START: Recibir patota
+[INFO] 04:10:12:780 Mi-RAM/(13236:13242): <>END: Recibir patota
+[INFO] 04:10:12:780 Mi-RAM/(13236:13242): Iniciando patota 1 con 1 tripulantes que pesa 54...
+[INFO] 04:10:12:780 Mi-RAM/(13236:13242): Guarde las tareas de la patota 1 en las paginas: 
+[INFO] 04:10:12:781 Mi-RAM/(13236:13242): 0
+[INFO] 04:10:12:781 Mi-RAM/(13236:13242): Guarde la pcb de la patota 1 en las pagina 0 y su desplazamiento es 25
+[INFO] 04:10:12:781 Mi-RAM/(13236:13242): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:10:12:781 Mi-RAM/(13236:13242): Guarde al tripulante 1 en la pagina 1 y su desplazamiento es 1
+[INFO] 04:10:12:781 Mi-RAM/(13236:13242): Guarde la tcb de 1 en memoria
+[INFO] 04:10:12:781 Mi-RAM/(13236:13242): Envio ok
+[INFO] 04:10:33:238 Mi-RAM/(13236:13242): <>START: Recibir patota
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): <>END: Recibir patota
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Iniciando patota 2 con 1 tripulantes que pesa 55...
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Guarde las tareas de la patota 2 en las paginas: 
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): 2
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Guarde la pcb de la patota 2 en las pagina 2 y su desplazamiento es 26
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Iniciando tripulante 2 de la patota 2 en la posicion 8|8
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Guarde al tripulante 2 en la pagina 3 y su desplazamiento es 2
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Guarde la tcb de 2 en memoria
+[INFO] 04:10:33:277 Mi-RAM/(13236:13242): Envio ok
+[INFO] 04:10:53:256 Mi-RAM/(13236:13242): <>START: Recibir patota
+[INFO] 04:10:53:296 Mi-RAM/(13236:13242): <>END: Recibir patota
+[INFO] 04:10:53:296 Mi-RAM/(13236:13242): Iniciando patota 3 con 1 tripulantes que pesa 58...
+[INFO] 04:10:53:296 Mi-RAM/(13236:13242): Swapeando ando
+[INFO] 04:10:53:296 Mi-RAM/(13236:13242): Voy a reemplazar la pagina 0 que estaba en el frame 0
+[INFO] 04:10:53:297 Mi-RAM/(13236:13242): Guardo la pagina 0 en el frame 0 de la memoria virtual
+[INFO] 04:10:53:300 Mi-RAM/(13236:13242): Guarde las tareas de la patota 3 en las paginas: 
+[INFO] 04:10:53:300 Mi-RAM/(13236:13242): 4
+[INFO] 04:10:53:300 Mi-RAM/(13236:13242): Swapeando ando
+[INFO] 04:10:53:300 Mi-RAM/(13236:13242): Voy a reemplazar la pagina 1 que estaba en el frame 1
+[INFO] 04:10:53:302 Mi-RAM/(13236:13242): Guardo la pagina 1 en el frame 1 de la memoria virtual
+[INFO] 04:10:53:303 Mi-RAM/(13236:13242): Guarde la pcb de la patota 3 en las pagina 4 y su desplazamiento es 29
+[INFO] 04:10:53:304 Mi-RAM/(13236:13242): Iniciando tripulante 3 de la patota 3 en la posicion 0|8
+[INFO] 04:10:53:304 Mi-RAM/(13236:13242): Guarde al tripulante 3 en la pagina 5 y su desplazamiento es 5
+[INFO] 04:10:53:304 Mi-RAM/(13236:13242): Guarde la tcb de 3 en memoria
+[INFO] 04:10:53:304 Mi-RAM/(13236:13242): Envio ok
+[INFO] 04:11:12:986 Mi-RAM/(13236:13242): <>START: Recibir patota
+[INFO] 04:11:13:024 Mi-RAM/(13236:13242): <>END: Recibir patota
+[INFO] 04:11:13:024 Mi-RAM/(13236:13242): Iniciando patota 4 con 1 tripulantes que pesa 51...
+[INFO] 04:11:13:024 Mi-RAM/(13236:13242): Swapeando ando
+[INFO] 04:11:13:024 Mi-RAM/(13236:13242): Voy a reemplazar la pagina 2 que estaba en el frame 2
+[INFO] 04:11:13:025 Mi-RAM/(13236:13242): Guardo la pagina 2 en el frame 2 de la memoria virtual
+[INFO] 04:11:13:030 Mi-RAM/(13236:13242): Guarde las tareas de la patota 4 en las paginas: 
+[INFO] 04:11:13:030 Mi-RAM/(13236:13242): 6
+[INFO] 04:11:13:030 Mi-RAM/(13236:13242): Guarde la pcb de la patota 4 en las pagina 6 y su desplazamiento es 22
+[INFO] 04:11:13:030 Mi-RAM/(13236:13242): Iniciando tripulante 4 de la patota 4 en la posicion 8|0
+[INFO] 04:11:13:030 Mi-RAM/(13236:13242): Swapeando ando
+[INFO] 04:11:13:030 Mi-RAM/(13236:13242): Voy a reemplazar la pagina 3 que estaba en el frame 3
+[INFO] 04:11:13:031 Mi-RAM/(13236:13242): Guardo la pagina 3 en el frame 3 de la memoria virtual
+[INFO] 04:11:13:032 Mi-RAM/(13236:13242): Guarde al tripulante 4 en la pagina 6 y su desplazamiento es 30
+[INFO] 04:11:13:033 Mi-RAM/(13236:13242): Guarde la tcb de 4 en memoria
+[INFO] 04:11:13:033 Mi-RAM/(13236:13242): Envio ok
+[INFO] 04:12:13:737 Mi-RAM/(13236:13254): Swapeando ando
+[INFO] 04:12:13:737 Mi-RAM/(13236:13254): Voy a reemplazar la pagina 4 que estaba en el frame 0
+[INFO] 04:12:13:738 Mi-RAM/(13236:13254): Guardo la pagina 4 en el frame 4 de la memoria virtual
+[INFO] 04:12:13:742 Mi-RAM/(13236:13254): Revivi la pagina 1 en el frame 0
+[INFO] 04:12:13:742 Mi-RAM/(13236:13256): Swapeando ando
+[INFO] 04:12:13:742 Mi-RAM/(13236:13256): Voy a reemplazar la pagina 5 que estaba en el frame 1
+[INFO] 04:12:13:743 Mi-RAM/(13236:13256): Guardo la pagina 5 en el frame 5 de la memoria virtual
+[INFO] 04:12:13:775 Mi-RAM/(13236:13256): Revivi la pagina 3 en el frame 1
+[INFO] 04:12:13:775 Mi-RAM/(13236:13264): Swapeando ando
+[INFO] 04:12:13:775 Mi-RAM/(13236:13264): Voy a reemplazar la pagina 1 que estaba en el frame 0
+[INFO] 04:12:13:779 Mi-RAM/(13236:13264): Actualice la pagina 1 en el frame 1 de mem virtual
+[INFO] 04:12:13:779 Mi-RAM/(13236:13264): Revivi la pagina 5 en el frame 0
+[INFO] 04:12:13:779 Mi-RAM/(13236:13254): Swapeando ando
+[INFO] 04:12:13:779 Mi-RAM/(13236:13254): Voy a reemplazar la pagina 3 que estaba en el frame 1
+[INFO] 04:12:13:782 Mi-RAM/(13236:13254): Actualice la pagina 3 en el frame 3 de mem virtual
+[INFO] 04:12:13:782 Mi-RAM/(13236:13254): Revivi la pagina 1 en el frame 1
+[INFO] 04:13:05:785 Mi-RAM/(13236:13256): Swapeando ando
+[INFO] 04:13:05:785 Mi-RAM/(13236:13256): Voy a reemplazar la pagina 1 que estaba en el frame 1
+[INFO] 04:13:05:791 Mi-RAM/(13236:13256): Actualice la pagina 1 en el frame 1 de mem virtual
+[INFO] 04:13:05:791 Mi-RAM/(13236:13256): Revivi la pagina 3 en el frame 1
+[INFO] 04:13:06:785 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 1|0
+[INFO] 04:13:06:785 Mi-RAM/(13236:13254): Swapeando ando
+[INFO] 04:13:06:785 Mi-RAM/(13236:13254): Voy a reemplazar la pagina 6 que estaba en el frame 2
+[INFO] 04:13:06:787 Mi-RAM/(13236:13254): Guardo la pagina 6 en el frame 6 de la memoria virtual
+[INFO] 04:13:06:808 Mi-RAM/(13236:13254): Revivi la pagina 1 en el frame 2
+[INFO] 04:13:07:786 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 1|1
+[INFO] 04:13:18:788 Mi-RAM/(13236:13266): Swapeando ando
+[INFO] 04:13:18:788 Mi-RAM/(13236:13266): Voy a reemplazar la pagina 5 que estaba en el frame 0
+[INFO] 04:13:18:816 Mi-RAM/(13236:13266): Actualice la pagina 5 en el frame 5 de mem virtual
+[INFO] 04:13:18:816 Mi-RAM/(13236:13266): Revivi la pagina 6 en el frame 0
+[INFO] 04:13:18:816 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 8|1
+[INFO] 04:13:19:790 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 7|1
+[INFO] 04:13:20:793 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 7|2
+[INFO] 04:13:21:795 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 6|2
+[INFO] 04:13:22:802 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 6|3
+[INFO] 04:13:23:809 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 5|3
+[INFO] 04:13:24:814 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 5|4
+[INFO] 04:13:25:816 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 4|4
+[INFO] 04:13:26:817 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 4|5
+[INFO] 04:13:27:819 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 3|5
+[INFO] 04:13:28:821 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 3|6
+[INFO] 04:13:29:833 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 2|6
+[INFO] 04:13:30:834 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 2|7
+[INFO] 04:13:31:836 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 1|7
+[INFO] 04:13:32:837 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 1|8
+[INFO] 04:13:33:841 Mi-RAM/(13236:13266): El tripulante 4 se movio a la posicion 0|8
+[INFO] 04:14:24:878 Mi-RAM/(13236:13264): Swapeando ando
+[INFO] 04:14:24:878 Mi-RAM/(13236:13264): Voy a reemplazar la pagina 3 que estaba en el frame 1
+[INFO] 04:14:24:889 Mi-RAM/(13236:13264): Actualice la pagina 3 en el frame 3 de mem virtual
+[INFO] 04:14:24:889 Mi-RAM/(13236:13264): Revivi la pagina 5 en el frame 1
+[INFO] 04:14:24:889 Mi-RAM/(13236:13256): Swapeando ando
+[INFO] 04:14:24:889 Mi-RAM/(13236:13256): Voy a reemplazar la pagina 1 que estaba en el frame 2
+[INFO] 04:14:24:890 Mi-RAM/(13236:13256): Actualice la pagina 1 en el frame 1 de mem virtual
+[INFO] 04:14:24:890 Mi-RAM/(13236:13256): Revivi la pagina 3 en el frame 2
+[INFO] 04:14:25:879 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 2|1
+[INFO] 04:14:25:879 Mi-RAM/(13236:13254): Swapeando ando
+[INFO] 04:14:25:879 Mi-RAM/(13236:13254): Voy a reemplazar la pagina 6 que estaba en el frame 0
+[INFO] 04:14:25:884 Mi-RAM/(13236:13254): Actualice la pagina 6 en el frame 6 de mem virtual
+[INFO] 04:14:25:884 Mi-RAM/(13236:13254): Revivi la pagina 1 en el frame 0
+[INFO] 04:14:26:879 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 3|1
+[INFO] 04:14:27:880 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 4|1
+[INFO] 04:14:28:880 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 5|1
+[INFO] 04:14:29:880 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 6|1
+[INFO] 04:14:30:881 Mi-RAM/(13236:13254): El tripulante 1 se movio a la posicion 7|1
+[INFO] 04:14:41:884 Mi-RAM/(13236:13266): Swapeando ando
+[INFO] 04:14:41:884 Mi-RAM/(13236:13266): Voy a reemplazar la pagina 5 que estaba en el frame 1
+[INFO] 04:14:41:888 Mi-RAM/(13236:13266): Actualice la pagina 5 en el frame 5 de mem virtual
+[INFO] 04:14:41:888 Mi-RAM/(13236:13266): Revivi la pagina 6 en el frame 1
+[INFO] 04:15:29:277 Mi-RAM/(13472:13472): RAM: 128
+[INFO] 04:15:29:277 Mi-RAM/(13472:13472): SWAP: 16384
+[INFO] 04:15:29:277 Mi-RAM/(13472:13472): Tengo 4 marcos de 32 bytes en memoria principal
+[INFO] 04:15:29:277 Mi-RAM/(13472:13472): Tengo 512 marcos de 32 bytes en memoria virtual
+[INFO] 04:15:29:279 Mi-RAM/(13472:13472): <> SERVIDOR LISTO....
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): <>START: Recibir patota
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): <>END: Recibir patota
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): Iniciando patota 1 con 1 tripulantes que pesa 83...
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): Guarde las tareas de la patota 1 en las paginas: 
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): 0
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): 1
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): Guarde la pcb de la patota 1 en las pagina 1 y su desplazamiento es 22
+[INFO] 04:15:49:149 Mi-RAM/(13472:13484): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:15:49:150 Mi-RAM/(13472:13484): Guarde al tripulante 1 en la pagina 1 y su desplazamiento es 30
+[INFO] 04:15:49:150 Mi-RAM/(13472:13484): Guarde la tcb de 1 en memoria
+[INFO] 04:15:49:150 Mi-RAM/(13472:13484): Envio ok
+[INFO] 04:16:13:718 Mi-RAM/(13472:13484): <>START: Recibir patota
+[INFO] 04:16:13:756 Mi-RAM/(13472:13484): <>END: Recibir patota
+[INFO] 04:16:13:756 Mi-RAM/(13472:13484): Iniciando patota 2 con 1 tripulantes que pesa 55...
+[INFO] 04:16:13:756 Mi-RAM/(13472:13484): Guarde las tareas de la patota 2 en las paginas: 
+[INFO] 04:16:13:756 Mi-RAM/(13472:13484): 3
+[INFO] 04:16:13:756 Mi-RAM/(13472:13484): Swapeando ando
+[INFO] 04:16:13:756 Mi-RAM/(13472:13484): Voy a reemplazar la pagina 0 que estaba en el frame 0
+[INFO] 04:16:13:758 Mi-RAM/(13472:13484): Guardo la pagina 0 en el frame 0 de la memoria virtual
+[INFO] 04:16:13:761 Mi-RAM/(13472:13484): Guarde la pcb de la patota 2 en las pagina 3 y su desplazamiento es 26
+[INFO] 04:16:13:762 Mi-RAM/(13472:13484): Iniciando tripulante 2 de la patota 2 en la posicion 8|0
+[INFO] 04:16:13:762 Mi-RAM/(13472:13484): Guarde al tripulante 2 en la pagina 4 y su desplazamiento es 2
+[INFO] 04:16:13:762 Mi-RAM/(13472:13484): Guarde la tcb de 2 en memoria
+[INFO] 04:16:13:762 Mi-RAM/(13472:13484): Envio ok
+[INFO] 04:16:43:107 Mi-RAM/(13472:13484): <>START: Recibir patota
+[INFO] 04:16:43:144 Mi-RAM/(13472:13484): <>END: Recibir patota
+[INFO] 04:16:43:144 Mi-RAM/(13472:13484): Iniciando patota 3 con 1 tripulantes que pesa 58...
+[INFO] 04:16:43:144 Mi-RAM/(13472:13484): Swapeando ando
+[INFO] 04:16:43:144 Mi-RAM/(13472:13484): Voy a reemplazar la pagina 1 que estaba en el frame 1
+[INFO] 04:16:43:146 Mi-RAM/(13472:13484): Guardo la pagina 1 en el frame 1 de la memoria virtual
+[INFO] 04:16:43:148 Mi-RAM/(13472:13484): Guarde las tareas de la patota 3 en las paginas: 
+[INFO] 04:16:43:148 Mi-RAM/(13472:13484): 5
+[INFO] 04:16:43:148 Mi-RAM/(13472:13484): Swapeando ando
+[INFO] 04:16:43:148 Mi-RAM/(13472:13484): Voy a reemplazar la pagina 2 que estaba en el frame 2
+[INFO] 04:16:43:149 Mi-RAM/(13472:13484): Guardo la pagina 2 en el frame 2 de la memoria virtual
+[INFO] 04:16:43:151 Mi-RAM/(13472:13484): Guarde la pcb de la patota 3 en las pagina 5 y su desplazamiento es 29
+[INFO] 04:16:43:152 Mi-RAM/(13472:13484): Iniciando tripulante 3 de la patota 3 en la posicion 8|8
+[INFO] 04:16:43:152 Mi-RAM/(13472:13484): Guarde al tripulante 3 en la pagina 6 y su desplazamiento es 5
+[INFO] 04:16:43:152 Mi-RAM/(13472:13484): Guarde la tcb de 3 en memoria
+[INFO] 04:16:43:152 Mi-RAM/(13472:13484): Envio ok
+[INFO] 04:16:58:138 Mi-RAM/(13472:13484): <>START: Recibir patota
+[INFO] 04:16:58:177 Mi-RAM/(13472:13484): <>END: Recibir patota
+[INFO] 04:16:58:177 Mi-RAM/(13472:13484): Iniciando patota 4 con 1 tripulantes que pesa 51...
+[INFO] 04:16:58:177 Mi-RAM/(13472:13484): Swapeando ando
+[INFO] 04:16:58:177 Mi-RAM/(13472:13484): Voy a reemplazar la pagina 3 que estaba en el frame 3
+[INFO] 04:16:58:178 Mi-RAM/(13472:13484): Guardo la pagina 3 en el frame 3 de la memoria virtual
+[INFO] 04:16:58:181 Mi-RAM/(13472:13484): Guarde las tareas de la patota 4 en las paginas: 
+[INFO] 04:16:58:181 Mi-RAM/(13472:13484): 7
+[INFO] 04:16:58:181 Mi-RAM/(13472:13484): Guarde la pcb de la patota 4 en las pagina 7 y su desplazamiento es 22
+[INFO] 04:16:58:181 Mi-RAM/(13472:13484): Iniciando tripulante 4 de la patota 4 en la posicion 0|8
+[INFO] 04:16:58:182 Mi-RAM/(13472:13484): Swapeando ando
+[INFO] 04:16:58:182 Mi-RAM/(13472:13484): Voy a reemplazar la pagina 4 que estaba en el frame 0
+[INFO] 04:16:58:183 Mi-RAM/(13472:13484): Guardo la pagina 4 en el frame 4 de la memoria virtual
+[INFO] 04:16:58:185 Mi-RAM/(13472:13484): Guarde al tripulante 4 en la pagina 7 y su desplazamiento es 30
+[INFO] 04:16:58:185 Mi-RAM/(13472:13484): Guarde la tcb de 4 en memoria
+[INFO] 04:16:58:185 Mi-RAM/(13472:13484): Envio ok
+[INFO] 04:17:05:253 Mi-RAM/(13472:13490): Swapeando ando
+[INFO] 04:17:05:253 Mi-RAM/(13472:13490): Voy a reemplazar la pagina 5 que estaba en el frame 1
+[INFO] 04:17:05:254 Mi-RAM/(13472:13490): Guardo la pagina 5 en el frame 5 de la memoria virtual
+[INFO] 04:17:05:258 Mi-RAM/(13472:13490): Revivi la pagina 1 en el frame 1
+[INFO] 04:17:05:258 Mi-RAM/(13472:13490): Swapeando ando
+[INFO] 04:17:05:258 Mi-RAM/(13472:13490): Voy a reemplazar la pagina 6 que estaba en el frame 2
+[INFO] 04:17:05:263 Mi-RAM/(13472:13490): Guardo la pagina 6 en el frame 6 de la memoria virtual
+[INFO] 04:17:05:274 Mi-RAM/(13472:13490): Revivi la pagina 2 en el frame 2
+[INFO] 04:17:05:275 Mi-RAM/(13472:13497): Swapeando ando
+[INFO] 04:17:05:275 Mi-RAM/(13472:13497): Voy a reemplazar la pagina 7 que estaba en el frame 3
+[INFO] 04:17:05:291 Mi-RAM/(13472:13497): Guardo la pagina 7 en el frame 7 de la memoria virtual
+[INFO] 04:17:05:295 Mi-RAM/(13472:13497): Revivi la pagina 4 en el frame 3
+[INFO] 04:17:05:295 Mi-RAM/(13472:13501): Swapeando ando
+[INFO] 04:17:05:295 Mi-RAM/(13472:13501): Voy a reemplazar la pagina 1 que estaba en el frame 1
+[INFO] 04:17:05:297 Mi-RAM/(13472:13501): Actualice la pagina 1 en el frame 1 de mem virtual
+[INFO] 04:17:05:297 Mi-RAM/(13472:13501): Revivi la pagina 7 en el frame 1
+[INFO] 04:17:05:298 Mi-RAM/(13472:13490): Swapeando ando
+[INFO] 04:17:05:298 Mi-RAM/(13472:13490): Voy a reemplazar la pagina 4 que estaba en el frame 3
+[INFO] 04:17:05:300 Mi-RAM/(13472:13490): Actualice la pagina 4 en el frame 4 de mem virtual
+[INFO] 04:17:05:300 Mi-RAM/(13472:13490): Revivi la pagina 1 en el frame 3
+[INFO] 04:17:05:300 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 1|0
+[INFO] 04:17:05:300 Mi-RAM/(13472:13499): Swapeando ando
+[INFO] 04:17:05:300 Mi-RAM/(13472:13499): Voy a reemplazar la pagina 7 que estaba en el frame 1
+[INFO] 04:17:05:304 Mi-RAM/(13472:13499): Actualice la pagina 7 en el frame 7 de mem virtual
+[INFO] 04:17:05:304 Mi-RAM/(13472:13499): Revivi la pagina 6 en el frame 1
+[INFO] 04:17:06:265 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 1|1
+[INFO] 04:17:07:267 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 2|1
+[INFO] 04:17:08:269 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 2|2
+[INFO] 04:17:09:270 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 3|2
+[INFO] 04:17:10:272 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 4|2
+[INFO] 04:17:11:273 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 5|2
+[INFO] 04:17:12:275 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 6|2
+[INFO] 04:17:13:277 Mi-RAM/(13472:13490): El tripulante 1 se movio a la posicion 7|2
+[INFO] 04:17:15:280 Mi-RAM/(13472:13497): Swapeando ando
+[INFO] 04:17:15:280 Mi-RAM/(13472:13497): Voy a reemplazar la pagina 8 que estaba en el frame 0
+[INFO] 04:17:15:283 Mi-RAM/(13472:13497): Guardo la pagina 8 en el frame 8 de la memoria virtual
+[INFO] 04:17:15:301 Mi-RAM/(13472:13497): Revivi la pagina 4 en el frame 0
+[INFO] 04:17:15:301 Mi-RAM/(13472:13490): Swapeando ando
+[INFO] 04:17:15:301 Mi-RAM/(13472:13490): Voy a reemplazar la pagina 6 que estaba en el frame 1
+[INFO] 04:17:15:343 Mi-RAM/(13472:13490): Actualice la pagina 6 en el frame 6 de mem virtual
+[INFO] 04:17:15:343 Mi-RAM/(13472:13490): Revivi la pagina 0 en el frame 1
+[INFO] 04:19:35:743 Mi-RAM/(13564:13564): RAM: 8192
+[INFO] 04:19:35:744 Mi-RAM/(13564:13564): SWAP: 16384
+[INFO] 04:19:35:744 Mi-RAM/(13564:13564): Tengo 256 marcos de 32 bytes en memoria principal
+[INFO] 04:19:35:744 Mi-RAM/(13564:13564): Tengo 512 marcos de 32 bytes en memoria virtual
+[INFO] 04:19:35:745 Mi-RAM/(13564:13564): <> SERVIDOR LISTO....
+[INFO] 04:19:58:256 Mi-RAM/(13564:13566): <>START: Recibir patota
+[INFO] 04:19:58:256 Mi-RAM/(13564:13566): <>END: Recibir patota
+[INFO] 04:19:58:256 Mi-RAM/(13564:13566): Iniciando patota 1 con 1 tripulantes que pesa 83...
+[INFO] 04:19:58:258 Mi-RAM/(13564:13566): Guarde las tareas de la patota 1 en las paginas: 
+[INFO] 04:19:58:258 Mi-RAM/(13564:13566): 0
+[INFO] 04:19:58:258 Mi-RAM/(13564:13566): 1
+[INFO] 04:19:58:258 Mi-RAM/(13564:13566): Guarde la pcb de la patota 1 en las pagina 1 y su desplazamiento es 22
+[INFO] 04:19:58:258 Mi-RAM/(13564:13566): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:19:58:259 Mi-RAM/(13564:13566): Guarde al tripulante 1 en la pagina 1 y su desplazamiento es 30
+[INFO] 04:19:58:259 Mi-RAM/(13564:13566): Guarde la tcb de 1 en memoria
+[INFO] 04:19:58:259 Mi-RAM/(13564:13566): Envio ok
+[INFO] 04:20:14:017 Mi-RAM/(13564:13566): <>START: Recibir patota
+[INFO] 04:20:14:056 Mi-RAM/(13564:13566): <>END: Recibir patota
+[INFO] 04:20:14:056 Mi-RAM/(13564:13566): Iniciando patota 2 con 1 tripulantes que pesa 55...
+[INFO] 04:20:14:057 Mi-RAM/(13564:13566): Guarde las tareas de la patota 2 en las paginas: 
+[INFO] 04:20:14:057 Mi-RAM/(13564:13566): 3
+[INFO] 04:20:14:057 Mi-RAM/(13564:13566): Guarde la pcb de la patota 2 en las pagina 3 y su desplazamiento es 26
+[INFO] 04:20:14:057 Mi-RAM/(13564:13566): Iniciando tripulante 2 de la patota 2 en la posicion 0|0
+[INFO] 04:20:14:057 Mi-RAM/(13564:13566): Guarde al tripulante 2 en la pagina 4 y su desplazamiento es 2
+[INFO] 04:20:14:057 Mi-RAM/(13564:13566): Guarde la tcb de 2 en memoria
+[INFO] 04:20:14:058 Mi-RAM/(13564:13566): Envio ok
+[INFO] 04:20:20:108 Mi-RAM/(13564:13566): <>START: Recibir patota
+[INFO] 04:20:20:148 Mi-RAM/(13564:13566): <>END: Recibir patota
+[INFO] 04:20:20:148 Mi-RAM/(13564:13566): Iniciando patota 3 con 1 tripulantes que pesa 55...
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): Guarde las tareas de la patota 3 en las paginas: 
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): 5
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): Guarde la pcb de la patota 3 en las pagina 5 y su desplazamiento es 26
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): Iniciando tripulante 3 de la patota 3 en la posicion 0|0
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): Guarde al tripulante 3 en la pagina 6 y su desplazamiento es 2
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): Guarde la tcb de 3 en memoria
+[INFO] 04:20:20:149 Mi-RAM/(13564:13566): Envio ok
+[INFO] 04:20:25:288 Mi-RAM/(13564:13566): <>START: Recibir patota
+[INFO] 04:20:25:328 Mi-RAM/(13564:13566): <>END: Recibir patota
+[INFO] 04:20:25:328 Mi-RAM/(13564:13566): Iniciando patota 4 con 1 tripulantes que pesa 55...
+[INFO] 04:20:25:328 Mi-RAM/(13564:13566): Guarde las tareas de la patota 4 en las paginas: 
+[INFO] 04:20:25:328 Mi-RAM/(13564:13566): 7
+[INFO] 04:20:25:328 Mi-RAM/(13564:13566): Guarde la pcb de la patota 4 en las pagina 7 y su desplazamiento es 26
+[INFO] 04:20:25:328 Mi-RAM/(13564:13566): Iniciando tripulante 4 de la patota 4 en la posicion 0|0
+[INFO] 04:20:25:329 Mi-RAM/(13564:13566): Guarde al tripulante 4 en la pagina 8 y su desplazamiento es 2
+[INFO] 04:20:25:329 Mi-RAM/(13564:13566): Guarde la tcb de 4 en memoria
+[INFO] 04:20:25:329 Mi-RAM/(13564:13566): Envio ok
+[INFO] 04:20:32:637 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 1|0
+[INFO] 04:20:33:599 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 1|1
+[INFO] 04:20:34:601 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 2|1
+[INFO] 04:20:35:602 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 2|2
+[INFO] 04:20:36:609 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 3|2
+[INFO] 04:20:37:610 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 4|2
+[INFO] 04:20:38:611 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 5|2
+[INFO] 04:20:39:613 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 6|2
+[INFO] 04:20:40:614 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|2
+[INFO] 04:20:42:617 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 1|0
+[INFO] 04:20:43:619 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 2|0
+[INFO] 04:20:44:620 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 3|0
+[INFO] 04:20:45:621 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 4|0
+[INFO] 04:20:46:623 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 5|0
+[INFO] 04:20:47:623 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 6|0
+[INFO] 04:20:48:626 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 7|0
+[INFO] 04:20:49:628 Mi-RAM/(13564:13573): El tripulante 2 se movio a la posicion 8|0
+[INFO] 04:21:11:643 Mi-RAM/(13564:13580): El tripulante 3 se movio a la posicion 1|0
+[INFO] 04:21:12:643 Mi-RAM/(13564:13580): El tripulante 3 se movio a la posicion 1|1
+[INFO] 04:21:42:664 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|1
+[INFO] 04:22:17:683 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|2
+[INFO] 04:22:18:684 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|3
+[INFO] 04:22:19:684 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|4
+[INFO] 04:22:20:685 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|5
+[INFO] 04:22:21:686 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|6
+[INFO] 04:22:22:686 Mi-RAM/(13564:13571): El tripulante 1 se movio a la posicion 7|7
+[INFO] 04:28:07:307 Mi-RAM/(13784:13784): RAM: 8192
+[INFO] 04:28:07:388 Mi-RAM/(13784:13784): SWAP: 16384
+[INFO] 04:28:07:388 Mi-RAM/(13784:13784): Tengo 256 marcos de 32 bytes en memoria principal
+[INFO] 04:28:07:388 Mi-RAM/(13784:13784): Tengo 512 marcos de 32 bytes en memoria virtual
+[INFO] 04:28:07:389 Mi-RAM/(13784:13784): <> SERVIDOR LISTO....
+[INFO] 04:28:56:164 Mi-RAM/(13784:13786): <>START: Recibir patota
+[INFO] 04:28:56:164 Mi-RAM/(13784:13786): <>END: Recibir patota
+[INFO] 04:28:56:164 Mi-RAM/(13784:13786): Iniciando patota 1 con 6 tripulantes que pesa 160...
+[INFO] 04:28:56:164 Mi-RAM/(13784:13786): Guarde las tareas de la patota 1 en las paginas: 
+[INFO] 04:28:56:164 Mi-RAM/(13784:13786): 0
+[INFO] 04:28:56:165 Mi-RAM/(13784:13786): Guarde la pcb de la patota 1 en las pagina 0 y su desplazamiento es 26
+[INFO] 04:28:56:165 Mi-RAM/(13784:13786): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:28:56:167 Mi-RAM/(13784:13786): Guarde al tripulante 1 en la pagina 1 y su desplazamiento es 2
+[INFO] 04:28:56:167 Mi-RAM/(13784:13786): Guarde la tcb de 1 en memoria
+[INFO] 04:28:56:167 Mi-RAM/(13784:13786): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 04:28:56:167 Mi-RAM/(13784:13786): Guarde al tripulante 2 en la pagina 1 y su desplazamiento es 23
+[INFO] 04:28:56:167 Mi-RAM/(13784:13786): Guarde la tcb de 2 en memoria
+[INFO] 04:28:56:167 Mi-RAM/(13784:13786): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde al tripulante 3 en la pagina 2 y su desplazamiento es 12
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde la tcb de 3 en memoria
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Iniciando tripulante 4 de la patota 1 en la posicion 0|0
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde al tripulante 4 en la pagina 3 y su desplazamiento es 1
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde la tcb de 4 en memoria
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Iniciando tripulante 5 de la patota 1 en la posicion 0|0
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde al tripulante 5 en la pagina 3 y su desplazamiento es 22
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde la tcb de 5 en memoria
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Iniciando tripulante 6 de la patota 1 en la posicion 0|0
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde al tripulante 6 en la pagina 4 y su desplazamiento es 11
+[INFO] 04:28:56:168 Mi-RAM/(13784:13786): Guarde la tcb de 6 en memoria
+[INFO] 04:28:56:169 Mi-RAM/(13784:13786): Envio ok
+[INFO] 04:29:01:332 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 1|0
+[INFO] 04:29:02:297 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 2|0
+[INFO] 04:29:03:300 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 3|0
+[INFO] 04:29:04:302 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 4|0
+[INFO] 04:29:05:304 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 5|0
+[INFO] 04:29:06:305 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 6|0
+[INFO] 04:29:07:307 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 7|0
+[INFO] 04:29:08:309 Mi-RAM/(13784:13807): El tripulante 1 se movio a la posicion 8|0
+[INFO] 04:29:20:315 Mi-RAM/(13784:13807): Se expulso el tripulante 1
+[INFO] 04:29:21:317 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 1|0
+[INFO] 04:29:22:318 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 2|0
+[INFO] 04:29:23:318 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 3|0
+[INFO] 04:29:24:319 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 4|0
+[INFO] 04:29:25:321 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 5|0
+[INFO] 04:29:26:323 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 6|0
+[INFO] 04:29:27:324 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 7|0
+[INFO] 04:29:28:325 Mi-RAM/(13784:13806): El tripulante 2 se movio a la posicion 8|0
+[INFO] 04:29:42:335 Mi-RAM/(13784:13806): Se expulso el tripulante 2
+[INFO] 04:29:43:335 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 1|0
+[INFO] 04:29:44:337 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 2|0
+[INFO] 04:29:45:339 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 3|0
+[INFO] 04:29:46:341 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 4|0
+[INFO] 04:29:47:343 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 5|0
+[INFO] 04:29:48:345 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 6|0
+[INFO] 04:29:49:346 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 7|0
+[INFO] 04:29:50:347 Mi-RAM/(13784:13805): El tripulante 3 se movio a la posicion 8|0
+[INFO] 04:30:19:369 Mi-RAM/(13784:13805): Se expulso el tripulante 3
+[INFO] 04:30:20:371 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 1|0
+[INFO] 04:30:21:372 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 2|0
+[INFO] 04:30:22:373 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 3|0
+[INFO] 04:30:23:375 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 4|0
+[INFO] 04:30:24:377 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 5|0
+[INFO] 04:30:25:378 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 6|0
+[INFO] 04:30:26:378 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 7|0
+[INFO] 04:30:27:380 Mi-RAM/(13784:13804): El tripulante 4 se movio a la posicion 8|0
+[INFO] 04:38:37:576 Mi-RAM/(13980:13980): RAM: 8192
+[INFO] 04:38:37:577 Mi-RAM/(13980:13980): <> SERVIDOR LISTO....
+[INFO] 04:38:46:691 Mi-RAM/(13980:13982): <>START: Recibir patota
+[INFO] 04:38:46:691 Mi-RAM/(13980:13982): <>END: Recibir patota
+[INFO] 04:38:46:691 Mi-RAM/(13980:13982): Iniciando patota 1 con 4 tripulantes que pesa 118...
+[INFO] 04:38:46:692 Mi-RAM/(13980:13982): Hay 8192 espacio libre, quiero guardar 118
+[INFO] 04:38:46:692 Mi-RAM/(13980:13982): Guarde las tareas EMPALMANDO_CABLES;8;0;600 en el segmento 0
+[INFO] 04:38:46:692 Mi-RAM/(13980:13982): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 04:38:46:692 Mi-RAM/(13980:13982): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb de 1 en memoria
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb de 2 en memoria
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb de 3 en memoria
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Iniciando tripulante 4 de la patota 1 en la posicion 0|0
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb del tripulante 4 en el segmento 5
+[INFO] 04:38:46:693 Mi-RAM/(13980:13982): Guarde la tcb de 4 en memoria
+[INFO] 04:38:46:694 Mi-RAM/(13980:13982): Envio ok
+[INFO] 04:39:15:544 Mi-RAM/(14002:14002): RAM: 8192
+[INFO] 04:39:15:546 Mi-RAM/(14002:14002): <> SERVIDOR LISTO....
+[INFO] 04:39:24:211 Mi-RAM/(14002:14004): <>START: Recibir patota
+[INFO] 04:39:24:211 Mi-RAM/(14002:14004): <>END: Recibir patota
+[INFO] 04:39:24:211 Mi-RAM/(14002:14004): Iniciando patota 1 con 5 tripulantes que pesa 139...
+[INFO] 04:39:24:212 Mi-RAM/(14002:14004): Hay 8192 espacio libre, quiero guardar 139
+[INFO] 04:39:24:212 Mi-RAM/(14002:14004): Guarde las tareas EMPALMANDO_CABLES;8;0;600 en el segmento 0
+[INFO] 04:39:24:212 Mi-RAM/(14002:14004): Guarde la pcb de la patota 1 en el segmento 1
+[INFO] 04:39:24:212 Mi-RAM/(14002:14004): Iniciando tripulante 1 de la patota 1 en la posicion 0|0
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb del tripulante 1 en el segmento 2
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb de 1 en memoria
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Iniciando tripulante 2 de la patota 1 en la posicion 0|0
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb del tripulante 2 en el segmento 3
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb de 2 en memoria
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Iniciando tripulante 3 de la patota 1 en la posicion 0|0
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb del tripulante 3 en el segmento 4
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb de 3 en memoria
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Iniciando tripulante 4 de la patota 1 en la posicion 0|0
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb del tripulante 4 en el segmento 5
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Guarde la tcb de 4 en memoria
+[INFO] 04:39:24:213 Mi-RAM/(14002:14004): Iniciando tripulante 5 de la patota 1 en la posicion 0|0
+[INFO] 04:39:24:214 Mi-RAM/(14002:14004): Guarde la tcb del tripulante 5 en el segmento 6
+[INFO] 04:39:24:214 Mi-RAM/(14002:14004): Guarde la tcb de 5 en memoria
+[INFO] 04:39:24:214 Mi-RAM/(14002:14004): Envio ok
+[INFO] 04:39:29:400 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 1|0
+[INFO] 04:39:30:371 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 2|0
+[INFO] 04:39:31:381 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 3|0
+[INFO] 04:39:32:385 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 4|0
+[INFO] 04:39:33:393 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 5|0
+[INFO] 04:39:34:402 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 6|0
+[INFO] 04:39:35:403 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 7|0
+[INFO] 04:39:36:404 Mi-RAM/(14002:14019): El tripulante 1 se movio a la posicion 8|0
+[INFO] 04:39:40:411 Mi-RAM/(14002:14019): Se expulso el tripulante 1
+[INFO] 04:39:41:413 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 1|0
+[INFO] 04:39:42:414 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 2|0
+[INFO] 04:39:43:416 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 3|0
+[INFO] 04:39:44:421 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 4|0
+[INFO] 04:39:45:422 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 5|0
+[INFO] 04:39:46:424 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 6|0
+[INFO] 04:39:47:426 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 7|0
+[INFO] 04:39:48:427 Mi-RAM/(14002:14018): El tripulante 2 se movio a la posicion 8|0

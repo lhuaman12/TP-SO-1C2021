@@ -1002,6 +1002,8 @@ void salir_expulsado(t_tripulante* tripulante){
 	tripulante->estado=EXIT;
 	tripulante->no_tiene_tareas=1;
 	// TODO: mensaje a ram de expulsado
+
+	enviar_expulsar_tripulante(tripulante->socket_ram,tripulante->TID);
 	log_info(discordiador_logger,"El tripulante %d fue expulsado",tripulante->TID);
 	//free(tripulante->posicion);
 	sem_post(&tripulante->esperar_ejecucion_tripulante);

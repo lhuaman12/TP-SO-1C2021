@@ -26,7 +26,7 @@ t_patota_envio* crear_patota(char* id,char* tareas,char* trips)
 
 void enviar_expulsar_tripulante(int socket,int tid)
 {
-
+	conectar_envio(socket,configuracion_user->ip_ram,configuracion_user->puerto_ram);
 	char* id = string_itoa(tid);
 	enviar_mensaje_por_codigo(id,EXPULSAR_TRIPULANTES,socket);
 }

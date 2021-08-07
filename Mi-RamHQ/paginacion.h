@@ -243,6 +243,7 @@ void mostrarTripulantePag(int tid);
 void iniciarSwap();
 
 int existeArchivo(char* path);
+int existe_archivo(char* path);
 
 void mostrarPagina(t_pagina* pagina);
 

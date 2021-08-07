@@ -33,5 +33,6 @@ void enviar_fin_tarea(int socket,char* tarea,int tid);
 void enviar_cambio_estado(int socket,char* estado,int tid);
 void avisar_fsck(int socket,int tid);
 void enviar_actualizar_pos(t_tripulante* trip);
+void enviar_expulsar_tripulante(int socket,int tid);
 
 #endif /* PAQUETES_H_ */

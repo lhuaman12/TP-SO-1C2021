@@ -1,13 +1,4 @@
-/*
- * paginacion.c
- *
- *  Created on: 23 jul. 2021
- *      Author: utnso
- */
-
-
-#include"paginacion.h"
-
+#include "paginacion.h"
 
 void setLock(t_pagina* unaPag){
 
@@ -39,7 +30,7 @@ int enMV(t_pagina* pag){
 int iniciarPaginacion(void){
 
     //MEMORIA PRINCIPAL
-    memoriaPrincipal = malloc(TAM_PAG);
+    memoriaPrincipal = malloc(TAM_MEM);
 
     if(memoriaPrincipal == NULL){
         //NO SE RESERVO LA MEMORIA
@@ -97,8 +88,6 @@ int puedoGuardarPaginacion(int paginasNecesarias){
 
     int cantFramesLibresPpal = memoriaDisponiblePag(MEM_PPAL);
     int cantFramesLibresVirtual = memoriaDisponiblePag(MEM_VIRT);
-
-    log_info(logger,"SON %d PAGINAS",cantFramesLibresPpal);
 
     if((cantFramesLibresPpal + cantFramesLibresVirtual) >= paginasNecesarias){
         return 1;
@@ -378,7 +367,7 @@ void copiarPaginaDesp(t_pagina* unaPagina, void* algo, int* desplazamiento){
 	int base = unaPagina->frame_ppal * TAM_PAG;
 
 	pthread_mutex_lock(&mutexMemoria);
-	memcpy(algo + *desplazamiento, memoriaPrincipal + base,TAM_PAG);
+	memcpy(algo + *desplazamiento, memoriaPrincipal + base, TAM_PAG);
 	pthread_mutex_unlock(&mutexMemoria);
 
 	*desplazamiento += TAM_PAG;
@@ -423,8 +412,6 @@ char* sacarTareasPaginacion(void* infoProceso , int size ){
     memcpy(tareas, infoProceso, size);
     return tareas;
 }
-
-
 
 //GUARDAR EN MV
 void guardarMemoriaVirtual(t_pagina* pagina){
@@ -505,7 +492,6 @@ void agregarPaginasALista(t_list* lista, t_list* paginas){
 char* buscarTareaPaginacion(int idPatota, int proxInst){
 
     char* tareas = buscarTareasPaginacion(idPatota);
-
 	char* tarea = separarTareas(tareas, proxInst); //ME DEVUELVE LA TAREA Y DICE SI ES LA ULTIMA
 
 	return tarea;
@@ -872,7 +858,7 @@ void sobreEscribirTcbPag(t_tcb* tcb, t_tabla_pagina* unaTabla){
 	int base = unaTabla->tamanioTareas + 8 + 21 * nTripu;
 
 	//BUSCO LA PAGINA DONDE ESTA GUARDADO
-	int nPrimerPagina = base /TAM_PAG; //CON ESTO TENGO LA PRIMERA PAGINA DONDE EMPIEZA EL TRIPU
+	int nPrimerPagina = base / TAM_PAG; //CON ESTO TENGO LA PRIMERA PAGINA DONDE EMPIEZA EL TRIPU
 
 	//SOBRANTE ES EL CACHITO QUE OCUPA LA TCB EN ESA PAGINA
 	int relleno = ((nPrimerPagina+1) * TAM_PAG) - base;
@@ -1066,7 +1052,7 @@ void liberarPaginas(t_list* paginas, int size, t_tabla_pagina* unaTabla, int bas
 		}else{ 												//SI HAY OTRAS COSAS EN LA PAGINA
 			t_pagina* primerPag = list_get(paginas,0);
 			primerPag->fragInterna += relleno; 		//el cachito que ocupaba de la pagina queda como frag interna
-			if(primerPag->fragInterna ==TAM_PAG){//Si el espacio libre mas lo que tengo mas la frag interna es un frame, NO HAY NADA MAS EN LA PAG Y LA PUEO LIBERAR
+			if(primerPag->fragInterna == TAM_PAG){//Si el espacio libre mas lo que tengo mas la frag interna es un frame, NO HAY NADA MAS EN LA PAG Y LA PUEO LIBERAR
 				liberarPagina(primerPag, unaTabla);
 			}
 			list_remove(paginas,0);
@@ -1455,7 +1441,7 @@ FILE * file;
 
     char* nombreDeArchivo = dameNombre();
 
-   // log_info(logger,"Creo un archivo con el nombre %s\n", nombreDeArchivo);
+    log_info(logger,"Creo un archivo con el nombre %s\n", nombreDeArchivo);
 
     char* time = temporal_get_string_time("%d/%m/%y %H:%M:%S");
 
@@ -1569,12 +1555,24 @@ void mostrarTripulantePag(int tid){
 
 void iniciarSwap(){
 
-	if(!existeArchivo(memoriaVirtualPath))//Si no existe el archivo, lo creo
+	if(!existe_archivo(memoriaVirtualPath))//Si no existe el archivo, lo creo
 	{
 		int file = open(memoriaVirtualPath, O_WRONLY);
 		ftruncate(file, TAM_SWAP);
 		close(file);
 	}
+}
+
+int existe_archivo(char* path)
+{
+	int ret = 0;
+	FILE* f = fopen(path,"r");
+	if (f != NULL)
+	{
+		ret = 1;
+		fclose(f);
+	}
+	return ret;
 }
 
 int existeArchivo(char* path)
