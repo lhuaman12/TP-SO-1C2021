@@ -2,7 +2,7 @@
 ## Pasos para deployar el TP :
 
 ### Clonar la shared
-** > git clone https://github.com/FeroMateo/shared-library-so.git**
+**git clone https://github.com/FeroMateo/shared-library-so.git**
 
 ### Clonar el repo
 **git clone https://github.com/sisoputnfrba/tp-2021-1c-bastardosSinGloria.git**
