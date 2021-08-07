@@ -64,11 +64,11 @@ void iniciarPatota(int socket_cliente){
 
 	t_patota_envio* patota = recibir_patota(socket_cliente);
 
-	char** tareas_decriptadas = malloc(300);
+	char** tareas_decriptadas = malloc(700);
 
 	tareas_decriptadas = string_split(patota->tareas,",");
 
-	char** tripulantes_decriptados = malloc(300);
+	char** tripulantes_decriptados = malloc(700);
 
 	tripulantes_decriptados = string_split(patota->trips,",");
 
@@ -78,7 +78,7 @@ void iniciarPatota(int socket_cliente){
 
 	int cantidadDeTripulantes = atoi(tripulantes_decriptados[0]);
 
-	char* tareas;
+	char* tareas = malloc(700);
 
 	if(cantidadDeTareas >= 10)
 	{
@@ -89,6 +89,8 @@ void iniciarPatota(int socket_cliente){
 		tareas = string_substring(patota->tareas,2,strlen(patota->tareas));
 		tareas = string_substring_until(tareas,strlen(tareas)-1);
 	}
+
+	//nads
 
 	//printf("TAREAS: %s",tareas);
 
@@ -127,6 +129,7 @@ void iniciarPatota(int socket_cliente){
 
 	free(tareas_decriptadas);
 	free(tripulantes_decriptados);
+	free(tareas);
 
 }
 
