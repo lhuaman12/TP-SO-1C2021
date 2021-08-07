@@ -12,6 +12,10 @@ if test -d /home/utnso/so-commons-library; then
 fi
  
 cd
+
+mkdir polus2
+
+cd
  
 git clone https://github.com/sisoputnfrba/so-commons-library.git
 cd so-commons-library/
