@@ -221,41 +221,7 @@ void guardarContenido(char* path, char* contenido)
 	agregarTamanioFile(path,strlen(contenido));
 	free(bloquesGuardados);
 }
-/*
-void guardarContenido(char* path, char* contenido)
-{
-	log_debug(log_IMONGO,"<> ARRANCA A GUARDAR");
-	int cantidadBloques = calcularBloquesPorContenido(contenido);
-	char* bloquesGuardados = string_new();
-	int i,offset=0;
-	char* contenidoCortado[cantidadBloques];
 
-	for(i=0;i<cantidadBloques;i++){
-
-		contenidoCortado[i]=malloc(BLOCK_SIZE);
-		strncpy(contenidoCortado[i],contenido+offset,BLOCK_SIZE);
-		contenidoCortado[i] = string_substring_until(contenidoCortado[i],BLOCK_SIZE);
-		offset+=BLOCK_SIZE;
-	}
-	int bloque = -1;
-	for(int i = 0; i<cantidadBloques;i++)
-	{
-		bloque = solicitarBloque();
-		if(bloque == -1)
-		{
-			log_error(log_IMONGO,"<> NO HAY SUFICIENTES BLOQUES PARA GUARDAR ESO");
-		}
-		cargarBLoqueEnMemoria(contenidoCortado[i],bloque);
-		string_append_with_format(&bloquesGuardados,"%d,",bloque);
-		free(contenidoCortado[i]);
-	}
-
-	agregarBloquesFile(path,bloquesGuardados);
-	agregarBlockCountFile(path,cantidadBloques);
-	agregarTamanioFile(path,strlen(contenido));
-	free(bloquesGuardados);
-}
-*/
 
 
 
@@ -291,26 +257,7 @@ void guardarContenidoBitacora(char* path, char* contenido)
 	agregarTamanioFile(path,strlen(contenido));
 	free(bloquesGuardados);
 }
-/*
-void descartarBasura()
-{
-	char* path = malloc(70);
-	strcpy(path,RUTA_FILES);
-	string_append_with_format(&path,"Basura.ims");
 
-	if(existeArchivo(path))
-	{
-		int tamanio = obtenerSizeFile(path);
-		consumirRecurso("Basura",tamanio);
-	}
-	else
-	{
-		log_warning(log_IMONGO,"NO HAY BASURA");
-	}
-
-	free(path);
-}
-*/
 void descartarBasura()
 {
 	char* path = malloc(70);
@@ -382,7 +329,12 @@ void consumirRecurso(char* recurso,char caracter ,int cantidad)
 
 	int tamanioFile = obtenerSizeFile(path);
 
-	tamanioFile -= cantidad;
+	tamanioFile = tamanioFile - cantidad;
+
+	if(tamanioFile<0)
+	{
+		tamanioFile=0;
+	}
 
 	char* bloquesEnUso = buscarBloquesUsados(path);
 	char** bloquesTotales = string_split(bloquesEnUso,",");
@@ -397,6 +349,37 @@ void consumirRecurso(char* recurso,char caracter ,int cantidad)
 	free(path);
 
 	generarRecurso(recurso,caracter,tamanioFile-1);
+
+}
+
+void consumirRecursoComida(char* recurso,char caracter ,int cantidad)
+{
+	char* path = malloc(70);
+	strcpy(path,RUTA_FILES);
+	string_append_with_format(&path,"%s.ims",recurso);
+
+	int tamanioFile = obtenerSizeFile(path);
+
+	tamanioFile = tamanioFile - cantidad;
+
+	char* bloquesEnUso = buscarBloquesUsados(path);
+	char** bloquesTotales = string_split(bloquesEnUso,",");
+	int tamanio = contarComas(bloquesEnUso);
+
+	for(int i = 0; i<tamanio;i++)
+	{
+		borrarContenido(bloquesTotales[i]);
+	}
+		eliminarFile(path);
+
+	free(path);
+
+	if(tamanioFile>0)
+		{
+		generarRecurso(recurso,caracter,tamanioFile-1);
+		}
+
+
 
 }
 

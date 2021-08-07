@@ -76,6 +76,11 @@ pthread_mutex_t semaforoSuperBloque;
 pthread_mutex_t semaforoFiles;
 pthread_mutex_t semaforoBitacoras;
 
+pthread_mutex_t semaforoBasura;
+pthread_mutex_t semaforoOxigeno;
+pthread_mutex_t semaforoComida;
+
+
 // *LOGS, CONFIG E HILOS
 
 t_log* log_IMONGO;
