@@ -35,6 +35,12 @@ cd
 git clone https://github.com/sisoputnfrba/so-nivel-gui-library.git
 cd so-nivel-gui-library/
 sudo make install
+
+cd
+
+git clone https://github.com/sisoputnfrba/a-mongos-pruebas
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/shared-library-so/SharedUtils/Debug/
  
 #FIN NIVEL GUI
  
@@ -43,18 +49,6 @@ sudo make install
 cd $actual_path
  
 make
-
- 
-#FIN COMPILACION
- 
-#DESCARGANDO PRUEBAS RELEASE 1.0.0
-sudo apt install unzip
-cd pruebas
-rm -r a-mongos-pruebas
-unzip a-mongos-pruebas-1.0.0.zip
-mv a-mongos-pruebas-1.0.0 a-mongos-pruebas
- 
-#FIN DESCARGANDO PRUEBAS RELEASE 1.0.0
  
 #SETEO DE IPs
  
